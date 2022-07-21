@@ -3,10 +3,16 @@ package administracion.vista;
 import administracion.controlador.ProcesosRepetidos;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Color;
+import java.awt.Dimension;
 
 public class MDI_Administracion extends javax.swing.JFrame {
     
     ProcesosRepetidos procesoRepetido = new ProcesosRepetidos();
+    private Mnt_Modulos mnt_modulos;
+    private Mnt_Aplicaciones mnt_aplicaciones;
+    private Mnt_Usuarios mnt_usuarios;
+    private Mnt_PuestoTrabajo mnt_puesto_trabajo;
+    private Asn_UsuarioAplicacion asn_usuarioAplicacion;
 
     public MDI_Administracion() {
         initComponents();
@@ -39,6 +45,7 @@ public class MDI_Administracion extends javax.swing.JFrame {
         MnI_bodegas = new javax.swing.JMenuItem();
         Sbm_procesos = new javax.swing.JMenu();
         Mnu_procesos = new javax.swing.JMenu();
+        MnI_UsuarioAplicacion = new javax.swing.JMenuItem();
         Sbm_herramientas = new javax.swing.JMenu();
         Sbm_ayuda = new javax.swing.JMenu();
         Btn_cerrarSesion = new javax.swing.JMenu();
@@ -81,15 +88,35 @@ public class MDI_Administracion extends javax.swing.JFrame {
         Mnu_mantenimientos.setText("Mantenimientos");
 
         MnI_modulos.setText("Modulos");
+        MnI_modulos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnI_modulosActionPerformed(evt);
+            }
+        });
         Mnu_mantenimientos.add(MnI_modulos);
 
         MnI_aplicaciones.setText("Aplicaciones");
+        MnI_aplicaciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnI_aplicacionesActionPerformed(evt);
+            }
+        });
         Mnu_mantenimientos.add(MnI_aplicaciones);
 
         MnI_usuarios.setText("Usuarios");
+        MnI_usuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnI_usuariosActionPerformed(evt);
+            }
+        });
         Mnu_mantenimientos.add(MnI_usuarios);
 
         MnI_puestosT.setText("Puestos de Trabajos");
+        MnI_puestosT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnI_puestosTActionPerformed(evt);
+            }
+        });
         Mnu_mantenimientos.add(MnI_puestosT);
 
         MnI_trabajadores.setText("Trabajadores");
@@ -112,6 +139,15 @@ public class MDI_Administracion extends javax.swing.JFrame {
         Sbm_procesos.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
 
         Mnu_procesos.setText("Procesos");
+
+        MnI_UsuarioAplicacion.setText("Asignacion Usuario Aplicacion");
+        MnI_UsuarioAplicacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnI_UsuarioAplicacionActionPerformed(evt);
+            }
+        });
+        Mnu_procesos.add(MnI_UsuarioAplicacion);
+
         Sbm_procesos.add(Mnu_procesos);
 
         Mnb_menu.add(Sbm_procesos);
@@ -146,12 +182,67 @@ public class MDI_Administracion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
-
+        
     }//GEN-LAST:event_formComponentResized
 
     private void Sbm_actualizarPermisosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Sbm_actualizarPermisosMouseClicked
         
     }//GEN-LAST:event_Sbm_actualizarPermisosMouseClicked
+
+    private void MnI_modulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnI_modulosActionPerformed
+        mnt_modulos = new Mnt_Modulos();
+
+        Jdp_contenedor.add(mnt_modulos);
+        Dimension desktopSize = Jdp_contenedor.getSize();
+        Dimension FrameSize = mnt_modulos.getSize();
+        mnt_modulos.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+        mnt_modulos.setVisible(true);
+        mnt_modulos.toFront();
+    }//GEN-LAST:event_MnI_modulosActionPerformed
+
+    private void MnI_aplicacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnI_aplicacionesActionPerformed
+        mnt_aplicaciones = new Mnt_Aplicaciones();
+
+        Jdp_contenedor.add(mnt_aplicaciones);
+        Dimension desktopSize = Jdp_contenedor.getSize();
+        Dimension FrameSize = mnt_aplicaciones.getSize();
+        mnt_aplicaciones.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+        mnt_aplicaciones.setVisible(true);
+        mnt_aplicaciones.toFront();
+    }//GEN-LAST:event_MnI_aplicacionesActionPerformed
+
+    private void MnI_usuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnI_usuariosActionPerformed
+        mnt_usuarios = new Mnt_Usuarios();
+
+        Jdp_contenedor.add(mnt_usuarios);
+        Dimension desktopSize = Jdp_contenedor.getSize();
+        Dimension FrameSize = mnt_usuarios.getSize();
+        mnt_usuarios.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+        mnt_usuarios.setVisible(true);
+        mnt_usuarios.toFront();
+    }//GEN-LAST:event_MnI_usuariosActionPerformed
+
+    private void MnI_puestosTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnI_puestosTActionPerformed
+        mnt_puesto_trabajo = new Mnt_PuestoTrabajo();
+
+        Jdp_contenedor.add(mnt_puesto_trabajo);
+        Dimension desktopSize = Jdp_contenedor.getSize();
+        Dimension FrameSize = mnt_puesto_trabajo.getSize();
+        mnt_puesto_trabajo.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+        mnt_puesto_trabajo.setVisible(true);
+        mnt_puesto_trabajo.toFront();
+    }//GEN-LAST:event_MnI_puestosTActionPerformed
+
+    private void MnI_UsuarioAplicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnI_UsuarioAplicacionActionPerformed
+        asn_usuarioAplicacion = new Asn_UsuarioAplicacion();
+
+        Jdp_contenedor.add(asn_usuarioAplicacion);
+        Dimension desktopSize = Jdp_contenedor.getSize();
+        Dimension FrameSize = asn_usuarioAplicacion.getSize();
+        asn_usuarioAplicacion.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+        asn_usuarioAplicacion.setVisible(true);
+        asn_usuarioAplicacion.toFront();
+    }//GEN-LAST:event_MnI_UsuarioAplicacionActionPerformed
 
     public static void main(String args[]) {
         //FLATLAF
@@ -168,6 +259,7 @@ public class MDI_Administracion extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JMenu Btn_cerrarSesion;
     private javax.swing.JDesktopPane Jdp_contenedor;
+    private javax.swing.JMenuItem MnI_UsuarioAplicacion;
     public static javax.swing.JMenuItem MnI_aplicaciones;
     public static javax.swing.JMenuItem MnI_bodegas;
     public static javax.swing.JMenuItem MnI_clientes;

@@ -1,9 +1,9 @@
 package administracion.vista;
 
 import administracion.controlador.Hash;
-import administracion.controlador.LOGIN;
+import administracion.controlador.Login;
 import administracion.controlador.ProcesosRepetidos;
-import administracion.modelo.LOGIN_DAO;
+import administracion.modelo.LoginDAO;
 import com.formdev.flatlaf.FlatLightLaf;
 
 public class LOGIN_Administracion extends javax.swing.JFrame {
@@ -11,8 +11,8 @@ public class LOGIN_Administracion extends javax.swing.JFrame {
     int xMouse, yMouse;
 
     public static String idUsuario, nomUsuario;
-    LOGIN_DAO ldao = new LOGIN_DAO();
-    LOGIN login = new LOGIN();
+    LoginDAO ldao = new LoginDAO();
+    Login login = new Login();
     ProcesosRepetidos procesoRepetido = new ProcesosRepetidos();
 
     public LOGIN_Administracion() {
@@ -277,7 +277,7 @@ public class LOGIN_Administracion extends javax.swing.JFrame {
 
     private void Btn_iniciarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_iniciarSesionMouseClicked
         String password = txt_password.getText(), usuario = txt_usuario.getText();
-        String newPassword = Hash.sha1(password);
+        String newPassword = Hash.getMD5(password);
 
         login.setUsername(usuario);
         login = ldao.query(login);

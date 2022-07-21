@@ -1,6 +1,6 @@
 package administracion.controlador;
 
-public class LOGIN {
+public class Login {
     private String id, nombre, apellido, username, password;
 
     public String getId() {
