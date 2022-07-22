@@ -5,11 +5,18 @@ package administracion.controlador;
 import java.awt.Color;
 import java.awt.Component;
 import java.text.SimpleDateFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
  /**
  * @author H. Leonel Dominguez C.
@@ -22,10 +29,10 @@ public class ProcesosRepetidos {
     
     Color sVerde = new Color(114, 243, 227);
     Color dsVerde = new Color(97, 212, 195);
-    Color sAmarillo = new Color(255, 255, 153);
-    Color dsAmarillo = new Color(255, 255, 102);
-    Color sRojo = new Color(255, 102, 102);
-    Color dsRojo = new Color(255, 51, 51);
+    Color sAmarillo = new Color(255, 255, 102);
+    Color dsAmarillo = new Color(255, 255, 153);
+    Color sRojo = new Color(255, 51, 51);
+    Color dsRojo = new Color(255, 102, 102);
     Color fLogin = new Color(52, 78, 65);
     
     
@@ -88,7 +95,7 @@ public class ProcesosRepetidos {
             try {
                 Integer.parseInt(jTextField.getText());
             } catch (Exception e) {
-                accionErronea("Existen campos que únicamente acepta unicamente números, revise e intentelo nuevamente", "¡ERROR!");
+                accionErronea("¡ERROR!","Existen campos que únicamente acepta unicamente números, revise e intentelo nuevamente");
                 return false;
             }
         }
@@ -100,7 +107,7 @@ public class ProcesosRepetidos {
             String palabra = jTextField.getText();
             palabra = palabra.replaceAll(" ", "");
             if (palabra.isEmpty()) {
-                accionErronea("Existen campos que estan vaciós, revise e intentelo nuevamente", "¡ERROR!");
+                accionErronea("¡ERROR!","Existen campos que estan vaciós, revise e intentelo nuevamente");
                 return false;
             }
         }
@@ -110,7 +117,7 @@ public class ProcesosRepetidos {
     public boolean isSelectedCbx(JComboBox... texto) {
         for (JComboBox jComboBox : texto) {
             if (jComboBox.getSelectedIndex() == 0) {
-                accionErronea("Existen campos que no se ah seleccionado una opción, revise e intentelo nuevamente", "¡ERROR!");
+                accionErronea("¡ERROR!", "Existen campos que no se ah seleccionado una opción, revise e intentelo nuevamente");
                 return false;
             }
         }
@@ -122,13 +129,37 @@ public class ProcesosRepetidos {
             String palabra = jTextArea.getText();
             palabra = palabra.replaceAll(" ", "");
             if (palabra.isEmpty()) {
-                accionErronea("Existen campos que estan vaciós, revise e intentelo nuevamente", "¡ERROR!");
+                accionErronea("¡ERROR!","Existen campos que estan vaciós, revise e intentelo nuevamente");
                 return false;
             }
         }
         return true;
     }
 
+    public boolean isSelectedRbt(JRadioButton... radioButtons) {
+        int flat = 0;
+        for (JRadioButton button : radioButtons) {
+            if (button.isSelected()) {
+                flat++;
+            }
+        }
+        if (flat == 0) {
+            accionErronea("¡ERROR!","Existen botones que no se selecciono una opción, revise e intentelo nuevamente");
+            return false;
+        }
+        return true;
+    }
+    
+    public Boolean ValidarEmail(String email) {
+        Pattern pattern = Pattern.compile("^([0-9a-zA-Z]+[_.])*[0-9a-zA-Z]+@([-0-9a-zA-Z]+[.])+[a-zA-Z]{2,6}$");
+        Matcher matcher = pattern.matcher(email);
+        if (matcher.matches()==true) {
+            return matcher.matches();
+        }
+        accionErronea("¡ERROR!","El email ingresado es invalido, revise e intentelo nuevamente");    
+        return matcher.matches();
+    }
+    
     //limpieza de componentes
     public void limpiarTxf(JTextField... texto){
         for (JTextField jTextField : texto) {
@@ -166,4 +197,52 @@ public class ProcesosRepetidos {
         return false;
     }
     
+    
+    //funciones de llenado de información
+    DefaultTableModel modelo = new DefaultTableModel() {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            if (column > 20) {
+                return true;
+            }
+            return false;
+        }
+    };
+    DefaultTableCellRenderer centro = new DefaultTableCellRenderer() {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected,
+                boolean hasFocus,
+                int row,
+                int column) {
+
+            if (row % 2 == 0) {
+                setBackground(new Color(229, 229, 229));
+                setForeground(Color.BLACK);
+            } else {
+                setBackground(Color.white);
+                setForeground(Color.BLACK);
+            }
+
+            return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        }
+    };
+    int totalColumnas;
+    public void llenarColumnas(String datos[], int cantidad, JTable tabla) {
+        totalColumnas = cantidad;
+        for (int j = 0; j < cantidad; j++) {
+            modelo.addColumn(datos[j]);
+        }
+        tabla.setModel(modelo);
+    }
+    public void llenarFilas(Object fila[], int tamaño[], JTable tabla) {
+        for (int i = 0; i < totalColumnas; i++) {
+            centro.setHorizontalAlignment(JLabel.CENTER);
+            tabla.getColumnModel().getColumn(i).setCellRenderer(centro);
+            tabla.getColumnModel().getColumn(i).setPreferredWidth(tamaño[i]);
+        }
+        modelo.addRow(fila);
+        tabla.setModel(modelo);
+    }
+
 }
