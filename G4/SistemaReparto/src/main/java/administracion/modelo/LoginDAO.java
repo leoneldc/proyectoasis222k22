@@ -1,13 +1,13 @@
 package administracion.modelo;
 
-import administracion.controlador.LOGIN;
+import administracion.controlador.Login;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class LOGIN_DAO {
+public class LoginDAO {
 
     Connection conn = null;
     PreparedStatement stmt = null;
@@ -15,7 +15,7 @@ public class LOGIN_DAO {
 
     private static final String SQL_QUERY = "SELECT pkidusuarios, Nomuser, Apelluser, Password FROM Usuarios WHERE Username = ?";
 
-    public LOGIN query(LOGIN usuario) {
+    public Login query(Login usuario) {
         int rows = 0;
         try {
             conn = Conexion.getConnection();
@@ -28,7 +28,7 @@ public class LOGIN_DAO {
                 String nombre = rs.getString("Nomuser");
                 String apellido = rs.getString("Apelluser");
                 String password = rs.getString("Password");
-                usuario = new LOGIN();
+                usuario = new Login();
                 usuario.setId(id);
                 usuario.setNombre(nombre);
                 usuario.setApellido(apellido);
