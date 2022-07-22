@@ -17,23 +17,26 @@ import javax.swing.JOptionPane;
 public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
 
     ProcesosRepetidos procesosr = new ProcesosRepetidos();
+    FuncionesBitacora funcBitacora = new FuncionesBitacora();
     Aplicaciones app = new Aplicaciones();
-    Usuarios usuarios = new Usuarios();
     UsuarioAplicacion asignaciones = new UsuarioAplicacion();
     UsuarioAplicacionDAO asignacionesDAO = new UsuarioAplicacionDAO();
+    Boolean modificar = false;
+    String idApp = "0030";
 
     /**
      * Creates new form Asn_UsuarioAplicacion
      */
     public Asn_UsuarioAplicacion() {
         initComponents();
+        cargarAcciones();
         diseño();
         cargarAplicaciones();
     }
 
     public void diseño() {
         setTitle("Asignación Usuarios a Aplicaciones");
-        procesosr.cursorMano(Tbl_aplicaciones, Btn_ayuda, Btn_cancelar, Btn_guardarT, Btn_guardarU, Btn_quitarU, Btn_quitarT);
+        procesosr.cursorMano(Tbl_aplicaciones,Tbl_asignaciones, Btn_ayuda, Btn_cancelar, Btn_guardarT, Btn_guardarU, Btn_quitarU, Btn_quitarT);
     }
 
     private void cargarAplicaciones() {
@@ -63,7 +66,7 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
         int tamaño[] = {150, 150, 75, 75, 75, 75};
         UsuarioAplicacionDAO asignacionesDAO = new UsuarioAplicacionDAO();
         UsuarioAplicacion asignaciones = new UsuarioAplicacion();
-        asignaciones.setIdUsuario(Txt_id.getText());
+        asignaciones.setIdUsuario(Txt_busqueda.getText());
         List<UsuarioAplicacion> listaAsignaciones = asignacionesDAO.selectUA(asignaciones);
         for (UsuarioAplicacion asignacion : listaAsignaciones) {
             datos[0] = asignacion.getIdUsuario();
@@ -92,6 +95,38 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
         }
     }
 
+    void cargarAcciones() {
+
+        Btn_guardarU.setVisible(false);
+        Btn_guardarT.setVisible(false);
+        Btn_quitarU.setVisible(false);
+        Btn_quitarT.setVisible(false);
+        Btn_cargarUsuario.setVisible(false);
+
+        UsuarioAplicacion permisos = new UsuarioAplicacion();
+        UsuarioAplicacionDAO permisosDAO = new UsuarioAplicacionDAO();
+
+        permisos.setIdUsuario(LOGIN_Administracion.idUsuario);
+        permisos.setIdAplicacion(idApp);
+
+        permisos = permisosDAO.selectV(permisos);
+
+        if (permisos.getBuscar().equals("1")) {
+            Btn_cargarUsuario.setVisible(true);
+        }
+        if (permisos.getGuardar().equals("1")) {
+            Btn_guardarU.setVisible(true);
+            Btn_guardarT.setVisible(true);
+        }
+        if (permisos.getModificar().equals("1")) {
+            modificar = true;
+        }
+        if (permisos.getEliminar().equals("1")) {
+            Btn_quitarU.setVisible(true);
+            Btn_quitarT.setVisible(true);
+        }
+    }
+
     /**
      * Esto es codigo generado automaticamente por el IDE debido al Design *
      */
@@ -102,7 +137,7 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
         Pnl_ingresoDatos = new javax.swing.JPanel();
         Btn_listaUsuarios = new javax.swing.JButton();
         Lbl_id = new javax.swing.JLabel();
-        Txt_id = new javax.swing.JTextField();
+        Txt_busqueda = new javax.swing.JTextField();
         Btn_cargarUsuario = new javax.swing.JButton();
         Lbl_nombre = new javax.swing.JLabel();
         Txt_nombre = new javax.swing.JTextField();
@@ -141,9 +176,9 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
         Lbl_id.setForeground(new java.awt.Color(255, 255, 255));
         Lbl_id.setText("ID USUARIO:");
 
-        Txt_id.setBackground(new java.awt.Color(163, 177, 138));
-        Txt_id.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Txt_id.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
+        Txt_busqueda.setBackground(new java.awt.Color(163, 177, 138));
+        Txt_busqueda.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Txt_busqueda.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
 
         Btn_cargarUsuario.setText("CARGAR");
         Btn_cargarUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -448,7 +483,7 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Pnl_ingresoDatosLayout.createSequentialGroup()
-                        .addComponent(Txt_id, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
+                        .addComponent(Txt_busqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(Btn_cargarUsuario)
                         .addGap(18, 18, 18)
@@ -478,7 +513,7 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Btn_listaUsuarios)
                     .addComponent(Lbl_id)
-                    .addComponent(Txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Txt_busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Btn_cargarUsuario)
                     .addComponent(Lbl_nombre)
                     .addComponent(Txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -523,7 +558,7 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
             int filaSeleccionada = Tbl_aplicaciones.getSelectedRow();
             if (filaSeleccionada >= 0) {
                 UsuarioAplicacion asignaciones = new UsuarioAplicacion();
-                asignaciones.setIdUsuario(Txt_id.getText());
+                asignaciones.setIdUsuario(Txt_busqueda.getText());
                 asignaciones.setIdAplicacion(Tbl_aplicaciones.getValueAt(filaSeleccionada, 0).toString());
                 asignaciones = asignacionesDAO.selectV(asignaciones);
                 if (asignaciones.getBuscar() == null) {
@@ -533,7 +568,7 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
                 }
             }
             if (!duplicada) {
-                asignaciones.setIdUsuario(Txt_id.getText());
+                asignaciones.setIdUsuario(Txt_busqueda.getText());
                 asignaciones.setIdAplicacion(Tbl_aplicaciones.getValueAt(filaSeleccionada, 0).toString());
                 int guardar = JOptionPane.showConfirmDialog(null, "¿Desea darle permisos de GUARDAR?", "Verifiación de permisos", JOptionPane.YES_NO_OPTION);
                 if (guardar == 0) {
@@ -560,6 +595,7 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
                     asignaciones.setEliminar("0");
                 }
                 asignacionesDAO.insert(asignaciones);
+                funcBitacora.GuardarBitacora("ASIGNAR1:1", idApp);
                 cargarAsignaciones();
             }
         }
@@ -575,20 +611,28 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
 
     private void Btn_guardarTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_guardarTMouseClicked
         if (procesosr.isEmptyTxf(Txt_nombre)) {
+            String valorPermisos;
+            int valor = JOptionPane.showConfirmDialog(null, "¿AGREGAR TODOS CON PERMISOS SI?", "Verifiación de permisos", JOptionPane.YES_NO_OPTION);
+            if (valor == 0) {
+                valorPermisos = "1";
+            } else {
+                valorPermisos = "0";
+            }
             boolean duplicada = true;
             for (int i = 0; i < Tbl_aplicaciones.getRowCount(); i++) {
                 UsuarioAplicacion asignaciones = new UsuarioAplicacion();
-                asignaciones.setIdUsuario(Txt_id.getText());
+                asignaciones.setIdUsuario(Txt_busqueda.getText());
                 asignaciones.setIdAplicacion(Tbl_aplicaciones.getValueAt(i, 0).toString());
                 asignaciones = asignacionesDAO.selectV(asignaciones);
                 if (asignaciones.getBuscar() == null) {
-                    asignaciones.setIdUsuario(Txt_id.getText());
+                    asignaciones.setIdUsuario(Txt_busqueda.getText());
                     asignaciones.setIdAplicacion(Tbl_aplicaciones.getValueAt(i, 0).toString());
-                    asignaciones.setGuardar("1");
-                    asignaciones.setEliminar("1");
-                    asignaciones.setBuscar("1");
-                    asignaciones.setModificar("1");
+                    asignaciones.setGuardar(valorPermisos);
+                    asignaciones.setEliminar(valorPermisos);
+                    asignaciones.setBuscar(valorPermisos);
+                    asignaciones.setModificar(valorPermisos);
                     asignacionesDAO.insert(asignaciones);
+                    funcBitacora.GuardarBitacora("ASIGNAR T", idApp);
                     cargarAsignaciones();
                 }
             }
@@ -612,6 +656,7 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
                     asignaciones.setIdUsuario(Tbl_asignaciones.getValueAt(filaSeleccionada, 0).toString());
                     asignaciones.setIdAplicacion(Tbl_asignaciones.getValueAt(filaSeleccionada, 1).toString());
                     asignacionesDAO.delete(asignaciones);
+                    funcBitacora.GuardarBitacora("DESASG 1:1", idApp);
                     cargarAsignaciones();
                 }
             }
@@ -641,6 +686,7 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
                         asignaciones.setIdUsuario(Tbl_asignaciones.getValueAt(i, 0).toString());
                         asignaciones.setIdAplicacion(Tbl_asignaciones.getValueAt(i, 1).toString());
                         asignacionesDAO.delete(asignaciones);
+                        funcBitacora.GuardarBitacora("DESASG T", idApp);
                     }
                 }
                 cargarAsignaciones();
@@ -681,13 +727,23 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_Btn_cancelarMouseExited
 
     private void Btn_cargarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_cargarUsuarioActionPerformed
-        if (procesosr.isEmptyTxf(Txt_id)) {
-            if (procesosr.isNumeric(Txt_id)) {
+        if (procesosr.isEmptyTxf(Txt_busqueda)) {
+            if (procesosr.isNumeric(Txt_busqueda)) {
+                Usuarios usuarios = new Usuarios();
                 UsuariosDAO usuariosDAO = new UsuariosDAO();
-                usuarios.setId(Txt_id.getText());
+                usuarios.setId(Txt_busqueda.getText());
                 usuarios = usuariosDAO.selectUA(usuarios);
-                Txt_nombre.setText(usuarios.getNombre() + " " + usuarios.getApellido());
-                cargarAsignaciones();
+                if (usuarios.getNombre() == null) {
+                    procesosr.accionErronea("¡ERROR!", "USUARIO NO ENCONTRADO");
+                } else {
+                    if (usuarios.getEstado().equals("0")) {
+                        procesosr.accionErronea("¡ERROR!", "USUARIO NO ACTIVO");
+                    } else {
+                        Txt_nombre.setText(usuarios.getNombre() + " " + usuarios.getApellido());
+                        cargarAsignaciones();
+                    }
+                }
+                funcBitacora.GuardarBitacora("BUSQUEDA", idApp);
             }
         }
     }//GEN-LAST:event_Btn_cargarUsuarioActionPerformed
@@ -705,36 +761,39 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_Btn_ReportesMouseExited
 
     private void Tbl_asignacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Tbl_asignacionesMouseClicked
-        int filaSeleccionada = Tbl_asignaciones.getSelectedRow();
-        if (evt.getClickCount() == 2) {
-            asignaciones.setIdUsuario(Txt_id.getText());
-            asignaciones.setIdAplicacion(Tbl_asignaciones.getValueAt(filaSeleccionada, 1).toString());
-            int guardar = JOptionPane.showConfirmDialog(null, "¿Desea darle permisos de GUARDAR?", "Verifiación de permisos", JOptionPane.YES_NO_OPTION);
-            if (guardar == 0) {
-                asignaciones.setGuardar("1");
-            } else {
-                asignaciones.setGuardar("0");
+        if (modificar) {
+            int filaSeleccionada = Tbl_asignaciones.getSelectedRow();
+            if (evt.getClickCount() == 2) {
+                asignaciones.setIdUsuario(Txt_busqueda.getText());
+                asignaciones.setIdAplicacion(Tbl_asignaciones.getValueAt(filaSeleccionada, 1).toString());
+                int guardar = JOptionPane.showConfirmDialog(null, "¿Desea darle permisos de GUARDAR?", "Verifiación de permisos", JOptionPane.YES_NO_OPTION);
+                if (guardar == 0) {
+                    asignaciones.setGuardar("1");
+                } else {
+                    asignaciones.setGuardar("0");
+                }
+                int buscar = JOptionPane.showConfirmDialog(null, "¿Desea darle permisos de BUSQUEDA?", "Verifiación de permisos", JOptionPane.YES_NO_OPTION);
+                if (buscar == 0) {
+                    asignaciones.setBuscar("1");
+                } else {
+                    asignaciones.setBuscar("0");
+                }
+                int modififcar = JOptionPane.showConfirmDialog(null, "¿Desea darle permisos de EDICIÓN?", "Verifiación de permisos", JOptionPane.YES_NO_OPTION);
+                if (modififcar == 0) {
+                    asignaciones.setModificar("1");
+                } else {
+                    asignaciones.setModificar("0");
+                }
+                int eliminar = JOptionPane.showConfirmDialog(null, "¿Desea darle permisos de ELIMINAR?", "Verifiación de permisos", JOptionPane.YES_NO_OPTION);
+                if (eliminar == 0) {
+                    asignaciones.setEliminar("1");
+                } else {
+                    asignaciones.setEliminar("0");
+                }
+                asignacionesDAO.update(asignaciones);
+                funcBitacora.GuardarBitacora("MODIFICAR", idApp);
+                cargarAsignaciones();
             }
-            int buscar = JOptionPane.showConfirmDialog(null, "¿Desea darle permisos de BUSQUEDA?", "Verifiación de permisos", JOptionPane.YES_NO_OPTION);
-            if (buscar == 0) {
-                asignaciones.setBuscar("1");
-            } else {
-                asignaciones.setBuscar("0");
-            }
-            int modififcar = JOptionPane.showConfirmDialog(null, "¿Desea darle permisos de EDICIÓN?", "Verifiación de permisos", JOptionPane.YES_NO_OPTION);
-            if (modififcar == 0) {
-                asignaciones.setModificar("1");
-            } else {
-                asignaciones.setModificar("0");
-            }
-            int eliminar = JOptionPane.showConfirmDialog(null, "¿Desea darle permisos de ELIMINAR?", "Verifiación de permisos", JOptionPane.YES_NO_OPTION);
-            if (eliminar == 0) {
-                asignaciones.setEliminar("1");
-            } else {
-                asignaciones.setEliminar("0");
-            }
-            asignacionesDAO.update(asignaciones);
-            cargarAsignaciones();
         }
     }//GEN-LAST:event_Tbl_asignacionesMouseClicked
 
@@ -763,7 +822,7 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
     private javax.swing.JPanel Pnl_ingresoDatos;
     private javax.swing.JTable Tbl_aplicaciones;
     private javax.swing.JTable Tbl_asignaciones;
-    private javax.swing.JTextField Txt_id;
+    private javax.swing.JTextField Txt_busqueda;
     private javax.swing.JTextField Txt_nombre;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
