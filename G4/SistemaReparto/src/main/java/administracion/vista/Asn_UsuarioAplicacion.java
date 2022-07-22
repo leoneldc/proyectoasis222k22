@@ -108,6 +108,10 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
         Txt_nombre = new javax.swing.JTextField();
         Lbl_descripcion = new javax.swing.JLabel();
         Lbl_estado = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        Tbl_aplicaciones = new javax.swing.JTable();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        Tbl_asignaciones = new javax.swing.JTable();
         Btn_fondoGuardarU = new javax.swing.JPanel();
         Btn_guardarU = new javax.swing.JLabel();
         Btn_fondoGuardarT = new javax.swing.JPanel();
@@ -120,12 +124,8 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
         Btn_ayuda = new javax.swing.JLabel();
         Btn_fondoCancelar = new javax.swing.JPanel();
         Btn_cancelar = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        Tbl_aplicaciones = new javax.swing.JTable();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        Tbl_asignaciones = new javax.swing.JTable();
         Btn_fondoReportes = new javax.swing.JPanel();
-        Btn_quitarReportes = new javax.swing.JLabel();
+        Btn_Reportes = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -167,6 +167,31 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
         Lbl_estado.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         Lbl_estado.setForeground(new java.awt.Color(255, 255, 255));
         Lbl_estado.setText("ASIGNACIONES:");
+
+        Tbl_aplicaciones.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane2.setViewportView(Tbl_aplicaciones);
+
+        Tbl_asignaciones.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        Tbl_asignaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Tbl_asignacionesMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(Tbl_asignaciones);
 
         Btn_fondoGuardarU.setBackground(new java.awt.Color(97, 212, 195));
         Btn_fondoGuardarU.setMaximumSize(new java.awt.Dimension(104, 40));
@@ -297,7 +322,7 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
         Btn_fondoQuitarT.setLayout(Btn_fondoQuitarTLayout);
         Btn_fondoQuitarTLayout.setHorizontalGroup(
             Btn_fondoQuitarTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Btn_quitarT, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+            .addComponent(Btn_quitarT, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         Btn_fondoQuitarTLayout.setVerticalGroup(
             Btn_fondoQuitarTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -370,50 +395,25 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
             .addComponent(Btn_cancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        Tbl_aplicaciones.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane2.setViewportView(Tbl_aplicaciones);
-
-        Tbl_asignaciones.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        Tbl_asignaciones.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Tbl_asignacionesMouseClicked(evt);
-            }
-        });
-        jScrollPane4.setViewportView(Tbl_asignaciones);
-
         Btn_fondoReportes.setBackground(new java.awt.Color(97, 212, 195));
         Btn_fondoReportes.setMaximumSize(new java.awt.Dimension(104, 40));
         Btn_fondoReportes.setMinimumSize(new java.awt.Dimension(104, 40));
 
-        Btn_quitarReportes.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        Btn_quitarReportes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Btn_quitarReportes.setText("REPORTE");
-        Btn_quitarReportes.setMaximumSize(new java.awt.Dimension(104, 40));
-        Btn_quitarReportes.setMinimumSize(new java.awt.Dimension(104, 40));
-        Btn_quitarReportes.setPreferredSize(new java.awt.Dimension(104, 40));
-        Btn_quitarReportes.addMouseListener(new java.awt.event.MouseAdapter() {
+        Btn_Reportes.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        Btn_Reportes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Btn_Reportes.setText("REPORTE");
+        Btn_Reportes.setMaximumSize(new java.awt.Dimension(104, 40));
+        Btn_Reportes.setMinimumSize(new java.awt.Dimension(104, 40));
+        Btn_Reportes.setPreferredSize(new java.awt.Dimension(104, 40));
+        Btn_Reportes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Btn_quitarReportesMouseClicked(evt);
+                Btn_ReportesMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                Btn_quitarReportesMouseEntered(evt);
+                Btn_ReportesMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                Btn_quitarReportesMouseExited(evt);
+                Btn_ReportesMouseExited(evt);
             }
         });
 
@@ -421,11 +421,11 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
         Btn_fondoReportes.setLayout(Btn_fondoReportesLayout);
         Btn_fondoReportesLayout.setHorizontalGroup(
             Btn_fondoReportesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Btn_quitarReportes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(Btn_Reportes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         Btn_fondoReportesLayout.setVerticalGroup(
             Btn_fondoReportesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Btn_quitarReportes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(Btn_Reportes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout Pnl_ingresoDatosLayout = new javax.swing.GroupLayout(Pnl_ingresoDatos);
@@ -448,7 +448,7 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Pnl_ingresoDatosLayout.createSequentialGroup()
-                        .addComponent(Txt_id)
+                        .addComponent(Txt_id, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(Btn_cargarUsuario)
                         .addGap(18, 18, 18)
@@ -462,8 +462,8 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
                     .addGroup(Pnl_ingresoDatosLayout.createSequentialGroup()
                         .addComponent(Btn_fondoQuitarU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Btn_fondoQuitarT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Btn_fondoQuitarT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(Btn_fondoReportes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Btn_fondoAyuda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -484,26 +484,22 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
                     .addComponent(Txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(Pnl_ingresoDatosLayout.createSequentialGroup()
-                        .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Lbl_descripcion)
-                            .addComponent(Lbl_estado))
-                        .addGap(0, 0, 0)
-                        .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
-                            .addComponent(jScrollPane4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Btn_fondoGuardarU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Btn_fondoGuardarT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Btn_fondoQuitarU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(Btn_fondoAyuda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(Btn_fondoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(Btn_fondoQuitarT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(Pnl_ingresoDatosLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(Btn_fondoReportes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(Lbl_descripcion)
+                    .addComponent(Lbl_estado))
+                .addGap(0, 0, 0)
+                .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Btn_fondoGuardarU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Btn_fondoGuardarT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Btn_fondoQuitarU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Btn_fondoQuitarT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(Btn_fondoAyuda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Btn_fondoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Btn_fondoReportes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -696,17 +692,17 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_Btn_cargarUsuarioActionPerformed
 
-    private void Btn_quitarReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_quitarReportesMouseClicked
+    private void Btn_ReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_ReportesMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_Btn_quitarReportesMouseClicked
+    }//GEN-LAST:event_Btn_ReportesMouseClicked
 
-    private void Btn_quitarReportesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_quitarReportesMouseEntered
+    private void Btn_ReportesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_ReportesMouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_Btn_quitarReportesMouseEntered
+    }//GEN-LAST:event_Btn_ReportesMouseEntered
 
-    private void Btn_quitarReportesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_quitarReportesMouseExited
+    private void Btn_ReportesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_ReportesMouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_Btn_quitarReportesMouseExited
+    }//GEN-LAST:event_Btn_ReportesMouseExited
 
     private void Tbl_asignacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Tbl_asignacionesMouseClicked
         int filaSeleccionada = Tbl_asignaciones.getSelectedRow();
@@ -744,6 +740,7 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Btn_Reportes;
     private javax.swing.JLabel Btn_ayuda;
     private javax.swing.JLabel Btn_cancelar;
     private javax.swing.JButton Btn_cargarUsuario;
@@ -757,7 +754,6 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
     private javax.swing.JLabel Btn_guardarT;
     private javax.swing.JLabel Btn_guardarU;
     private javax.swing.JButton Btn_listaUsuarios;
-    private javax.swing.JLabel Btn_quitarReportes;
     private javax.swing.JLabel Btn_quitarT;
     private javax.swing.JLabel Btn_quitarU;
     private javax.swing.JLabel Lbl_descripcion;

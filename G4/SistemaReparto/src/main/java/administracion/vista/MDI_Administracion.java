@@ -1,28 +1,36 @@
 package administracion.vista;
 
+import administracion.controlador.GenerarPermisos;
 import administracion.controlador.ProcesosRepetidos;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Color;
 import java.awt.Dimension;
 
 public class MDI_Administracion extends javax.swing.JFrame {
-    
+
     ProcesosRepetidos procesoRepetido = new ProcesosRepetidos();
+    GenerarPermisos gpermisos = new GenerarPermisos();
+    FuncionesBitacora funcBitacora = new FuncionesBitacora();
+    String idBusqueda = LOGIN_Administracion.idUsuario;
+
     private Mnt_Modulos mnt_modulos;
     private Mnt_Aplicaciones mnt_aplicaciones;
     private Mnt_Usuarios mnt_usuarios;
     private Mnt_PuestoTrabajo mnt_puesto_trabajo;
     private Asn_UsuarioAplicacion asn_usuarioAplicacion;
+    private Vst_Bitacora vst_bitacora;
 
     public MDI_Administracion() {
         initComponents();
+        gpermisos.cargarAplicaciones(idBusqueda);
+        funcBitacora.GuardarBitacora("LOGIN", "0001");
         Diseño();
     }
 
-    public void Diseño(){
+    public void Diseño() {
         Jdp_contenedor.setBackground(new Color(52, 78, 65));
         procesoRepetido.cursorMano(Mnb_menu);
-        setTitle("[ USUARIO: " + LOGIN_Administracion.nomUsuario.toUpperCase() + "  [ "+procesoRepetido.getFechaActual("gt")+" ]  ");
+        setTitle("[ USUARIO: " + LOGIN_Administracion.nomUsuario.toUpperCase() + "  [ " + procesoRepetido.getFechaActual("gt") + " ]  ");
     }
 
     @SuppressWarnings("unchecked")
@@ -47,6 +55,7 @@ public class MDI_Administracion extends javax.swing.JFrame {
         Mnu_procesos = new javax.swing.JMenu();
         MnI_UsuarioAplicacion = new javax.swing.JMenuItem();
         Sbm_herramientas = new javax.swing.JMenu();
+        MnI_bitacora = new javax.swing.JMenuItem();
         Sbm_ayuda = new javax.swing.JMenu();
         Btn_cerrarSesion = new javax.swing.JMenu();
 
@@ -154,6 +163,15 @@ public class MDI_Administracion extends javax.swing.JFrame {
 
         Sbm_herramientas.setText("Herramientas");
         Sbm_herramientas.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+
+        MnI_bitacora.setText("Bitacora");
+        MnI_bitacora.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnI_bitacoraActionPerformed(evt);
+            }
+        });
+        Sbm_herramientas.add(MnI_bitacora);
+
         Mnb_menu.add(Sbm_herramientas);
 
         Sbm_ayuda.setText("Ayuda");
@@ -182,11 +200,11 @@ public class MDI_Administracion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
-        
+
     }//GEN-LAST:event_formComponentResized
 
     private void Sbm_actualizarPermisosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Sbm_actualizarPermisosMouseClicked
-        
+        gpermisos.cargarAplicaciones(idBusqueda);
     }//GEN-LAST:event_Sbm_actualizarPermisosMouseClicked
 
     private void MnI_modulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnI_modulosActionPerformed
@@ -198,6 +216,7 @@ public class MDI_Administracion extends javax.swing.JFrame {
         mnt_modulos.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
         mnt_modulos.setVisible(true);
         mnt_modulos.toFront();
+        funcBitacora.GuardarBitacora("ACCESO", "0004");
     }//GEN-LAST:event_MnI_modulosActionPerformed
 
     private void MnI_aplicacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnI_aplicacionesActionPerformed
@@ -209,6 +228,7 @@ public class MDI_Administracion extends javax.swing.JFrame {
         mnt_aplicaciones.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
         mnt_aplicaciones.setVisible(true);
         mnt_aplicaciones.toFront();
+        funcBitacora.GuardarBitacora("ACCESO", "0005");
     }//GEN-LAST:event_MnI_aplicacionesActionPerformed
 
     private void MnI_usuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnI_usuariosActionPerformed
@@ -220,6 +240,7 @@ public class MDI_Administracion extends javax.swing.JFrame {
         mnt_usuarios.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
         mnt_usuarios.setVisible(true);
         mnt_usuarios.toFront();
+        funcBitacora.GuardarBitacora("ACCESO", "0006");
     }//GEN-LAST:event_MnI_usuariosActionPerformed
 
     private void MnI_puestosTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnI_puestosTActionPerformed
@@ -231,6 +252,7 @@ public class MDI_Administracion extends javax.swing.JFrame {
         mnt_puesto_trabajo.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
         mnt_puesto_trabajo.setVisible(true);
         mnt_puesto_trabajo.toFront();
+        funcBitacora.GuardarBitacora("ACCESO", "0007");
     }//GEN-LAST:event_MnI_puestosTActionPerformed
 
     private void MnI_UsuarioAplicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnI_UsuarioAplicacionActionPerformed
@@ -242,7 +264,19 @@ public class MDI_Administracion extends javax.swing.JFrame {
         asn_usuarioAplicacion.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
         asn_usuarioAplicacion.setVisible(true);
         asn_usuarioAplicacion.toFront();
+        funcBitacora.GuardarBitacora("ACCESO", "0030");
     }//GEN-LAST:event_MnI_UsuarioAplicacionActionPerformed
+
+    private void MnI_bitacoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnI_bitacoraActionPerformed
+        vst_bitacora = new Vst_Bitacora();
+
+        Jdp_contenedor.add(vst_bitacora);
+        Dimension desktopSize = Jdp_contenedor.getSize();
+        Dimension FrameSize = vst_bitacora.getSize();
+        vst_bitacora.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+        vst_bitacora.setVisible(true);
+        vst_bitacora.toFront();
+    }//GEN-LAST:event_MnI_bitacoraActionPerformed
 
     public static void main(String args[]) {
         //FLATLAF
@@ -259,8 +293,9 @@ public class MDI_Administracion extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JMenu Btn_cerrarSesion;
     private javax.swing.JDesktopPane Jdp_contenedor;
-    private javax.swing.JMenuItem MnI_UsuarioAplicacion;
+    public static javax.swing.JMenuItem MnI_UsuarioAplicacion;
     public static javax.swing.JMenuItem MnI_aplicaciones;
+    private javax.swing.JMenuItem MnI_bitacora;
     public static javax.swing.JMenuItem MnI_bodegas;
     public static javax.swing.JMenuItem MnI_clientes;
     public static javax.swing.JMenuItem MnI_modulos;
