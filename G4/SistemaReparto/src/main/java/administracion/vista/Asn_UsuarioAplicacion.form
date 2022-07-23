@@ -71,7 +71,7 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="Txt_id" pref="284" max="32767" attributes="0"/>
+                          <Component id="Txt_busqueda" pref="284" max="32767" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="Btn_cargarUsuario" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -107,7 +107,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="Btn_listaUsuarios" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="Lbl_id" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="Txt_id" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="Txt_busqueda" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="Btn_cargarUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="Lbl_nombre" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="Txt_nombre" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -156,7 +156,7 @@
             <Property name="text" type="java.lang.String" value="ID USUARIO:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="Txt_id">
+        <Component class="javax.swing.JTextField" name="Txt_busqueda">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="8a" green="b1" red="a3" type="rgb"/>

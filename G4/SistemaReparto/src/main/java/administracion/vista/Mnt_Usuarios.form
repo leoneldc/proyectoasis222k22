@@ -731,7 +731,7 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="Lbl_id4" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="Txt_query" max="32767" attributes="0"/>
+                          <Component id="Txt_busqueda" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -743,7 +743,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="Txt_query" alignment="0" max="32767" attributes="0"/>
+                      <Component id="Txt_busqueda" alignment="0" max="32767" attributes="0"/>
                       <Component id="Lbl_id4" alignment="0" min="-2" pref="27" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -787,7 +787,7 @@
             <Property name="text" type="java.lang.String" value="BUSCAR ID &#xd3; NOMBRE:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="Txt_query">
+        <Component class="javax.swing.JTextField" name="Txt_busqueda">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="8a" green="b1" red="a3" type="rgb"/>
@@ -802,7 +802,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="Txt_queryKeyReleased"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="Txt_busquedaKeyReleased"/>
           </Events>
         </Component>
       </SubComponents>
