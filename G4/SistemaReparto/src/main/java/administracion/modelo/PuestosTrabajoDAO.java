@@ -21,6 +21,7 @@ public class PuestosTrabajoDAO {
     private static final String SQL_INSERT = "INSERT into Puestos_trabajo(Nompt,Descpt,Estpt) values(?,?,?)";
     private static final String SQL_DELETE = "DELETE from Puestos_trabajo where pkidpuestotrabajo = ?";
     private static final String SQL_UPDATE = "UPDATE Puestos_trabajo SET Nompt=?, Descpt=?, Estpt=? WHERE pkidpuestotrabajo=?";
+    private static final String SQL_SELECTV = "SELECT * FROM Puestos_trabajo WHERE pkidpuestotrabajo=?";
     
     Connection conn = null;
     PreparedStatement stmt = null;
@@ -114,6 +115,33 @@ public class PuestosTrabajoDAO {
         }
         return rows;
     }
-    
+        
+    public PuestosTrabajo selectV(PuestosTrabajo puestoT) {
+        int rows = 0;
+        try {
+            conn = Conexion.getConnection();
+            stmt = conn.prepareStatement(SQL_SELECTV);
+            stmt.setString(1, puestoT.getId());
+            //System.out.println(stmt);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                String id = rs.getString("pkidpuestotrabajo");
+                String nombre = rs.getString("Nompt");
+                String descripcion = rs.getString("Descpt");
+                String estado = rs.getString("Estpt");
+                puestoT.setId(id);
+                puestoT.setNombre(nombre);
+                puestoT.setDescripcion(descripcion);
+                puestoT.setEstado(estado);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(rs);
+            Conexion.close(stmt);
+            Conexion.close(conn);
+        }
+        return puestoT;
+    }
     
 }

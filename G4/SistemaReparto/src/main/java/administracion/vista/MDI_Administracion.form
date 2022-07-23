@@ -99,6 +99,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Trabajadores"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MnI_trabajadoresActionPerformed"/>
+                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                   </AuxValues>
@@ -160,6 +163,14 @@
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
                   </AuxValues>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="MnI_TrabajadorAplicacion">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Asignacion Trabajador Aplicacion"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MnI_TrabajadorAplicacionActionPerformed"/>
+                  </Events>
                 </MenuItem>
               </SubComponents>
             </Menu>
@@ -251,6 +262,11 @@
   </Layout>
   <SubComponents>
     <Container class="javax.swing.JDesktopPane" name="Jdp_contenedor">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="41" green="4e" red="34" type="rgb"/>
+        </Property>
+      </Properties>
 
       <Layout>
         <DimensionLayout dim="0">

@@ -242,7 +242,7 @@ public class LOGIN_Administracion extends javax.swing.JFrame {
     }//GEN-LAST:event_Pnl_barraSuperiorMouseDragged
 
     private void Btn_salirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_salirMouseExited
-        procesoRepetido.pintarComponente("fLogin", Pnl_salir);
+        procesoRepetido.pintarComponente("aLogin", Pnl_salir);
     }//GEN-LAST:event_Btn_salirMouseExited
 
     private void Btn_salirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_salirMouseEntered

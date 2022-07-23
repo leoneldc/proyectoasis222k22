@@ -1,5 +1,3 @@
-
-
 package administracion.modelo;
 
 import administracion.controlador.UsuarioAplicacion;
@@ -10,23 +8,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
- /**
+/**
  * @author H. Leonel Dominguez C.
  * @github https://github.com/leoneldc
  */
-
 public class UsuarioAplicacionDAO {
-    
+
     private static final String SQL_SELECTV = "SELECT * FROM Asignacion_Usuario_aplicacion WHERE  fpkidusuario=? AND fpkidaplicacion=?";
     private static final String SQL_SELECT = "SELECT * FROM Asignacion_Usuario_aplicacion WHERE  fpkidusuario=?";
     private static final String SQL_INSERT = "INSERT INTO Asignacion_Usuario_aplicacion VALUES (?,?,?,?,?,?)";
     private static final String SQL_DELETE = "DELETE from Asignacion_Usuario_aplicacion where fpkidusuario=? AND fpkidaplicacion=?";
     private static final String SQL_UPDATE = "UPDATE Asignacion_Usuario_aplicacion SET Ingresarua=?, Consultarua=?, Modificarua=?, Eliminarua=? WHERE fpkidusuario=? AND fpkidaplicacion=?";
-    
+
     Connection conn = null;
     PreparedStatement stmt = null;
     ResultSet rs = null;
-    
+
     public UsuarioAplicacion selectV(UsuarioAplicacion usuarios) {
         int rows = 0;
         try {
@@ -40,9 +37,9 @@ public class UsuarioAplicacionDAO {
                 String idUsuario = rs.getString("fpkidusuario");
                 String idApp = rs.getString("fpkidaplicacion");
                 String Guardar = rs.getString("Ingresarua");
-                String Modificar = rs.getString("Consultarua");
-                String Eliminar = rs.getString("Modificarua");
-                String Buscar = rs.getString("Eliminarua");
+                String Buscar = rs.getString("Consultarua");
+                String Modificar = rs.getString("Modificarua");
+                String Eliminar = rs.getString("Eliminarua");
                 usuarios.setIdUsuario(idUsuario);
                 usuarios.setIdAplicacion(idUsuario);
                 usuarios.setGuardar(Guardar);
@@ -59,7 +56,7 @@ public class UsuarioAplicacionDAO {
         }
         return usuarios;
     }
-    
+
     public List<UsuarioAplicacion> selectUA(UsuarioAplicacion usuarios) {
         List<UsuarioAplicacion> listaAsignacion = new ArrayList<UsuarioAplicacion>();
         try {
@@ -92,7 +89,7 @@ public class UsuarioAplicacionDAO {
         }
         return listaAsignacion;
     }
-    
+
     public int insert(UsuarioAplicacion asignacion) {
         int rows = 0;
         try {
@@ -115,7 +112,7 @@ public class UsuarioAplicacionDAO {
         }
         return rows;
     }
-    
+
     public int delete(UsuarioAplicacion asignacion) {
         int rows = 0;
         try {
@@ -133,7 +130,7 @@ public class UsuarioAplicacionDAO {
         }
         return rows;
     }
-    
+
     public int update(UsuarioAplicacion asignacion) {
         int rows = 0;
         try {
@@ -145,7 +142,7 @@ public class UsuarioAplicacionDAO {
             stmt.setString(4, asignacion.getEliminar());
             stmt.setString(5, asignacion.getIdUsuario());
             stmt.setString(6, asignacion.getIdAplicacion());
-            System.out.println(stmt + " "+rows);
+            //System.out.println(stmt + " "+rows);
             rows = stmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
@@ -155,5 +152,5 @@ public class UsuarioAplicacionDAO {
         }
         return rows;
     }
-    
+
 }

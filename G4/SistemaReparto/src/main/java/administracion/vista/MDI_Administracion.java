@@ -2,6 +2,8 @@ package administracion.vista;
 
 import administracion.controlador.GenerarPermisos;
 import administracion.controlador.ProcesosRepetidos;
+import administracion.controlador.Usuarios;
+import administracion.modelo.UsuariosDAO;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,12 +20,13 @@ public class MDI_Administracion extends javax.swing.JFrame {
     private Mnt_Usuarios mnt_usuarios;
     private Mnt_PuestoTrabajo mnt_puesto_trabajo;
     private Asn_UsuarioAplicacion asn_usuarioAplicacion;
+    private Asn_TrabajadorAplicacion asn_trabajadorAplicacion;
     private Vst_Bitacora vst_bitacora;
+    private Mnt_Trabajadores mnt_trabajadores;
 
     public MDI_Administracion() {
         initComponents();
-        gpermisos.cargarAplicaciones(idBusqueda);
-        funcBitacora.GuardarBitacora("LOGIN", "0001");
+        InicioSesion();
         Diseño();
     }
 
@@ -31,6 +34,16 @@ public class MDI_Administracion extends javax.swing.JFrame {
         Jdp_contenedor.setBackground(new Color(52, 78, 65));
         procesoRepetido.cursorMano(Mnb_menu);
         setTitle("[ USUARIO: " + LOGIN_Administracion.nomUsuario.toUpperCase() + "  [ " + procesoRepetido.getFechaActual("gt") + " ]  ");
+    }
+
+    private void InicioSesion() {
+        Usuarios user = new Usuarios();
+        UsuariosDAO userDAO = new UsuariosDAO();
+        gpermisos.cargarAplicaciones(idBusqueda);
+        funcBitacora.GuardarBitacora("LOGIN", "0001");
+        user.setId(idBusqueda);
+        user.setUltimaConexion(procesoRepetido.getFechaActual("us")+" "+procesoRepetido.getHoraActual());
+        userDAO.updateL(user);
     }
 
     @SuppressWarnings("unchecked")
@@ -54,6 +67,7 @@ public class MDI_Administracion extends javax.swing.JFrame {
         Sbm_procesos = new javax.swing.JMenu();
         Mnu_procesos = new javax.swing.JMenu();
         MnI_UsuarioAplicacion = new javax.swing.JMenuItem();
+        MnI_TrabajadorAplicacion = new javax.swing.JMenuItem();
         Sbm_herramientas = new javax.swing.JMenu();
         MnI_bitacora = new javax.swing.JMenuItem();
         Sbm_ayuda = new javax.swing.JMenu();
@@ -66,6 +80,8 @@ public class MDI_Administracion extends javax.swing.JFrame {
                 formComponentResized(evt);
             }
         });
+
+        Jdp_contenedor.setBackground(new java.awt.Color(52, 78, 65));
 
         javax.swing.GroupLayout Jdp_contenedorLayout = new javax.swing.GroupLayout(Jdp_contenedor);
         Jdp_contenedor.setLayout(Jdp_contenedorLayout);
@@ -129,6 +145,11 @@ public class MDI_Administracion extends javax.swing.JFrame {
         Mnu_mantenimientos.add(MnI_puestosT);
 
         MnI_trabajadores.setText("Trabajadores");
+        MnI_trabajadores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnI_trabajadoresActionPerformed(evt);
+            }
+        });
         Mnu_mantenimientos.add(MnI_trabajadores);
 
         MnI_clientes.setText("Clientes");
@@ -156,6 +177,14 @@ public class MDI_Administracion extends javax.swing.JFrame {
             }
         });
         Mnu_procesos.add(MnI_UsuarioAplicacion);
+
+        MnI_TrabajadorAplicacion.setText("Asignacion Trabajador Aplicacion");
+        MnI_TrabajadorAplicacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnI_TrabajadorAplicacionActionPerformed(evt);
+            }
+        });
+        Mnu_procesos.add(MnI_TrabajadorAplicacion);
 
         Sbm_procesos.add(Mnu_procesos);
 
@@ -252,7 +281,7 @@ public class MDI_Administracion extends javax.swing.JFrame {
         mnt_puesto_trabajo.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
         mnt_puesto_trabajo.setVisible(true);
         mnt_puesto_trabajo.toFront();
-        funcBitacora.GuardarBitacora("ACCESO", "0007");
+        funcBitacora.GuardarBitacora("ACCESO", "0008");
     }//GEN-LAST:event_MnI_puestosTActionPerformed
 
     private void MnI_UsuarioAplicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnI_UsuarioAplicacionActionPerformed
@@ -278,6 +307,30 @@ public class MDI_Administracion extends javax.swing.JFrame {
         vst_bitacora.toFront();
     }//GEN-LAST:event_MnI_bitacoraActionPerformed
 
+    private void MnI_trabajadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnI_trabajadoresActionPerformed
+        mnt_trabajadores = new Mnt_Trabajadores();
+
+        Jdp_contenedor.add(mnt_trabajadores);
+        Dimension desktopSize = Jdp_contenedor.getSize();
+        Dimension FrameSize = mnt_trabajadores.getSize();
+        mnt_trabajadores.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+        mnt_trabajadores.setVisible(true);
+        mnt_trabajadores.toFront();
+        funcBitacora.GuardarBitacora("ACCESO", "0007");
+    }//GEN-LAST:event_MnI_trabajadoresActionPerformed
+
+    private void MnI_TrabajadorAplicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnI_TrabajadorAplicacionActionPerformed
+        asn_trabajadorAplicacion = new Asn_TrabajadorAplicacion();
+
+        Jdp_contenedor.add(asn_trabajadorAplicacion);
+        Dimension desktopSize = Jdp_contenedor.getSize();
+        Dimension FrameSize = asn_trabajadorAplicacion.getSize();
+        asn_trabajadorAplicacion.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+        asn_trabajadorAplicacion.setVisible(true);
+        asn_trabajadorAplicacion.toFront();
+        funcBitacora.GuardarBitacora("ACCESO", "0030");
+    }//GEN-LAST:event_MnI_TrabajadorAplicacionActionPerformed
+
     public static void main(String args[]) {
         //FLATLAF
         FlatLightLaf.setup();
@@ -293,6 +346,7 @@ public class MDI_Administracion extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JMenu Btn_cerrarSesion;
     private javax.swing.JDesktopPane Jdp_contenedor;
+    private javax.swing.JMenuItem MnI_TrabajadorAplicacion;
     public static javax.swing.JMenuItem MnI_UsuarioAplicacion;
     public static javax.swing.JMenuItem MnI_aplicaciones;
     private javax.swing.JMenuItem MnI_bitacora;

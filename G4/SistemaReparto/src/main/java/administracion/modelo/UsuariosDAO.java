@@ -19,6 +19,8 @@ public class UsuariosDAO {
     private static final String SQL_DELETE = "DELETE from Usuarios where pkidusuarios = ?";
     private static final String SQL_UPDATE = "UPDATE Usuarios SET Nomuser=?, Apelluser=?, Username=?, Password=?, Emailuser=?, Estuser=? WHERE pkidusuarios=?";
     private static final String SQL_SELECT = "SELECT * FROM Usuarios WHERE pkidusuarios = ?";
+    private static final String SQL_UPDATEL = "UPDATE Usuarios SET Ultimacuser=? WHERE pkidusuarios=?";
+    
 
     Connection conn = null;
     PreparedStatement stmt = null;
@@ -164,4 +166,21 @@ public class UsuariosDAO {
         return usuarios;
     }
 
+    public int updateL(Usuarios usuario) {
+        int rows = 0;
+        try {
+            conn = Conexion.getConnection();
+            stmt = conn.prepareStatement(SQL_UPDATEL);
+            stmt.setString(1, usuario.getUltimaConexion());
+            stmt.setString(2, usuario.getId());
+//          System.out.println(stmt);
+            rows = stmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(stmt);
+            Conexion.close(conn);
+        }
+        return rows;
+    }
 }
