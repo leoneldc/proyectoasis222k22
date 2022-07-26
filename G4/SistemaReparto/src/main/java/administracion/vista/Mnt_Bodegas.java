@@ -2,71 +2,83 @@ package administracion.vista;
 
 import administracion.controlador.Hash;
 import administracion.controlador.ProcesosRepetidos;
+import administracion.controlador.Trabajadores;
+import administracion.controlador.Bodegas;
 import administracion.controlador.UsuarioAplicacion;
-import administracion.controlador.Usuarios;
+import administracion.modelo.TrabajadoresDAO;
+import administracion.modelo.BodegasDAO;
 import administracion.modelo.UsuarioAplicacionDAO;
-import administracion.modelo.UsuariosDAO;
 import java.util.List;
+import javax.swing.JOptionPane;
 
-public class Mnt_Usuarios extends javax.swing.JInternalFrame {
+public class Mnt_Bodegas extends javax.swing.JInternalFrame {
 
     ProcesosRepetidos procesosr = new ProcesosRepetidos();
     FuncionesBitacora funcBitacora = new FuncionesBitacora();
-    Usuarios usuarios = new Usuarios();
-    UsuariosDAO usuariosDAO = new UsuariosDAO();
-    String idApp = "0006";
-    
-    public Mnt_Usuarios() {
+    Bodegas bodegas = new Bodegas();
+    BodegasDAO bodegasDAO = new BodegasDAO();
+    String idApp = "0010";
+
+    public Mnt_Bodegas() {
         initComponents();
         cargarAcciones();
         diseño();
         cargarDatos("");
+        cargar_encargados();
     }
 
     public void diseño() {
-        setTitle("Mantenimiento de Usuarios");
+        setTitle("Mantenimiento de Bodegas");
         Rb_limpieza.setVisible(false);
         procesosr.cursorMano(Tbl_Datos, Btn_ayuda, Btn_cancelar, Btn_eliminar, Btn_guardar, Btn_modificar, Btn_reporte);
     }
 
     private void limpiar() {
-        procesosr.limpiarTxf(Txt_id, Txt_nombre, Txt_apellido, Txt_user, Txt_password, Txt_email, Txt_busqueda);
+        procesosr.limpiarTxf(Txt_id, Txt_Dire, Txt_Max, Txt_busqueda);
+        Txt_Encargado.setSelectedItem("Seleccionar...");
         Rb_limpieza.setSelected(true);
         Txt_id.setText("0");
+    }
+    
+    public void cargar_encargados() {
+        Txt_Encargado.addItem("Seleccionar...");
+        TrabajadoresDAO.codigoTrabajador = "";
+        TrabajadoresDAO.nombreTrabajador = "";
+        TrabajadoresDAO trabajadoresdao = new TrabajadoresDAO();
+        List<Trabajadores> trabajador = trabajadoresdao.select();
+        for (Trabajadores listaTrabajador : trabajador) {
+            if (listaTrabajador.getIdPuestoT().equals("3")&& listaTrabajador.getEstado().equals("1")) {
+                Txt_Encargado.addItem(String.valueOf(listaTrabajador.getIdTrabaajdor()));
+            }
+        }
     }
 
     private void cargarDatos(String query) {
         ProcesosRepetidos procesosr = new ProcesosRepetidos();
-        UsuariosDAO.codigoUsuario = query;
-        UsuariosDAO.nombreUsuario = query;
-        String encabezado[] = {"ID", "NOMBRE", "APELLDIO", "USER", "PASSWORD", "EMAIL", "ULTIMA CONEX.", "ESTADO"};
+        BodegasDAO.codigoBodega = query;
+        BodegasDAO.nombreBodega = query;
+        String encabezado[] = {"ID", "ID Encargado", "Direccion", "Capacidad", "MAX", "Estado"};
         int cantidadcolumnas = encabezado.length;
         procesosr.llenarColumnas(encabezado, cantidadcolumnas, Tbl_Datos);
         String datos[] = new String[cantidadcolumnas];
-        int tamaño[] = {25, 75, 75, 75, 150, 150, 150, 50};
-        UsuariosDAO usuariosDAO = new UsuariosDAO();
-        List<Usuarios> listaUsuario = usuariosDAO.select();
-        for (Usuarios usuario : listaUsuario) {
-            datos[0] = usuario.getId();
-            datos[1] = usuario.getNombre();
-            datos[2] = usuario.getApellido();
-            datos[3] = usuario.getUser();
-            datos[4] = usuario.getPassword();
-            datos[5] = usuario.getEmail();
-            if (usuario.getUltimaConexion() == null) {
-                datos[6] = "no conectado";
+        int tamaño[] = {75, 75, 100, 100, 125, 75};
+        BodegasDAO bodegasDAO = new BodegasDAO();
+        List<Bodegas> listadoBodega = this.bodegasDAO.select();
+        for (Bodegas bodega : listadoBodega) {
+            datos[0] = bodega.getId();
+            datos[1] = bodega.getEncargado();
+            datos[2] = bodega.getDireccion();
+            datos[3] = bodega.getCapacidad();
+            datos[4] = bodega.getMax();
+            if (bodega.getEstado().equals("1")) {
+                datos[5] = "activo";
             } else {
-                datos[6] = usuario.getUltimaConexion();
-            }
-            if (usuario.getEstado().equals("1")) {
-                datos[7] = "activo";
-            } else {
-                datos[7] = "inactivo";
+                datos[5] = "inactivo";
             }
             procesosr.llenarFilas(datos, tamaño, Tbl_Datos);
         }
     }
-
+    
     
     void cargarAcciones() {
 
@@ -96,6 +108,7 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
             Btn_eliminar.setVisible(true);
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The content of this method is always regenerated by the Form Editor.
      */
@@ -108,15 +121,11 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
         Lbl_id = new javax.swing.JLabel();
         Txt_id = new javax.swing.JTextField();
         Lbl_nombre = new javax.swing.JLabel();
-        Txt_nombre = new javax.swing.JTextField();
-        Lbl_apellido = new javax.swing.JLabel();
-        Txt_apellido = new javax.swing.JTextField();
+        Txt_Encargado = new javax.swing.JComboBox<>();
         Lbl_user = new javax.swing.JLabel();
-        Txt_user = new javax.swing.JTextField();
-        Lbl_password = new javax.swing.JLabel();
-        Txt_password = new javax.swing.JPasswordField();
+        Txt_Dire = new javax.swing.JTextField();
         Lbl_email = new javax.swing.JLabel();
-        Txt_email = new javax.swing.JTextField();
+        Txt_Max = new javax.swing.JTextField();
         Lbl_estado = new javax.swing.JLabel();
         Rb_activo = new javax.swing.JRadioButton();
         Rb_inactivo = new javax.swing.JRadioButton();
@@ -150,54 +159,35 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
 
         Lbl_id.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         Lbl_id.setForeground(new java.awt.Color(255, 255, 255));
-        Lbl_id.setText("ID USUARIO :");
+        Lbl_id.setText("ID BODEGA:");
 
         Txt_id.setEditable(false);
         Txt_id.setBackground(new java.awt.Color(163, 177, 138));
         Txt_id.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Txt_id.setText("0");
         Txt_id.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
 
         Lbl_nombre.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         Lbl_nombre.setForeground(new java.awt.Color(255, 255, 255));
-        Lbl_nombre.setText("NOMBRE:");
-
-        Txt_nombre.setBackground(new java.awt.Color(163, 177, 138));
-        Txt_nombre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Txt_nombre.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
-
-        Lbl_apellido.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        Lbl_apellido.setForeground(new java.awt.Color(255, 255, 255));
-        Lbl_apellido.setText("APELLIDO:");
-
-        Txt_apellido.setBackground(new java.awt.Color(163, 177, 138));
-        Txt_apellido.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Txt_apellido.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
+        Lbl_nombre.setText("ENCARGADO:");
 
         Lbl_user.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         Lbl_user.setForeground(new java.awt.Color(255, 255, 255));
-        Lbl_user.setText("USERNAME:");
+        Lbl_user.setText("DIRECCION");
 
-        Txt_user.setBackground(new java.awt.Color(163, 177, 138));
-        Txt_user.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Txt_user.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
-        Txt_user.setDoubleBuffered(true);
-
-        Lbl_password.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        Lbl_password.setForeground(new java.awt.Color(255, 255, 255));
-        Lbl_password.setText("PASSWORD:");
-
-        Txt_password.setBackground(new java.awt.Color(163, 177, 138));
-        Txt_password.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Txt_password.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
+        Txt_Dire.setBackground(new java.awt.Color(163, 177, 138));
+        Txt_Dire.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Txt_Dire.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
+        Txt_Dire.setDoubleBuffered(true);
 
         Lbl_email.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         Lbl_email.setForeground(new java.awt.Color(255, 255, 255));
-        Lbl_email.setText("EMAIL:");
+        Lbl_email.setText("CAPACIDAD MAX:");
 
-        Txt_email.setBackground(new java.awt.Color(163, 177, 138));
-        Txt_email.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Txt_email.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
-        Txt_email.setDoubleBuffered(true);
+        Txt_Max.setBackground(new java.awt.Color(163, 177, 138));
+        Txt_Max.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Txt_Max.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
+        Txt_Max.setDoubleBuffered(true);
 
         Lbl_estado.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         Lbl_estado.setForeground(new java.awt.Color(255, 255, 255));
@@ -423,45 +413,41 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
         Pnl_ingresoDatosLayout.setHorizontalGroup(
             Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Pnl_ingresoDatosLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addContainerGap()
                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(Btn_fondoReporte, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Btn_fondoGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(Lbl_nombre)
-                    .addComponent(Lbl_id)
-                    .addComponent(Lbl_apellido)
-                    .addComponent(Lbl_user)
-                    .addComponent(Lbl_password)
-                    .addComponent(Lbl_email)
-                    .addComponent(Lbl_estado))
-                .addGap(21, 21, 21)
-                .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(Pnl_ingresoDatosLayout.createSequentialGroup()
-                        .addComponent(Rb_activo)
-                        .addGap(18, 18, 18)
-                        .addComponent(Rb_inactivo)
-                        .addGap(18, 18, 18)
-                        .addComponent(Rb_limpieza)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(Pnl_ingresoDatosLayout.createSequentialGroup()
                         .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Txt_email, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+                            .addComponent(Lbl_nombre)
+                            .addComponent(Lbl_user)
+                            .addComponent(Lbl_email)
+                            .addComponent(Lbl_estado))
+                        .addGap(18, 18, 18)
+                        .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(Pnl_ingresoDatosLayout.createSequentialGroup()
+                                .addComponent(Rb_activo)
+                                .addGap(18, 18, 18)
+                                .addComponent(Rb_inactivo)
+                                .addGap(18, 18, 18)
+                                .addComponent(Rb_limpieza))
+                            .addComponent(Txt_Dire, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Txt_Max, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Txt_Encargado, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(Pnl_ingresoDatosLayout.createSequentialGroup()
+                        .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(Txt_id)
-                                .addComponent(Txt_nombre)
-                                .addGroup(Pnl_ingresoDatosLayout.createSequentialGroup()
-                                    .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(Btn_fondoAyuda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(Btn_fondoEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(Btn_fondoModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(Btn_fondoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addComponent(Txt_apellido)
-                                .addComponent(Txt_password)
-                                .addComponent(Txt_user, javax.swing.GroupLayout.Alignment.TRAILING)))
-                        .addContainerGap(14, Short.MAX_VALUE))))
+                                .addComponent(Btn_fondoReporte, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(Btn_fondoGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Lbl_id, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(21, 21, 21)
+                        .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(Btn_fondoAyuda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Btn_fondoEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(Btn_fondoModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Btn_fondoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         Pnl_ingresoDatosLayout.setVerticalGroup(
             Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -473,23 +459,15 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Lbl_nombre)
-                    .addComponent(Txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Lbl_apellido)
-                    .addComponent(Txt_apellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Txt_Encargado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Lbl_user)
-                    .addComponent(Txt_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Lbl_password)
-                    .addComponent(Txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Txt_Dire, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Lbl_email)
-                    .addComponent(Txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Txt_Max, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Lbl_estado)
@@ -530,7 +508,7 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
 
         Lbl_id4.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         Lbl_id4.setForeground(new java.awt.Color(255, 255, 255));
-        Lbl_id4.setText("BUSCAR ID Ó NOMBRE:");
+        Lbl_id4.setText("BUSCAR ID Ó DIRECCION:");
 
         Txt_busqueda.setBackground(new java.awt.Color(163, 177, 138));
         Txt_busqueda.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -548,7 +526,7 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
             .addGroup(Pnl_datosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(Pnl_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 723, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
                     .addGroup(Pnl_datosLayout.createSequentialGroup()
                         .addComponent(Lbl_id4)
                         .addGap(18, 18, 18)
@@ -594,13 +572,10 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
     private void Tbl_DatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Tbl_DatosMouseClicked
         if (evt.getClickCount() == 2) {
             Txt_id.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 0).toString());
-            Txt_nombre.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 1).toString());
-            Txt_apellido.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 2).toString());
-            Txt_user.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 3).toString());
-            String descontraseña = Hash.getString(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 4).toString());
-            Txt_password.setText(descontraseña);
-            Txt_email.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 5).toString());
-            if (Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 7).toString().equals("activo")) {
+            Txt_Encargado.setSelectedItem(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 1).toString());
+            Txt_Dire.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 2).toString());
+            Txt_Max.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 4).toString());
+            if (Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 5).toString().equals("activo")) {
                 Rb_activo.setSelected(true);
             } else {
                 Rb_inactivo.setSelected(true);
@@ -645,28 +620,29 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_Btn_modificarMouseEntered
 
     private void Btn_modificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_modificarMouseClicked
-        if (procesosr.isEmptyTxf(Txt_id, Txt_nombre, Txt_apellido, Txt_user, Txt_password, Txt_email)) {
+        if (procesosr.isEmptyTxf(Txt_id, Txt_Dire, Txt_Max)&& Txt_Encargado.getSelectedItem().toString().length() != 0) {
             if (procesosr.isNumeric(Txt_id)) {
                 if (procesosr.isSelectedRbt(Rb_activo, Rb_inactivo)) {
-                    if (procesosr.ValidarEmail(Txt_email.getText())) {
-                        usuarios.setId(Txt_id.getText());
-                        usuarios.setNombre(Txt_nombre.getText());
-                        usuarios.setApellido(Txt_apellido.getText());
-                        usuarios.setUser(Txt_user.getText());
-                        String encriptPass = Hash.getMD5(Txt_password.getText());
-                        usuarios.setPassword(encriptPass);
-                        usuarios.setEmail(Txt_email.getText());
+                    if (Double.parseDouble(Txt_Max.getText())>0) {
+                        
+                    
+                        bodegas.setId(Txt_id.getText());
+                        bodegas.setEncargado(Txt_Encargado.getSelectedItem().toString());
+                        bodegas.setDireccion(Txt_Dire.getText());
+                        bodegas.setMax(Txt_Max.getText());
                         if (Rb_activo.isSelected()) {
-                            usuarios.setEstado("1");
-                        } else {
-                            usuarios.setEstado("0");
+                            bodegas.setEstado("1");
                         }
-                        usuariosDAO.update(usuarios);
+                        if (Rb_inactivo.isSelected()) {
+                            bodegas.setEstado("0");
+                        }
+                        bodegasDAO.update(bodegas);
                         funcBitacora.GuardarBitacora("MODIFICAR", idApp);
                         cargarDatos("");
-                        procesosr.accionExitosa("Modificación Exitosa", "Se ha modificado el usuario: \"" + Txt_nombre.getText() + " " + Txt_apellido.getText() + "\" correctamente");
+                        procesosr.accionExitosa("Modificación Exitosa", "Se ha modificado la bodega: \"" + Txt_id.getText() + " " + "\" correctamente");
                         limpiar();
                     }
+                    procesosr.accionErronea("ERROR", "No se puede tener una capacidad < a 0");
                 }
             }
         }
@@ -683,12 +659,12 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
     private void Btn_eliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_eliminarMouseClicked
         if (procesosr.isEmptyTxf(Txt_id)) {
             if (procesosr.isNumeric(Txt_id)) {
-                if (procesosr.confirmarEliminación("el Modulo # " + Txt_id.getText())) {
-                    usuarios.setId(Txt_id.getText());
-                    usuariosDAO.delete(usuarios);
+                if (procesosr.confirmarEliminación("La Bodega# " + Txt_id.getText())) {
+                    bodegas.setId(Txt_id.getText());
+                    bodegasDAO.delete(bodegas);
                     funcBitacora.GuardarBitacora("ELIMINAR", idApp);
                     cargarDatos("");
-                    procesosr.accionExitosa("Eliminación Exitosa", "Se ha eliminado el usuario #" + Txt_id.getText() + " correctamente");
+                    procesosr.accionExitosa("Eliminación Exitosa", "Se ha eliminado la boedga #" + Txt_id.getText() + " correctamente");
                     limpiar();
                 }
             }
@@ -704,28 +680,27 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_Btn_guardarMouseEntered
 
     private void Btn_guardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_guardarMouseClicked
-        if (procesosr.isEmptyTxf(Txt_id, Txt_nombre, Txt_apellido, Txt_user, Txt_password, Txt_email)) {
-            if (procesosr.isNumeric(Txt_id)) {
+        if (procesosr.isEmptyTxf(Txt_id, Txt_Dire, Txt_Max)&& Txt_Encargado.getSelectedItem().toString().length() != 0) {
+            if (procesosr.isNumeric(Txt_id, Txt_Max)) {
                 if (procesosr.isSelectedRbt(Rb_activo, Rb_inactivo)) {
-                    if (procesosr.ValidarEmail(Txt_email.getText())) {
-                        usuarios.setId(Txt_id.getText());
-                        usuarios.setNombre(Txt_nombre.getText());
-                        usuarios.setApellido(Txt_apellido.getText());
-                        usuarios.setUser(Txt_user.getText());
-                        String encriptPass = Hash.getMD5(Txt_password.getText());
-                        usuarios.setPassword(encriptPass);
-                        usuarios.setEmail(Txt_email.getText());
+                    if (Double.parseDouble(Txt_Max.getText())>0) {
+                        bodegas.setId("0");
+                        bodegas.setEncargado(Txt_Encargado.getSelectedItem().toString());
+                        bodegas.setDireccion(Txt_Dire.getText());
+                        bodegas.setMax(Txt_Max.getText());
                         if (Rb_activo.isSelected()) {
-                            usuarios.setEstado("1");
-                        } else {
-                            usuarios.setEstado("0");
+                            bodegas.setEstado("1");
                         }
-                        usuariosDAO.insert(usuarios);
+                        if (Rb_inactivo.isSelected()) {
+                            bodegas.setEstado("0");
+                        }
+                        bodegasDAO.insert(bodegas);
                         funcBitacora.GuardarBitacora("GUARDAR", idApp);
                         cargarDatos("");
-                        procesosr.accionExitosa("Registro Exitoso", "Se ha registrado el usuario: \"" + Txt_nombre.getText() + " " + Txt_apellido.getText() + "\" correctamente");
+                        procesosr.accionExitosa("Registro Exitoso", "Se ha registrado la bodega: \"" + Txt_id.getText() + " " + "\" correctamente");
                         limpiar();
                     }
+                    procesosr.accionErronea("ERROR", "No se puede tener una capacidad < a 0");
                 }
             }
         }
@@ -760,13 +735,11 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
     private javax.swing.JLabel Btn_guardar;
     private javax.swing.JLabel Btn_modificar;
     private javax.swing.JLabel Btn_reporte;
-    private javax.swing.JLabel Lbl_apellido;
     private javax.swing.JLabel Lbl_email;
     private javax.swing.JLabel Lbl_estado;
     private javax.swing.JLabel Lbl_id;
     private javax.swing.JLabel Lbl_id4;
     private javax.swing.JLabel Lbl_nombre;
-    private javax.swing.JLabel Lbl_password;
     private javax.swing.JLabel Lbl_user;
     private javax.swing.JPanel Pnl_datos;
     private javax.swing.JPanel Pnl_ingresoDatos;
@@ -774,13 +747,11 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton Rb_inactivo;
     private javax.swing.JRadioButton Rb_limpieza;
     private javax.swing.JTable Tbl_Datos;
-    private javax.swing.JTextField Txt_apellido;
+    private javax.swing.JTextField Txt_Dire;
+    private javax.swing.JComboBox<String> Txt_Encargado;
+    private javax.swing.JTextField Txt_Max;
     private javax.swing.JTextField Txt_busqueda;
-    private javax.swing.JTextField Txt_email;
     private javax.swing.JTextField Txt_id;
-    private javax.swing.JTextField Txt_nombre;
-    private javax.swing.JPasswordField Txt_password;
-    private javax.swing.JTextField Txt_user;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }

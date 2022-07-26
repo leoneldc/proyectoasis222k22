@@ -3,20 +3,20 @@ package administracion.vista;
 import administracion.controlador.Hash;
 import administracion.controlador.ProcesosRepetidos;
 import administracion.controlador.UsuarioAplicacion;
-import administracion.controlador.Usuarios;
+import administracion.controlador.Vehiculos;
 import administracion.modelo.UsuarioAplicacionDAO;
-import administracion.modelo.UsuariosDAO;
+import administracion.modelo.VehiculosDAO;
 import java.util.List;
 
-public class Mnt_Usuarios extends javax.swing.JInternalFrame {
+public class Mnt_Vehiculos extends javax.swing.JInternalFrame {
 
     ProcesosRepetidos procesosr = new ProcesosRepetidos();
     FuncionesBitacora funcBitacora = new FuncionesBitacora();
-    Usuarios usuarios = new Usuarios();
-    UsuariosDAO usuariosDAO = new UsuariosDAO();
-    String idApp = "0006";
+    Vehiculos vehiculos = new Vehiculos();
+    VehiculosDAO vehiculosDAO = new VehiculosDAO();
+    String idApp = "0009";
     
-    public Mnt_Usuarios() {
+    public Mnt_Vehiculos() {
         initComponents();
         cargarAcciones();
         diseño();
@@ -24,41 +24,37 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
     }
 
     public void diseño() {
-        setTitle("Mantenimiento de Usuarios");
+        setTitle("Mantenimiento de Vehiculos");
         Rb_limpieza.setVisible(false);
         procesosr.cursorMano(Tbl_Datos, Btn_ayuda, Btn_cancelar, Btn_eliminar, Btn_guardar, Btn_modificar, Btn_reporte);
     }
 
     private void limpiar() {
-        procesosr.limpiarTxf(Txt_id, Txt_nombre, Txt_apellido, Txt_user, Txt_password, Txt_email, Txt_busqueda);
+        procesosr.limpiarTxf(Txt_id, Txt_placa, Txt_marca, Txt_modelo, Txt_ano, Txt_color, Txt_busqueda, Txt_capa);
         Rb_limpieza.setSelected(true);
         Txt_id.setText("0");
     }
 
     private void cargarDatos(String query) {
         ProcesosRepetidos procesosr = new ProcesosRepetidos();
-        UsuariosDAO.codigoUsuario = query;
-        UsuariosDAO.nombreUsuario = query;
-        String encabezado[] = {"ID", "NOMBRE", "APELLDIO", "USER", "PASSWORD", "EMAIL", "ULTIMA CONEX.", "ESTADO"};
+        VehiculosDAO.codigoVehiculos = query;
+        VehiculosDAO.nombreVehiculos = query;
+        String encabezado[] = {"ID", "PLACA", "MARCA", "MODELO", "AÑO", "COLOR", "CAPACIDAD.", "ESTADO"};
         int cantidadcolumnas = encabezado.length;
         procesosr.llenarColumnas(encabezado, cantidadcolumnas, Tbl_Datos);
         String datos[] = new String[cantidadcolumnas];
         int tamaño[] = {25, 75, 75, 75, 150, 150, 150, 50};
-        UsuariosDAO usuariosDAO = new UsuariosDAO();
-        List<Usuarios> listaUsuario = usuariosDAO.select();
-        for (Usuarios usuario : listaUsuario) {
-            datos[0] = usuario.getId();
-            datos[1] = usuario.getNombre();
-            datos[2] = usuario.getApellido();
-            datos[3] = usuario.getUser();
-            datos[4] = usuario.getPassword();
-            datos[5] = usuario.getEmail();
-            if (usuario.getUltimaConexion() == null) {
-                datos[6] = "no conectado";
-            } else {
-                datos[6] = usuario.getUltimaConexion();
-            }
-            if (usuario.getEstado().equals("1")) {
+        VehiculosDAO vehiculosDAO = new VehiculosDAO();
+        List<Vehiculos> listaVehiculos = vehiculosDAO.select();
+        for (Vehiculos vehiculo : listaVehiculos) {
+            datos[0] = vehiculo.getId();
+            datos[1] = vehiculo.getPlaca();
+            datos[2] = vehiculo.getMarca();
+            datos[3] = vehiculo.getModelo();
+            datos[4] = vehiculo.getAno();
+            datos[5] = vehiculo.getColor();
+            datos[6] = vehiculo.getMax();
+            if (vehiculo.getEstado().equals("1")) {
                 datos[7] = "activo";
             } else {
                 datos[7] = "inactivo";
@@ -108,15 +104,14 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
         Lbl_id = new javax.swing.JLabel();
         Txt_id = new javax.swing.JTextField();
         Lbl_nombre = new javax.swing.JLabel();
-        Txt_nombre = new javax.swing.JTextField();
+        Txt_placa = new javax.swing.JTextField();
         Lbl_apellido = new javax.swing.JLabel();
-        Txt_apellido = new javax.swing.JTextField();
+        Txt_marca = new javax.swing.JTextField();
         Lbl_user = new javax.swing.JLabel();
-        Txt_user = new javax.swing.JTextField();
+        Txt_modelo = new javax.swing.JTextField();
         Lbl_password = new javax.swing.JLabel();
-        Txt_password = new javax.swing.JPasswordField();
         Lbl_email = new javax.swing.JLabel();
-        Txt_email = new javax.swing.JTextField();
+        Txt_color = new javax.swing.JTextField();
         Lbl_estado = new javax.swing.JLabel();
         Rb_activo = new javax.swing.JRadioButton();
         Rb_inactivo = new javax.swing.JRadioButton();
@@ -133,6 +128,9 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
         Btn_ayuda = new javax.swing.JLabel();
         Btn_fondoCancelar = new javax.swing.JPanel();
         Btn_cancelar = new javax.swing.JLabel();
+        Txt_capa = new javax.swing.JTextField();
+        Lbl_estado1 = new javax.swing.JLabel();
+        Txt_ano = new javax.swing.JTextField();
         Pnl_datos = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         Tbl_Datos = new javax.swing.JTable();
@@ -150,54 +148,56 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
 
         Lbl_id.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         Lbl_id.setForeground(new java.awt.Color(255, 255, 255));
-        Lbl_id.setText("ID USUARIO :");
+        Lbl_id.setText("ID VEHICULO :");
 
         Txt_id.setEditable(false);
         Txt_id.setBackground(new java.awt.Color(163, 177, 138));
         Txt_id.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Txt_id.setText("0");
         Txt_id.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
 
         Lbl_nombre.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         Lbl_nombre.setForeground(new java.awt.Color(255, 255, 255));
-        Lbl_nombre.setText("NOMBRE:");
+        Lbl_nombre.setText("PLACA:");
 
-        Txt_nombre.setBackground(new java.awt.Color(163, 177, 138));
-        Txt_nombre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Txt_nombre.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
+        Txt_placa.setBackground(new java.awt.Color(163, 177, 138));
+        Txt_placa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Txt_placa.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
+        Txt_placa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Txt_placaActionPerformed(evt);
+            }
+        });
 
         Lbl_apellido.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         Lbl_apellido.setForeground(new java.awt.Color(255, 255, 255));
-        Lbl_apellido.setText("APELLIDO:");
+        Lbl_apellido.setText("MARCA:");
 
-        Txt_apellido.setBackground(new java.awt.Color(163, 177, 138));
-        Txt_apellido.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Txt_apellido.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
+        Txt_marca.setBackground(new java.awt.Color(163, 177, 138));
+        Txt_marca.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Txt_marca.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
 
         Lbl_user.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         Lbl_user.setForeground(new java.awt.Color(255, 255, 255));
-        Lbl_user.setText("USERNAME:");
+        Lbl_user.setText("MODELO:");
 
-        Txt_user.setBackground(new java.awt.Color(163, 177, 138));
-        Txt_user.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Txt_user.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
-        Txt_user.setDoubleBuffered(true);
+        Txt_modelo.setBackground(new java.awt.Color(163, 177, 138));
+        Txt_modelo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Txt_modelo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
+        Txt_modelo.setDoubleBuffered(true);
 
         Lbl_password.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         Lbl_password.setForeground(new java.awt.Color(255, 255, 255));
-        Lbl_password.setText("PASSWORD:");
-
-        Txt_password.setBackground(new java.awt.Color(163, 177, 138));
-        Txt_password.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Txt_password.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
+        Lbl_password.setText("AÑO:");
 
         Lbl_email.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         Lbl_email.setForeground(new java.awt.Color(255, 255, 255));
-        Lbl_email.setText("EMAIL:");
+        Lbl_email.setText("COLOR:");
 
-        Txt_email.setBackground(new java.awt.Color(163, 177, 138));
-        Txt_email.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Txt_email.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
-        Txt_email.setDoubleBuffered(true);
+        Txt_color.setBackground(new java.awt.Color(163, 177, 138));
+        Txt_color.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Txt_color.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
+        Txt_color.setDoubleBuffered(true);
 
         Lbl_estado.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         Lbl_estado.setForeground(new java.awt.Color(255, 255, 255));
@@ -418,6 +418,25 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
             .addComponent(Btn_cancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        Txt_capa.setBackground(new java.awt.Color(163, 177, 138));
+        Txt_capa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Txt_capa.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
+        Txt_capa.setDoubleBuffered(true);
+        Txt_capa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Txt_capaActionPerformed(evt);
+            }
+        });
+
+        Lbl_estado1.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        Lbl_estado1.setForeground(new java.awt.Color(255, 255, 255));
+        Lbl_estado1.setText("CAPACIDAD:");
+
+        Txt_ano.setBackground(new java.awt.Color(163, 177, 138));
+        Txt_ano.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Txt_ano.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
+        Txt_ano.setDoubleBuffered(true);
+
         javax.swing.GroupLayout Pnl_ingresoDatosLayout = new javax.swing.GroupLayout(Pnl_ingresoDatos);
         Pnl_ingresoDatos.setLayout(Pnl_ingresoDatosLayout);
         Pnl_ingresoDatosLayout.setHorizontalGroup(
@@ -434,7 +453,8 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
                     .addComponent(Lbl_user)
                     .addComponent(Lbl_password)
                     .addComponent(Lbl_email)
-                    .addComponent(Lbl_estado))
+                    .addComponent(Lbl_estado)
+                    .addComponent(Lbl_estado1))
                 .addGap(21, 21, 21)
                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Pnl_ingresoDatosLayout.createSequentialGroup()
@@ -442,26 +462,24 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(Rb_inactivo)
                         .addGap(18, 18, 18)
-                        .addComponent(Rb_limpieza)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(Pnl_ingresoDatosLayout.createSequentialGroup()
-                        .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Txt_email, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+                        .addComponent(Rb_limpieza))
+                    .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(Txt_id, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(Txt_placa, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, Pnl_ingresoDatosLayout.createSequentialGroup()
+                            .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(Btn_fondoAyuda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(Btn_fondoEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)
                             .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(Txt_id)
-                                .addComponent(Txt_nombre)
-                                .addGroup(Pnl_ingresoDatosLayout.createSequentialGroup()
-                                    .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(Btn_fondoAyuda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(Btn_fondoEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(Btn_fondoModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(Btn_fondoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addComponent(Txt_apellido)
-                                .addComponent(Txt_password)
-                                .addComponent(Txt_user, javax.swing.GroupLayout.Alignment.TRAILING)))
-                        .addContainerGap(14, Short.MAX_VALUE))))
+                                .addComponent(Btn_fondoModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(Btn_fondoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(Txt_marca, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(Txt_modelo)
+                        .addComponent(Txt_color, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(Txt_capa)
+                        .addComponent(Txt_ano, javax.swing.GroupLayout.Alignment.LEADING)))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         Pnl_ingresoDatosLayout.setVerticalGroup(
             Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -473,30 +491,34 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Lbl_nombre)
-                    .addComponent(Txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Txt_placa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Lbl_apellido)
-                    .addComponent(Txt_apellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Txt_marca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Lbl_user)
-                    .addComponent(Txt_user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Txt_modelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Lbl_password)
-                    .addComponent(Txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Txt_ano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Lbl_email)
-                    .addComponent(Txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Txt_color, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Txt_capa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Lbl_estado1))
                 .addGap(18, 18, 18)
                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Lbl_estado)
                     .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(Rb_activo)
                         .addComponent(Rb_inactivo))
-                    .addComponent(Rb_limpieza))
+                    .addComponent(Rb_limpieza, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(Btn_fondoReporte, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -548,22 +570,23 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
             .addGroup(Pnl_datosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(Pnl_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 723, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
                     .addGroup(Pnl_datosLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
                         .addComponent(Lbl_id4)
-                        .addGap(18, 18, 18)
-                        .addComponent(Txt_busqueda)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Txt_busqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 515, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         Pnl_datosLayout.setVerticalGroup(
             Pnl_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Pnl_datosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(Pnl_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Txt_busqueda)
+                .addGroup(Pnl_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Txt_busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Lbl_id4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -594,12 +617,12 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
     private void Tbl_DatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Tbl_DatosMouseClicked
         if (evt.getClickCount() == 2) {
             Txt_id.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 0).toString());
-            Txt_nombre.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 1).toString());
-            Txt_apellido.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 2).toString());
-            Txt_user.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 3).toString());
-            String descontraseña = Hash.getString(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 4).toString());
-            Txt_password.setText(descontraseña);
-            Txt_email.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 5).toString());
+            Txt_placa.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 1).toString());
+            Txt_marca.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 2).toString());
+            Txt_modelo.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 3).toString());
+            Txt_ano.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 4).toString());
+            Txt_color.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 5).toString());
+            Txt_capa.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 6).toString());
             if (Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 7).toString().equals("activo")) {
                 Rb_activo.setSelected(true);
             } else {
@@ -645,28 +668,27 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_Btn_modificarMouseEntered
 
     private void Btn_modificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_modificarMouseClicked
-        if (procesosr.isEmptyTxf(Txt_id, Txt_nombre, Txt_apellido, Txt_user, Txt_password, Txt_email)) {
+        if (procesosr.isEmptyTxf(Txt_id, Txt_placa, Txt_marca, Txt_modelo, Txt_ano, Txt_color, Txt_capa)) {
             if (procesosr.isNumeric(Txt_id)) {
                 if (procesosr.isSelectedRbt(Rb_activo, Rb_inactivo)) {
-                    if (procesosr.ValidarEmail(Txt_email.getText())) {
-                        usuarios.setId(Txt_id.getText());
-                        usuarios.setNombre(Txt_nombre.getText());
-                        usuarios.setApellido(Txt_apellido.getText());
-                        usuarios.setUser(Txt_user.getText());
-                        String encriptPass = Hash.getMD5(Txt_password.getText());
-                        usuarios.setPassword(encriptPass);
-                        usuarios.setEmail(Txt_email.getText());
+                        vehiculos.setId(Txt_id.getText());
+                        vehiculos.setPlaca(Txt_placa.getText());
+                        vehiculos.setMarca(Txt_marca.getText());
+                        vehiculos.setModelo(Txt_modelo.getText());
+                        vehiculos.setAno(Txt_ano.getText());
+                        vehiculos.setColor(Txt_color.getText());
+                        vehiculos.setMax(Txt_capa.getText());
                         if (Rb_activo.isSelected()) {
-                            usuarios.setEstado("1");
+                            vehiculos.setEstado("1");
                         } else {
-                            usuarios.setEstado("0");
+                            vehiculos.setEstado("0");
                         }
-                        usuariosDAO.update(usuarios);
+                        vehiculosDAO.update(vehiculos);
                         funcBitacora.GuardarBitacora("MODIFICAR", idApp);
                         cargarDatos("");
-                        procesosr.accionExitosa("Modificación Exitosa", "Se ha modificado el usuario: \"" + Txt_nombre.getText() + " " + Txt_apellido.getText() + "\" correctamente");
+                        procesosr.accionExitosa("Modificación Exitosa", "Se ha modificado el vehiculo: \"" + Txt_placa.getText() + " " + Txt_marca.getText() + "\" correctamente");
                         limpiar();
-                    }
+                    
                 }
             }
         }
@@ -684,8 +706,8 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
         if (procesosr.isEmptyTxf(Txt_id)) {
             if (procesosr.isNumeric(Txt_id)) {
                 if (procesosr.confirmarEliminación("el Modulo # " + Txt_id.getText())) {
-                    usuarios.setId(Txt_id.getText());
-                    usuariosDAO.delete(usuarios);
+                    vehiculos.setId(Txt_id.getText());
+                    vehiculosDAO.delete(vehiculos);
                     funcBitacora.GuardarBitacora("ELIMINAR", idApp);
                     cargarDatos("");
                     procesosr.accionExitosa("Eliminación Exitosa", "Se ha eliminado el usuario #" + Txt_id.getText() + " correctamente");
@@ -704,28 +726,27 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_Btn_guardarMouseEntered
 
     private void Btn_guardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_guardarMouseClicked
-        if (procesosr.isEmptyTxf(Txt_id, Txt_nombre, Txt_apellido, Txt_user, Txt_password, Txt_email)) {
+        if (procesosr.isEmptyTxf(Txt_id, Txt_placa, Txt_marca, Txt_modelo, Txt_ano, Txt_color)) {
             if (procesosr.isNumeric(Txt_id)) {
                 if (procesosr.isSelectedRbt(Rb_activo, Rb_inactivo)) {
-                    if (procesosr.ValidarEmail(Txt_email.getText())) {
-                        usuarios.setId(Txt_id.getText());
-                        usuarios.setNombre(Txt_nombre.getText());
-                        usuarios.setApellido(Txt_apellido.getText());
-                        usuarios.setUser(Txt_user.getText());
-                        String encriptPass = Hash.getMD5(Txt_password.getText());
-                        usuarios.setPassword(encriptPass);
-                        usuarios.setEmail(Txt_email.getText());
+                        vehiculos.setId("0");
+                        vehiculos.setPlaca(Txt_placa.getText());
+                        vehiculos.setMarca(Txt_marca.getText());
+                        vehiculos.setModelo(Txt_modelo.getText());
+                        vehiculos.setAno(Txt_ano.getText());
+                        vehiculos.setColor(Txt_color.getText());
+                        vehiculos.setMax(Txt_capa.getText());
                         if (Rb_activo.isSelected()) {
-                            usuarios.setEstado("1");
+                            vehiculos.setEstado("1");
                         } else {
-                            usuarios.setEstado("0");
+                            vehiculos.setEstado("0");
                         }
-                        usuariosDAO.insert(usuarios);
+                        vehiculosDAO.insert(vehiculos);
                         funcBitacora.GuardarBitacora("GUARDAR", idApp);
                         cargarDatos("");
-                        procesosr.accionExitosa("Registro Exitoso", "Se ha registrado el usuario: \"" + Txt_nombre.getText() + " " + Txt_apellido.getText() + "\" correctamente");
+                        procesosr.accionExitosa("Registro Exitoso", "Se ha registrado el usuario: \"" + Txt_placa.getText() + " " + Txt_marca.getText() + "\" correctamente");
                         limpiar();
-                    }
+                    
                 }
             }
         }
@@ -745,6 +766,14 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
         funcBitacora.GuardarBitacora("BUSQUEDA", idApp);
     }//GEN-LAST:event_Txt_busquedaKeyReleased
 
+    private void Txt_capaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Txt_capaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Txt_capaActionPerformed
+
+    private void Txt_placaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Txt_placaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Txt_placaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup Bg_estados;
@@ -763,6 +792,7 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
     private javax.swing.JLabel Lbl_apellido;
     private javax.swing.JLabel Lbl_email;
     private javax.swing.JLabel Lbl_estado;
+    private javax.swing.JLabel Lbl_estado1;
     private javax.swing.JLabel Lbl_id;
     private javax.swing.JLabel Lbl_id4;
     private javax.swing.JLabel Lbl_nombre;
@@ -774,13 +804,14 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton Rb_inactivo;
     private javax.swing.JRadioButton Rb_limpieza;
     private javax.swing.JTable Tbl_Datos;
-    private javax.swing.JTextField Txt_apellido;
+    private javax.swing.JTextField Txt_ano;
     private javax.swing.JTextField Txt_busqueda;
-    private javax.swing.JTextField Txt_email;
+    private javax.swing.JTextField Txt_capa;
+    private javax.swing.JTextField Txt_color;
     private javax.swing.JTextField Txt_id;
-    private javax.swing.JTextField Txt_nombre;
-    private javax.swing.JPasswordField Txt_password;
-    private javax.swing.JTextField Txt_user;
+    private javax.swing.JTextField Txt_marca;
+    private javax.swing.JTextField Txt_modelo;
+    private javax.swing.JTextField Txt_placa;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }

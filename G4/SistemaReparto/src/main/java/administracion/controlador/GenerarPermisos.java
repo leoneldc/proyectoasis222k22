@@ -25,6 +25,7 @@ public class GenerarPermisos {
         MDI_Administracion.MnI_bodegas.setVisible(false);
         MDI_Administracion.MnI_clientes.setVisible(false);
         MDI_Administracion.MnI_UsuarioAplicacion.setVisible(false);
+        MDI_Administracion.MnI_TrabajadorAplicacion.setVisible(false);
 
         permisos.setIdUsuario(id);
         List<UsuarioAplicacion> listadoPermisos = permisosDAO.selectUA(permisos);
@@ -39,6 +40,7 @@ public class GenerarPermisos {
                 case 10:MDI_Administracion.MnI_bodegas.setVisible(true);break;
                 case 11:MDI_Administracion.MnI_clientes.setVisible(true);break;
                 case 30:MDI_Administracion.MnI_UsuarioAplicacion.setVisible(true);break;
+                case 31:MDI_Administracion.MnI_TrabajadorAplicacion.setVisible(true);break;
             }
         }
 
