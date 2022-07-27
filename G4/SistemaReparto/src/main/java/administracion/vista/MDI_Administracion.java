@@ -23,6 +23,9 @@ public class MDI_Administracion extends javax.swing.JFrame {
     private Asn_TrabajadorAplicacion asn_trabajadorAplicacion;
     private Vst_Bitacora vst_bitacora;
     private Mnt_Trabajadores mnt_trabajadores;
+    private Mnt_Bodegas mnt_bodegas;
+    private Mnt_Clientes mnt_clientes;
+    private Mnt_Vehiculos mnt_vehiculos;
 
     public MDI_Administracion() {
         initComponents();
@@ -153,12 +156,27 @@ public class MDI_Administracion extends javax.swing.JFrame {
         Mnu_mantenimientos.add(MnI_trabajadores);
 
         MnI_clientes.setText("Clientes");
+        MnI_clientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnI_clientesActionPerformed(evt);
+            }
+        });
         Mnu_mantenimientos.add(MnI_clientes);
 
         MnI_vahiculos.setText("Vehiculos");
+        MnI_vahiculos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnI_vahiculosActionPerformed(evt);
+            }
+        });
         Mnu_mantenimientos.add(MnI_vahiculos);
 
         MnI_bodegas.setText("Bodegas");
+        MnI_bodegas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnI_bodegasActionPerformed(evt);
+            }
+        });
         Mnu_mantenimientos.add(MnI_bodegas);
 
         Sbm_catalogo.add(Mnu_mantenimientos);
@@ -331,6 +349,42 @@ public class MDI_Administracion extends javax.swing.JFrame {
         funcBitacora.GuardarBitacora("ACCESO", "0030");
     }//GEN-LAST:event_MnI_TrabajadorAplicacionActionPerformed
 
+    private void MnI_bodegasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnI_bodegasActionPerformed
+        mnt_bodegas = new Mnt_Bodegas();
+
+        Jdp_contenedor.add(mnt_bodegas);
+        Dimension desktopSize = Jdp_contenedor.getSize();
+        Dimension FrameSize = mnt_bodegas.getSize();
+        mnt_bodegas.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+        mnt_bodegas.setVisible(true);
+        mnt_bodegas.toFront();
+        funcBitacora.GuardarBitacora("ACCESO", "0010");
+    }//GEN-LAST:event_MnI_bodegasActionPerformed
+
+    private void MnI_vahiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnI_vahiculosActionPerformed
+        mnt_vehiculos = new Mnt_Vehiculos();
+
+        Jdp_contenedor.add(mnt_vehiculos);
+        Dimension desktopSize = Jdp_contenedor.getSize();
+        Dimension FrameSize = mnt_vehiculos.getSize();
+        mnt_vehiculos.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+        mnt_vehiculos.setVisible(true);
+        mnt_vehiculos.toFront();
+        funcBitacora.GuardarBitacora("ACCESO", "0009");
+    }//GEN-LAST:event_MnI_vahiculosActionPerformed
+
+    private void MnI_clientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnI_clientesActionPerformed
+        mnt_clientes = new Mnt_Clientes();
+
+        Jdp_contenedor.add(mnt_clientes);
+        Dimension desktopSize = Jdp_contenedor.getSize();
+        Dimension FrameSize = mnt_clientes.getSize();
+        mnt_clientes.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+        mnt_clientes.setVisible(true);
+        mnt_clientes.toFront();
+        funcBitacora.GuardarBitacora("ACCESO", "0011");
+    }//GEN-LAST:event_MnI_clientesActionPerformed
+
     public static void main(String args[]) {
         //FLATLAF
         FlatLightLaf.setup();
@@ -346,7 +400,7 @@ public class MDI_Administracion extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JMenu Btn_cerrarSesion;
     private javax.swing.JDesktopPane Jdp_contenedor;
-    private javax.swing.JMenuItem MnI_TrabajadorAplicacion;
+    public static javax.swing.JMenuItem MnI_TrabajadorAplicacion;
     public static javax.swing.JMenuItem MnI_UsuarioAplicacion;
     public static javax.swing.JMenuItem MnI_aplicaciones;
     private javax.swing.JMenuItem MnI_bitacora;
