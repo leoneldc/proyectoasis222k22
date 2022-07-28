@@ -25,6 +25,7 @@ public class TrabajadoresDAO {
     private static final String SQL_UPDATE = "UPDATE Trabajadores SET fkidpuestotrabajo=?, Nomtbd=?, Apelltbd=?, Usernametbd=?, Passwordtbd=?, Emailtbd=?, Esttbd=? WHERE pkidtrabajador=?";
     private static final String SQL_SELECTTA = "SELECT * FROM Trabajadores WHERE pkidtrabajador = ?";
     private static final String SQL_SELECTL = "SELECT * FROM Trabajadores WHERE Usernametbd = ?";
+    private static final String SQL_UPDATEL = "UPDATE Trabajadores SET Ultimactbd=? WHERE pkidtrabajador=?";
     
     public List<Trabajadores> select() {
         String SQL_SELECT = "SELECT * FROM Trabajadores WHERE pkidtrabajador LIKE '%" + codigoTrabajador + "%' OR Nomtbd LIKE '%" + nombreTrabajador + "%'";
@@ -133,6 +134,24 @@ public class TrabajadoresDAO {
         return rows;
     }
     
+    public int updateL(Trabajadores trabajador) {
+        int rows = 0;
+        try {
+            conn = Conexion.getConnection();
+            stmt = conn.prepareStatement(SQL_UPDATEL);
+            stmt.setString(1, trabajador.getUltimac());
+            stmt.setString(2, trabajador.getIdTrabaajdor());
+            //System.out.println(stmt);
+            rows = stmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(stmt);
+            Conexion.close(conn);
+        }
+        return rows;
+    }
+     
     public Trabajadores selectL(Trabajadores trabajador) {
         int rows = 0;
         try {

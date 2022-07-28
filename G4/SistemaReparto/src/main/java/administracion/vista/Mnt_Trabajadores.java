@@ -450,6 +450,11 @@ public class Mnt_Trabajadores extends javax.swing.JInternalFrame {
         Txt_nombrePT.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
 
         jButton1.setText("?");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout Pnl_ingresoDatosLayout = new javax.swing.GroupLayout(Pnl_ingresoDatos);
         Pnl_ingresoDatos.setLayout(Pnl_ingresoDatosLayout);
@@ -819,6 +824,11 @@ public class Mnt_Trabajadores extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_Btn_listadoPTActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Vst_PuestosTrabajo vst_puestosTrabajo = new Vst_PuestosTrabajo();
+        vst_puestosTrabajo.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -14,7 +14,7 @@ import java.sql.SQLException;
 public class Conexion {
     private static final String JDBC_URL = "jdbc:mysql://localhost/RepartoBD?allowPublicKeyRetrieval=true";
     private static final String JDBC_USER = "root";
-    private static final String JDBC_PASS = "";
+    private static final String JDBC_PASS = "HLeonelDC_10";
 
 
     public static Connection getConnection() throws SQLException {

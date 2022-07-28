@@ -57,5 +57,14 @@ public class Clientes {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    private String id, nombre, telefono, password, email, estado;
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+    
+    private String id, nombre, telefono, password, email, estado, usuario;
 }

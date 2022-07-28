@@ -1,15 +1,14 @@
 package clientes.vista;
 
-import administracion.controlador.Hash;
 import clientes.controlador.Pedidos;
 import administracion.controlador.ProcesosRepetidos;
 import administracion.controlador.UsuarioAplicacion;
 import clientes.modelo.PedidosDAO;
 import administracion.modelo.UsuarioAplicacionDAO;
+import administracion.vista.FuncionesBitacora;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 public class Prcs_Pedidos extends javax.swing.JInternalFrame {
 
@@ -48,7 +47,7 @@ public class Prcs_Pedidos extends javax.swing.JInternalFrame {
         UsuarioAplicacion permisos = new UsuarioAplicacion();
         UsuarioAplicacionDAO permisosDAO = new UsuarioAplicacionDAO();
 
-        permisos.setIdUsuario(LOGIN_Clientes.idUsuario);
+        permisos.setIdUsuario(LOGIN_Clientes.idCliente);
         permisos.setIdAplicacion(idApp);
 
         permisos = permisosDAO.selectV(permisos);
@@ -96,100 +95,74 @@ public class Prcs_Pedidos extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setResizable(true);
 
-        Pnl_ingresoDatos.setBackground(new java.awt.Color(163, 177, 138));
+        Pnl_ingresoDatos.setBackground(new java.awt.Color(252, 239, 180));
         Pnl_ingresoDatos.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(52, 78, 65), 1, true));
 
         Lbl_nombre1.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        Lbl_nombre1.setForeground(new java.awt.Color(255, 255, 255));
         Lbl_nombre1.setText("DATOS DEL PEDIDO:");
 
         Lbl_Id.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        Lbl_Id.setForeground(new java.awt.Color(255, 255, 255));
         Lbl_Id.setText("ID:");
 
-        Txt_Id.setBackground(new java.awt.Color(163, 177, 138));
+        Txt_Id.setEditable(false);
+        Txt_Id.setBackground(new java.awt.Color(252, 239, 180));
         Txt_Id.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Txt_Id.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
-        Txt_Id.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Txt_IdActionPerformed(evt);
-            }
-        });
 
         Lbl_Fecha.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        Lbl_Fecha.setForeground(new java.awt.Color(255, 255, 255));
         Lbl_Fecha.setText("FECHA:");
 
+        Txt_Fecha.setBackground(new java.awt.Color(252, 239, 180));
+        Txt_Fecha.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
         Txt_Fecha.setEnabled(false);
 
         Lbl_DireR.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        Lbl_DireR.setForeground(new java.awt.Color(255, 255, 255));
         Lbl_DireR.setText("DIRECCION REMITENTE:");
 
-        Txt_DireR.setBackground(new java.awt.Color(163, 177, 138));
+        Txt_DireR.setBackground(new java.awt.Color(252, 239, 180));
         Txt_DireR.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Txt_DireR.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
         Txt_DireR.setDoubleBuffered(true);
 
         Lbl_DireD.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        Lbl_DireD.setForeground(new java.awt.Color(255, 255, 255));
         Lbl_DireD.setText("DIRECCION DESTINATARIO:");
 
-        Txt_DireD.setBackground(new java.awt.Color(163, 177, 138));
+        Txt_DireD.setBackground(new java.awt.Color(252, 239, 180));
         Txt_DireD.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Txt_DireD.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
         Txt_DireD.setDoubleBuffered(true);
 
         Lbl_ZonaD.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        Lbl_ZonaD.setForeground(new java.awt.Color(255, 255, 255));
         Lbl_ZonaD.setText("ZONA DESTINATARIO:");
 
-        Txt_ZonaD.setBackground(new java.awt.Color(163, 177, 138));
+        Txt_ZonaD.setBackground(new java.awt.Color(252, 239, 180));
         Txt_ZonaD.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Txt_ZonaD.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
         Txt_ZonaD.setDoubleBuffered(true);
 
         Lbl_NomD.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        Lbl_NomD.setForeground(new java.awt.Color(255, 255, 255));
         Lbl_NomD.setText("NOMBRE DESTINATARIO:");
 
-        Txt_NombreD.setBackground(new java.awt.Color(163, 177, 138));
+        Txt_NombreD.setBackground(new java.awt.Color(252, 239, 180));
         Txt_NombreD.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Txt_NombreD.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
         Txt_NombreD.setDoubleBuffered(true);
-        Txt_NombreD.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Txt_NombreDActionPerformed(evt);
-            }
-        });
 
         Lbl_TelD.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        Lbl_TelD.setForeground(new java.awt.Color(255, 255, 255));
         Lbl_TelD.setText("TEL DESTINATARIO:");
 
-        Txt_TelD.setBackground(new java.awt.Color(163, 177, 138));
+        Txt_TelD.setBackground(new java.awt.Color(252, 239, 180));
         Txt_TelD.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Txt_TelD.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
         Txt_TelD.setDoubleBuffered(true);
-        Txt_TelD.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Txt_TelDActionPerformed(evt);
-            }
-        });
 
         Lbl_TamP.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        Lbl_TamP.setForeground(new java.awt.Color(255, 255, 255));
         Lbl_TamP.setText("TAMAÑO PEDIDO (LB):");
 
-        Txt_TamP.setBackground(new java.awt.Color(163, 177, 138));
+        Txt_TamP.setBackground(new java.awt.Color(252, 239, 180));
         Txt_TamP.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Txt_TamP.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
         Txt_TamP.setDoubleBuffered(true);
-        Txt_TamP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Txt_TamPActionPerformed(evt);
-            }
-        });
 
         Btn_fondoGuardar.setBackground(new java.awt.Color(97, 212, 195));
         Btn_fondoGuardar.setMaximumSize(new java.awt.Dimension(104, 40));
@@ -382,7 +355,7 @@ public class Prcs_Pedidos extends javax.swing.JInternalFrame {
                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Txt_TamP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Lbl_TamP))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 197, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 196, Short.MAX_VALUE)
                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Btn_fondoGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -462,22 +435,6 @@ public class Prcs_Pedidos extends javax.swing.JInternalFrame {
     private void Btn_ayudaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_ayudaMouseClicked
         System.out.println("ayuda");
     }//GEN-LAST:event_Btn_ayudaMouseClicked
-
-    private void Txt_NombreDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Txt_NombreDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Txt_NombreDActionPerformed
-
-    private void Txt_IdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Txt_IdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Txt_IdActionPerformed
-
-    private void Txt_TelDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Txt_TelDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Txt_TelDActionPerformed
-
-    private void Txt_TamPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Txt_TamPActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Txt_TamPActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
