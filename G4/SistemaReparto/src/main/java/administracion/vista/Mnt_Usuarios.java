@@ -73,7 +73,7 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
         Btn_guardar.setVisible(false);
         Btn_modificar.setVisible(false);
         Btn_eliminar.setVisible(false);
-        Txt_busqueda.setVisible(false);
+        Txt_busqueda.setEditable(false);
 
         UsuarioAplicacion permisos = new UsuarioAplicacion();
         UsuarioAplicacionDAO permisosDAO = new UsuarioAplicacionDAO();
