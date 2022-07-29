@@ -7,7 +7,6 @@ import administracion.controlador.UsuarioAplicacion;
 import administracion.modelo.ClientesDAO;
 import administracion.modelo.UsuarioAplicacionDAO;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 public class Mnt_Clientes extends javax.swing.JInternalFrame {
 
@@ -31,7 +30,7 @@ public class Mnt_Clientes extends javax.swing.JInternalFrame {
     }
 
     private void limpiar() {
-        procesosr.limpiarTxf(Txt_id, Txt_nombre, Txt_password, Txt_email, Txt_telefono, Txt_busqueda);
+        procesosr.limpiarTxf(Txt_id, Txt_nombre, Txt_password, Txt_email, Txt_telefono, Txt_busqueda, Txt_usuario);
         Rb_limpieza.setSelected(true);
         Txt_id.setText("0");
     }
@@ -40,29 +39,29 @@ public class Mnt_Clientes extends javax.swing.JInternalFrame {
         ProcesosRepetidos procesosr = new ProcesosRepetidos();
         ClientesDAO.codigoCliente = query;
         ClientesDAO.nombreCliente = query;
-        String encabezado[] = {"ID", "NOMBRE", "PASSWORD", "EMAIL", "TELEFONO", "ESTADO"};
+        String encabezado[] = {"ID", "NOMBRE", "USUARIO", "PASSWORD", "EMAIL", "TELEFONO", "ESTADO"};
         int cantidadcolumnas = encabezado.length;
         procesosr.llenarColumnas(encabezado, cantidadcolumnas, Tbl_Datos);
         String datos[] = new String[cantidadcolumnas];
-        int tamaño[] = {50, 75, 75, 100, 75, 75};
+        int tamaño[] = {50, 75, 75, 100, 75, 75, 75};
         ClientesDAO clientesDAO = new ClientesDAO();
         List<Clientes> listadoClientes = clientesDAO.select();
         for (Clientes trabajador : listadoClientes) {
             datos[0] = trabajador.getId();
             datos[1] = trabajador.getNombre();
-            datos[2] = trabajador.getPassword();
-            datos[3] = trabajador.getEmail();
-            datos[4] = trabajador.getTelefono();
+            datos[2] = trabajador.getUsuario();
+            datos[3] = trabajador.getPassword();
+            datos[4] = trabajador.getEmail();
+            datos[5] = trabajador.getTelefono();
             if (trabajador.getEstado().equals("1")) {
-                datos[5] = "activo";
+                datos[6] = "activo";
             } else {
-                datos[5] = "inactivo";
+                datos[6] = "inactivo";
             }
             procesosr.llenarFilas(datos, tamaño, Tbl_Datos);
         }
     }
-    
-    
+
     void cargarAcciones() {
 
         Btn_guardar.setVisible(false);
@@ -107,6 +106,8 @@ public class Mnt_Clientes extends javax.swing.JInternalFrame {
         Txt_nombre = new javax.swing.JTextField();
         Lbl_apellido = new javax.swing.JLabel();
         Txt_email = new javax.swing.JTextField();
+        Lbl_usuario = new javax.swing.JLabel();
+        Txt_usuario = new javax.swing.JTextField();
         Lbl_password = new javax.swing.JLabel();
         Txt_password = new javax.swing.JPasswordField();
         Lbl_t = new javax.swing.JLabel();
@@ -167,6 +168,14 @@ public class Mnt_Clientes extends javax.swing.JInternalFrame {
         Txt_email.setBackground(new java.awt.Color(163, 177, 138));
         Txt_email.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Txt_email.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
+
+        Lbl_usuario.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        Lbl_usuario.setForeground(new java.awt.Color(255, 255, 255));
+        Lbl_usuario.setText("USERNAME:");
+
+        Txt_usuario.setBackground(new java.awt.Color(163, 177, 138));
+        Txt_usuario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Txt_usuario.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
 
         Lbl_password.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         Lbl_password.setForeground(new java.awt.Color(255, 255, 255));
@@ -413,23 +422,19 @@ public class Mnt_Clientes extends javax.swing.JInternalFrame {
                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Pnl_ingresoDatosLayout.createSequentialGroup()
                         .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Lbl_nombre)
-                            .addComponent(Lbl_apellido)
                             .addComponent(Lbl_password)
                             .addComponent(Lbl_t)
                             .addComponent(Lbl_estado))
                         .addGap(56, 56, 56)
-                        .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Txt_nombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
-                            .addComponent(Txt_email, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Txt_password, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(Pnl_ingresoDatosLayout.createSequentialGroup()
                                 .addComponent(Rb_activo)
                                 .addGap(18, 18, 18)
                                 .addComponent(Rb_inactivo)
                                 .addGap(18, 18, 18)
                                 .addComponent(Rb_limpieza))
-                            .addComponent(Txt_telefono, javax.swing.GroupLayout.Alignment.TRAILING)))
+                            .addComponent(Txt_password)
+                            .addComponent(Txt_telefono)))
                     .addGroup(Pnl_ingresoDatosLayout.createSequentialGroup()
                         .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -446,8 +451,19 @@ public class Mnt_Clientes extends javax.swing.JInternalFrame {
                                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(Btn_fondoModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(Btn_fondoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(Txt_id, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addContainerGap(15, Short.MAX_VALUE))
+                            .addComponent(Txt_id, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(Pnl_ingresoDatosLayout.createSequentialGroup()
+                        .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Lbl_nombre)
+                            .addComponent(Lbl_apellido)
+                            .addComponent(Lbl_usuario))
+                        .addGap(56, 56, 56)
+                        .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(Txt_email, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
+                                .addComponent(Txt_usuario)))))
+                .addGap(15, 15, 15))
         );
         Pnl_ingresoDatosLayout.setVerticalGroup(
             Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -464,6 +480,10 @@ public class Mnt_Clientes extends javax.swing.JInternalFrame {
                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Lbl_apellido)
                     .addComponent(Txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Lbl_usuario)
+                    .addComponent(Txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Lbl_password)
@@ -530,7 +550,7 @@ public class Mnt_Clientes extends javax.swing.JInternalFrame {
             .addGroup(Pnl_datosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(Pnl_datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 732, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 715, Short.MAX_VALUE)
                     .addGroup(Pnl_datosLayout.createSequentialGroup()
                         .addComponent(Lbl_id4)
                         .addGap(18, 18, 18)
@@ -577,11 +597,12 @@ public class Mnt_Clientes extends javax.swing.JInternalFrame {
         if (evt.getClickCount() == 2) {
             Txt_id.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 0).toString());
             Txt_nombre.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 1).toString());
-            String descontraseña = Hash.getString(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 2).toString());
+            Txt_usuario.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 2).toString());
+            String descontraseña = Hash.getString(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 3).toString());
             Txt_password.setText(descontraseña);
-            Txt_email.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 3).toString());
-            Txt_telefono.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 4).toString());
-            if (Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 5).toString().equals("activo")) {
+            Txt_email.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 4).toString());
+            Txt_telefono.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 5).toString());
+            if (Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 6).toString().equals("activo")) {
                 Rb_activo.setSelected(true);
             } else {
                 Rb_inactivo.setSelected(true);
@@ -630,23 +651,31 @@ public class Mnt_Clientes extends javax.swing.JInternalFrame {
             if (procesosr.isNumeric(Txt_id)) {
                 if (procesosr.isSelectedRbt(Rb_activo, Rb_inactivo)) {
                     if (procesosr.ValidarEmail(Txt_email.getText())) {
+                        Clientes clientes = new Clientes();
                         clientes.setId(Txt_id.getText());
-                        clientes.setNombre(Txt_nombre.getText());
-                        String passwordEncry = Hash.getMD5(Txt_password.getText());
-                        clientes.setPassword(passwordEncry);
-                        clientes.setEmail(Txt_email.getText());
-                        clientes.setTelefono(Txt_telefono.getText());
-                        if (Rb_activo.isSelected()) {
-                            clientes.setEstado("1");
+                        clientes = clientesDAO.selectL(clientes);
+                        if (clientes.getUsuario() != null) {
+                            clientes.setId(Txt_id.getText());
+                            clientes.setNombre(Txt_nombre.getText());
+                            clientes.setUsuario(Txt_usuario.getText());
+                            String passwordEncry = Hash.getMD5(Txt_password.getText());
+                            clientes.setPassword(passwordEncry);
+                            clientes.setEmail(Txt_email.getText());
+                            clientes.setTelefono(Txt_telefono.getText());
+                            if (Rb_activo.isSelected()) {
+                                clientes.setEstado("1");
+                            }
+                            if (Rb_inactivo.isSelected()) {
+                                clientes.setEstado("0");
+                            }
+                            clientesDAO.update(clientes);
+                            funcBitacora.GuardarBitacora("MODIFICAR", idApp);
+                            cargarDatos("");
+                            procesosr.accionExitosa("Modificación Exitosa", "Se ha modificado el cliente: \"" + Txt_nombre.getText() + " " + "\" correctamente");
+                            limpiar();
+                        } else {
+                            procesosr.accionErronea("¡ERROR!", "NOMBRE DE USUARIO YA EXISTE");
                         }
-                        if (Rb_inactivo.isSelected()) {
-                            clientes.setEstado("0");
-                        }
-                        clientesDAO.update(clientes);
-                        funcBitacora.GuardarBitacora("MODIFICAR", idApp);
-                        cargarDatos("");
-                        procesosr.accionExitosa("Modificación Exitosa", "Se ha modificado el trabajador: \"" + Txt_nombre.getText() + " " + "\" correctamente");
-                        limpiar();
                     }
                 }
             }
@@ -689,23 +718,31 @@ public class Mnt_Clientes extends javax.swing.JInternalFrame {
             if (procesosr.isNumeric(Txt_id)) {
                 if (procesosr.isSelectedRbt(Rb_activo, Rb_inactivo)) {
                     if (procesosr.ValidarEmail(Txt_email.getText())) {
-                        clientes.setId("0");
-                        clientes.setNombre(Txt_nombre.getText());
-                        String passwordEncry = Hash.getMD5(Txt_password.getText());
-                        clientes.setPassword(passwordEncry);
-                        clientes.setEmail(Txt_email.getText());
-                        clientes.setTelefono(Txt_telefono.getText());
-                        if (Rb_activo.isSelected()) {
-                            clientes.setEstado("1");
+                        Clientes clientes = new Clientes();
+                        clientes.setId(Txt_id.getText());
+                        clientes = clientesDAO.selectL(clientes);
+                        if (clientes.getUsuario() != null) {
+                            clientes.setId("0");
+                            clientes.setNombre(Txt_nombre.getText());
+                            clientes.setUsuario(Txt_usuario.getText());
+                            String passwordEncry = Hash.getMD5(Txt_password.getText());
+                            clientes.setPassword(passwordEncry);
+                            clientes.setEmail(Txt_email.getText());
+                            clientes.setTelefono(Txt_telefono.getText());
+                            if (Rb_activo.isSelected()) {
+                                clientes.setEstado("1");
+                            }
+                            if (Rb_inactivo.isSelected()) {
+                                clientes.setEstado("0");
+                            }
+                            clientesDAO.insert(clientes);
+                            funcBitacora.GuardarBitacora("GUARDAR", idApp);
+                            cargarDatos("");
+                            procesosr.accionExitosa("Registro Exitoso", "Se ha registrado el cliente: \"" + Txt_nombre.getText() + " " + "\" correctamente");
+                            limpiar();
+                        } else {
+                            procesosr.accionErronea("¡ERROR!", "NOMBRE DE USUARIO YA EXISTE");
                         }
-                        if (Rb_inactivo.isSelected()) {
-                            clientes.setEstado("0");
-                        }
-                        clientesDAO.insert(clientes);
-                        funcBitacora.GuardarBitacora("GUARDAR", idApp);
-                        cargarDatos("");
-                        procesosr.accionExitosa("Registro Exitoso", "Se ha registrado el cliente: \"" + Txt_nombre.getText() + " " + "\" correctamente");
-                        limpiar();
                     }
                 }
             }
@@ -748,6 +785,7 @@ public class Mnt_Clientes extends javax.swing.JInternalFrame {
     private javax.swing.JLabel Lbl_nombre;
     private javax.swing.JLabel Lbl_password;
     private javax.swing.JLabel Lbl_t;
+    private javax.swing.JLabel Lbl_usuario;
     private javax.swing.JPanel Pnl_datos;
     private javax.swing.JPanel Pnl_ingresoDatos;
     private javax.swing.JRadioButton Rb_activo;
@@ -760,6 +798,7 @@ public class Mnt_Clientes extends javax.swing.JInternalFrame {
     private javax.swing.JTextField Txt_nombre;
     private javax.swing.JPasswordField Txt_password;
     private javax.swing.JTextField Txt_telefono;
+    private javax.swing.JTextField Txt_usuario;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }
