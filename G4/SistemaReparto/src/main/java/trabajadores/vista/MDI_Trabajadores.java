@@ -1,22 +1,27 @@
 package trabajadores.vista;
 
-import administracion.vista.*;
-import administracion.controlador.GenerarPermisos;
+
 import administracion.controlador.ProcesosRepetidos;
-import administracion.controlador.Usuarios;
-import administracion.modelo.UsuariosDAO;
+import administracion.controlador.Trabajadores;
+import administracion.modelo.TrabajadoresDAO;
+import administracion.vista.*;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Color;
 import java.awt.Dimension;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import trabajadores.controlador.GenerarPermisos;
 
 public class MDI_Trabajadores extends javax.swing.JFrame {
 
     ProcesosRepetidos procesoRepetido = new ProcesosRepetidos();
     GenerarPermisos gpermisos = new GenerarPermisos();
-    FuncionesBitacora funcBitacora = new FuncionesBitacora();
     String idBusqueda = LOGIN_Trabajadores.idUsuario;
 
+    public static JLabel Jl_logo = new JLabel();
+    
     private Vst_Bitacora vst_bitacora;
+    private Asgn_RutaRemitente asgn_RutaRemitente;
 
     public MDI_Trabajadores() {
         initComponents();
@@ -27,10 +32,31 @@ public class MDI_Trabajadores extends javax.swing.JFrame {
     public void Diseño() {
         Jdp_contenedor.setBackground(new Color(83, 107, 120));
         procesoRepetido.cursorMano(Mnb_menu);
-        setTitle("[ USUARIO: " + LOGIN_Trabajadores.nomUsuario.toUpperCase() + "  [ " + procesoRepetido.getFechaActual("gt") + " ]  ");
+        setTitle("[ USUARIO: " + LOGIN_Trabajadores.nomUsuario.toUpperCase() + "  " + procesoRepetido.getFechaActual("gt") + " ]  ");
+        logo();
+        Jdp_contenedor.add(Jl_logo);
     }
 
     private void InicioSesion() {
+        TrabajadoresDAO ldao = new TrabajadoresDAO();
+        Trabajadores login = new Trabajadores();
+        gpermisos.cargarAplicaciones(idBusqueda);
+        login.setIdTrabaajdor(idBusqueda);
+        login.setUltimac(procesoRepetido.getFechaActual("us") + " " + procesoRepetido.getHoraActual());
+        ldao.updateL(login);
+    }
+    
+    public void logo() {
+        ImageIcon icon = new ImageIcon("src/main/java/assets/logoT.png");
+        Jl_logo.setSize(512, 512);
+        if (icon != null) {
+            Jl_logo.setIcon(icon);
+        } else {
+            System.out.println("error al cargar el logo");
+        }
+        Dimension desktopSize = Jdp_contenedor.getSize();
+        Dimension FrameSize = Jl_logo.getSize();
+        Jl_logo.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
     }
 
     @SuppressWarnings("unchecked")
@@ -45,6 +71,7 @@ public class MDI_Trabajadores extends javax.swing.JFrame {
         Mnu_mantenimientos = new javax.swing.JMenu();
         Sbm_procesos = new javax.swing.JMenu();
         Mnu_procesos = new javax.swing.JMenu();
+        MnI_RutasRemitente = new javax.swing.JMenuItem();
         Sbm_herramientas = new javax.swing.JMenu();
         MnI_bitacora = new javax.swing.JMenuItem();
         Sbm_ayuda = new javax.swing.JMenu();
@@ -96,6 +123,15 @@ public class MDI_Trabajadores extends javax.swing.JFrame {
         Sbm_procesos.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
 
         Mnu_procesos.setText("Procesos");
+
+        MnI_RutasRemitente.setText("Creación de Rutas de Remitente");
+        MnI_RutasRemitente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnI_RutasRemitenteActionPerformed(evt);
+            }
+        });
+        Mnu_procesos.add(MnI_RutasRemitente);
+
         Sbm_procesos.add(Mnu_procesos);
 
         Mnb_menu.add(Sbm_procesos);
@@ -139,11 +175,11 @@ public class MDI_Trabajadores extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
-
+        logo();
     }//GEN-LAST:event_formComponentResized
 
     private void Sbm_actualizarPermisosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Sbm_actualizarPermisosMouseClicked
-        
+
     }//GEN-LAST:event_Sbm_actualizarPermisosMouseClicked
 
     private void MnI_bitacoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnI_bitacoraActionPerformed
@@ -156,6 +192,17 @@ public class MDI_Trabajadores extends javax.swing.JFrame {
         vst_bitacora.setVisible(true);
         vst_bitacora.toFront();
     }//GEN-LAST:event_MnI_bitacoraActionPerformed
+
+    private void MnI_RutasRemitenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnI_RutasRemitenteActionPerformed
+        asgn_RutaRemitente = new Asgn_RutaRemitente();
+
+        Jdp_contenedor.add(asgn_RutaRemitente);
+        Dimension desktopSize = Jdp_contenedor.getSize();
+        Dimension FrameSize = asgn_RutaRemitente.getSize();
+        asgn_RutaRemitente.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+        asgn_RutaRemitente.setVisible(true);
+        asgn_RutaRemitente.toFront();
+    }//GEN-LAST:event_MnI_RutasRemitenteActionPerformed
 
     public static void main(String args[]) {
         //FLATLAF
@@ -172,10 +219,11 @@ public class MDI_Trabajadores extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JMenu Btn_cerrarSesion;
     private javax.swing.JDesktopPane Jdp_contenedor;
+    public static javax.swing.JMenuItem MnI_RutasRemitente;
     private javax.swing.JMenuItem MnI_bitacora;
     public static javax.swing.JMenuBar Mnb_menu;
     public static javax.swing.JMenu Mnu_mantenimientos;
-    private javax.swing.JMenu Mnu_procesos;
+    public static javax.swing.JMenu Mnu_procesos;
     public static javax.swing.JMenu Sbm_actualizarPermisos;
     public static javax.swing.JMenu Sbm_archivos;
     public static javax.swing.JMenu Sbm_ayuda;

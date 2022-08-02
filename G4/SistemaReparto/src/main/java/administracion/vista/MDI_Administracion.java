@@ -7,6 +7,8 @@ import administracion.modelo.UsuariosDAO;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Color;
 import java.awt.Dimension;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 public class MDI_Administracion extends javax.swing.JFrame {
 
@@ -15,6 +17,8 @@ public class MDI_Administracion extends javax.swing.JFrame {
     FuncionesBitacora funcBitacora = new FuncionesBitacora();
     String idBusqueda = LOGIN_Administracion.idUsuario;
 
+    public static JLabel Jl_logo = new JLabel();
+    
     private Mnt_Modulos mnt_modulos;
     private Mnt_Aplicaciones mnt_aplicaciones;
     private Mnt_Usuarios mnt_usuarios;
@@ -36,7 +40,9 @@ public class MDI_Administracion extends javax.swing.JFrame {
     public void Diseño() {
         Jdp_contenedor.setBackground(new Color(52, 78, 65));
         procesoRepetido.cursorMano(Mnb_menu);
-        setTitle("[ USUARIO: " + LOGIN_Administracion.nomUsuario.toUpperCase() + "  [ " + procesoRepetido.getFechaActual("gt") + " ]  ");
+        setTitle("[ USUARIO: " + LOGIN_Administracion.nomUsuario.toUpperCase() + "  " + procesoRepetido.getFechaActual("gt") + " ]  ");
+        logo();
+        Jdp_contenedor.add(Jl_logo);
     }
 
     private void InicioSesion() {
@@ -49,6 +55,19 @@ public class MDI_Administracion extends javax.swing.JFrame {
         userDAO.updateL(user);
     }
 
+    public void logo() {
+        ImageIcon icon = new ImageIcon("src/main/java/assets/logoA.png");
+        Jl_logo.setSize(512, 512);
+        if (icon != null) {
+            Jl_logo.setIcon(icon);
+        } else {
+            System.out.println("error al cargar el logo");
+        }
+        Dimension desktopSize = Jdp_contenedor.getSize();
+        Dimension FrameSize = Jl_logo.getSize();
+        Jl_logo.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -247,7 +266,7 @@ public class MDI_Administracion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
-
+        logo();
     }//GEN-LAST:event_formComponentResized
 
     private void Sbm_actualizarPermisosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Sbm_actualizarPermisosMouseClicked

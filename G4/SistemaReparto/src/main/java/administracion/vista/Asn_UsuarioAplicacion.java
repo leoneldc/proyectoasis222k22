@@ -171,6 +171,11 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
         Pnl_ingresoDatos.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(52, 78, 65), 1, true));
 
         Btn_listaUsuarios.setText("LISTADO DE USUARIOS");
+        Btn_listaUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_listaUsuariosActionPerformed(evt);
+            }
+        });
 
         Lbl_id.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         Lbl_id.setForeground(new java.awt.Color(255, 255, 255));
@@ -796,6 +801,11 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_Tbl_asignacionesMouseClicked
+
+    private void Btn_listaUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_listaUsuariosActionPerformed
+        Vst_Usuarios vst_usuario = new Vst_Usuarios();
+        vst_usuario.setVisible(true);
+    }//GEN-LAST:event_Btn_listaUsuariosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

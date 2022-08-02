@@ -12,9 +12,9 @@ import java.sql.SQLException;
  * @author leone
  */
 public class Conexion {
-    private static final String JDBC_URL = "jdbc:mysql://localhost/RepartoBD?allowPublicKeyRetrieval=true";
-    private static final String JDBC_USER = "root";
-    private static final String JDBC_PASS = "HLeonelDC_10";
+    private static final String JDBC_URL = "jdbc:mysql://sisreparto.mysql.database.azure.com:3306/RepartoBD?useSSL=true";
+    private static final String JDBC_USER = "administrador";
+    private static final String JDBC_PASS = "asis_G4_";
 
 
     public static Connection getConnection() throws SQLException {

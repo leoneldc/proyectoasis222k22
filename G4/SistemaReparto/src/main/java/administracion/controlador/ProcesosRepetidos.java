@@ -35,6 +35,7 @@ public class ProcesosRepetidos {
     Color dsRojo = new Color(255, 102, 102);
     Color aLogin = new Color(52, 78, 65);
     Color tLogin = new Color(83,107,120);
+    Color cLogin = new Color(250,229,136);
     
     
     //diseño
@@ -63,7 +64,10 @@ public class ProcesosRepetidos {
                     componente.setBackground(aLogin);
                 break;
                 case "tLogin":
-                    componente.setBackground(aLogin);
+                    componente.setBackground(tLogin);
+                break;
+                case "cLogin":
+                    componente.setBackground(cLogin);
                 break;
             }
         }

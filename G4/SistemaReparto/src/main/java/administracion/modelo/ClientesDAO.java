@@ -19,11 +19,11 @@ public class ClientesDAO {
     PreparedStatement stmt = null;
     ResultSet rs = null;
     public static String codigoCliente, nombreCliente;
-    private static final String SQL_INSERT = "INSERT into Clientes(Nomcte,Passwordcte,Emailcte,Telcte,Estcte) values(?,?,?,?,?)";
+    private static final String SQL_INSERT = "INSERT into Clientes(Nomcte,Usercte,Passwordcte,Emailcte,Telcte,Estcte) values(?,?,?,?,?)";
     private static final String SQL_DELETE = "DELETE from Clientes where pkidcliente = ?";
-    private static final String SQL_UPDATE = "UPDATE Clientes SET Nomcte=?, Passwordcte=?, Emailcte=?, Telcte=?, Estcte=? WHERE pkidcliente=?";
+    private static final String SQL_UPDATE = "UPDATE Clientes SET Nomcte=?, Usercte=?, Passwordcte=?, Emailcte=?, Telcte=?, Estcte=? WHERE pkidcliente=?";
     private static final String SQL_SELECTTA = "SELECT * FROM Clientes WHERE pkidcliente = ?";
-    private static final String SQL_SELECTL = "SELECT * FROM Clientes WHERE Nomcte = ?";
+    private static final String SQL_SELECTL = "SELECT * FROM Clientes WHERE Usercte = ?";
     
     public List<Clientes> select() { 
         String SQL_SELECT = "SELECT * FROM Clientes WHERE pkidcliente LIKE '%" + codigoCliente + "%' OR Nomcte LIKE '%" + nombreCliente + "%'";
@@ -36,6 +36,7 @@ public class ClientesDAO {
             while (rs.next()) {
                 String id = rs.getString("pkidcliente");
                 String nombre = rs.getString("Nomcte");
+                String user = rs.getString("Usercte");
                 String password = rs.getString("Passwordcte");
                 String email = rs.getString("Emailcte");
                 String telefono = rs.getString("Telcte");
@@ -43,6 +44,7 @@ public class ClientesDAO {
                 clientes = new Clientes();
                 clientes.setId(id);
                 clientes.setNombre(nombre);
+                clientes.setUsuario(user);
                 clientes.setPassword(password);
                 clientes.setEmail(email);
                 clientes.setTelefono(telefono);
@@ -65,10 +67,11 @@ public class ClientesDAO {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_INSERT);
             stmt.setString(1, clientes.getNombre());
-            stmt.setString(2, clientes.getPassword());
-            stmt.setString(3, clientes.getEmail());
-            stmt.setString(4, clientes.getTelefono());
-            stmt.setString(5, clientes.getEstado());
+            stmt.setString(2, clientes.getUsuario());
+            stmt.setString(3, clientes.getPassword());
+            stmt.setString(4, clientes.getEmail());
+            stmt.setString(5, clientes.getTelefono());
+            stmt.setString(6, clientes.getEstado());
             //System.out.println("ejecutando query:" + SQL_INSERT);
             rows = stmt.executeUpdate();
             //System.out.println("Registros afectados:" + rows);
@@ -127,12 +130,13 @@ public class ClientesDAO {
         try {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_SELECTL);
-            stmt.setString(1, clientes.getNombre());
+            stmt.setString(1, clientes.getUsuario());
             //System.out.println(stmt);
             rs = stmt.executeQuery();
             while (rs.next()) {
                 String id = rs.getString("pkidcliente");
-                String nombre = rs.getString("Nomtbd");
+                String user = rs.getString("Usercte");
+                String nombre = rs.getString("Nomcte");
                 String password = rs.getString("Passwordcte");
                 String email = rs.getString("Emailcte");
                 String telefono = rs.getString("Telcte");
@@ -140,6 +144,7 @@ public class ClientesDAO {
                 clientes = new Clientes();
                 clientes.setId(id);
                 clientes.setNombre(nombre);
+                clientes.setUsuario(user);
                 clientes.setPassword(password);
                 clientes.setEmail(email);
                 clientes.setTelefono(telefono);
@@ -166,6 +171,7 @@ public class ClientesDAO {
             while (rs.next()) {
                 String id = rs.getString("pkidcliente");
                 String nombre = rs.getString("Nomtbd");
+                String user = rs.getString("Usercte");
                 String password = rs.getString("Passwordcte");
                 String email = rs.getString("Emailcte");
                 String telefono = rs.getString("Telcte");
@@ -173,6 +179,7 @@ public class ClientesDAO {
                 clientes = new Clientes();
                 clientes.setId(id);
                 clientes.setNombre(nombre);
+                clientes.setUsuario(user);
                 clientes.setPassword(password);
                 clientes.setEmail(email);
                 clientes.setTelefono(telefono);
