@@ -16,6 +16,8 @@ public class MDI_Clientes extends javax.swing.JFrame {
 
     public static JLabel Jl_logo = new JLabel();
     
+    private Prcs_Pedidos prcs_pedidos;
+    
     public MDI_Clientes() {
         initComponents();
         Diseño();
@@ -54,6 +56,7 @@ public class MDI_Clientes extends javax.swing.JFrame {
         Mnu_mantenimientos = new javax.swing.JMenu();
         Sbm_procesos = new javax.swing.JMenu();
         Mnu_procesos = new javax.swing.JMenu();
+        Prcs_Pedidos = new javax.swing.JMenuItem();
         Sbm_herramientas = new javax.swing.JMenu();
         Sbm_ayuda = new javax.swing.JMenu();
         Btn_cerrarSesion = new javax.swing.JMenu();
@@ -104,6 +107,15 @@ public class MDI_Clientes extends javax.swing.JFrame {
         Sbm_procesos.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
 
         Mnu_procesos.setText("Procesos");
+
+        Prcs_Pedidos.setText("Realizar Pedido");
+        Prcs_Pedidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Prcs_PedidosActionPerformed(evt);
+            }
+        });
+        Mnu_procesos.add(Prcs_Pedidos);
+
         Sbm_procesos.add(Mnu_procesos);
 
         Mnb_menu.add(Sbm_procesos);
@@ -145,6 +157,18 @@ public class MDI_Clientes extends javax.swing.JFrame {
         
     }//GEN-LAST:event_Sbm_actualizarPermisosMouseClicked
 
+    private void Prcs_PedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Prcs_PedidosActionPerformed
+        // TODO add your handling code here:
+        prcs_pedidos = new Prcs_Pedidos();
+
+        Jdp_contenedor.add(prcs_pedidos);
+        Dimension desktopSize = Jdp_contenedor.getSize();
+        Dimension FrameSize = prcs_pedidos.getSize();
+        prcs_pedidos.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+        prcs_pedidos.setVisible(true);
+        prcs_pedidos.toFront();
+    }//GEN-LAST:event_Prcs_PedidosActionPerformed
+
     public static void main(String args[]) {
         //FLATLAF
         FlatLightLaf.setup();
@@ -161,12 +185,13 @@ public class MDI_Clientes extends javax.swing.JFrame {
     public static javax.swing.JMenu Btn_cerrarSesion;
     private javax.swing.JDesktopPane Jdp_contenedor;
     public static javax.swing.JMenuBar Mnb_menu;
-    private javax.swing.JMenu Mnu_mantenimientos;
+    public static javax.swing.JMenu Mnu_mantenimientos;
     public static javax.swing.JMenu Mnu_procesos;
+    private javax.swing.JMenuItem Prcs_Pedidos;
     public static javax.swing.JMenu Sbm_actualizarPermisos;
     public static javax.swing.JMenu Sbm_archivos;
     public static javax.swing.JMenu Sbm_ayuda;
-    private javax.swing.JMenu Sbm_catalogo;
+    public static javax.swing.JMenu Sbm_catalogo;
     public static javax.swing.JMenu Sbm_herramientas;
     public static javax.swing.JMenu Sbm_procesos;
     // End of variables declaration//GEN-END:variables
