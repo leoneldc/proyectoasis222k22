@@ -102,27 +102,19 @@
                           <Component id="Lbl_estado" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="Rb_Pendiente" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="Rb_EnUso" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="Rb_Terminada" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="Rb_limpieza" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
                               <Component id="Txt_datos1" max="32767" attributes="0"/>
                               <Component id="Txt_datos2" alignment="0" max="32767" attributes="0"/>
+                              <Component id="Txt_estado" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="Lbl_idVehiculo" min="-2" pref="120" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="Txt_idVehiculo" min="-2" pref="136" max="-2" attributes="0"/>
+                          <Component id="Txt_idAsignacion" min="-2" pref="136" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jButton1" min="-2" pref="28" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                          <Component id="Btn_buscarAsignacion" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -140,9 +132,9 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="Lbl_idVehiculo" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="Txt_idVehiculo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="Txt_idAsignacion" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="Btn_buscarAsignacion" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="Txt_datos1" min="-2" max="-2" attributes="0"/>
@@ -150,15 +142,9 @@
                   <Component id="Txt_datos2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="Rb_Pendiente" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="Lbl_estado" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="Txt_estado" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="Rb_EnUso" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="Rb_Terminada" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="Rb_limpieza" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="Btn_fondoReporte" alignment="0" max="32767" attributes="0"/>
@@ -207,10 +193,10 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Ubuntu" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="ID VEHICULO:"/>
+            <Property name="text" type="java.lang.String" value="ID ASIGNACI&#xd3;N:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="Txt_idVehiculo">
+        <Component class="javax.swing.JTextField" name="Txt_idAsignacion">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="e1" green="cb" red="ac" type="rgb"/>
@@ -234,12 +220,12 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton2">
+        <Component class="javax.swing.JButton" name="Btn_buscarAsignacion">
           <Properties>
             <Property name="text" type="java.lang.String" value="CARGAR"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Btn_buscarAsignacionActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="Txt_datos1">
@@ -278,37 +264,6 @@
               <Font name="Ubuntu" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="ESTADO:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JRadioButton" name="Rb_Pendiente">
-          <Properties>
-            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-              <ComponentRef name="Bg_estados"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="ASIGNADA"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JRadioButton" name="Rb_Terminada">
-          <Properties>
-            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-              <ComponentRef name="Bg_estados"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="TERMINADA"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JRadioButton" name="Rb_EnUso">
-          <Properties>
-            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-              <ComponentRef name="Bg_estados"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="EN USO"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JRadioButton" name="Rb_limpieza">
-          <Properties>
-            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-              <ComponentRef name="Bg_estados"/>
-            </Property>
           </Properties>
         </Component>
         <Container class="javax.swing.JPanel" name="Btn_fondoGuardar">
@@ -638,6 +593,22 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JTextField" name="Txt_estado">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="e1" green="cb" red="ac" type="rgb"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
+                <MatteColorBorder bottom="1" left="0" right="0" top="0">
+                  <Color PropertyName="color" blue="57" green="81" red="58" type="rgb"/>
+                </MatteColorBorder>
+              </Border>
+            </Property>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="Pnl_datos">

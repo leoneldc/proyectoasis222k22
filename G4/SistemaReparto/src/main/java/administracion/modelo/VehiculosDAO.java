@@ -19,6 +19,7 @@ public class VehiculosDAO {
     private static final String SQL_UPDATE = "UPDATE Vehiculos SET Placavhc=?, Marcavhc=?, Modelovhc=?, Añovhc=?, Colorvhc=?, CapaMaxvhc=?, Estvhc=? WHERE pkidvehiculo=?";
     private static final String SQL_SELECT = "SELECT * FROM Vehiculos WHERE pkidvehiculo = ?";
     private static final String SQL_UPDATEL = "UPDATE Vehiculos SET Ultimacuser=? WHERE pkidvehiculo=?";
+    private static final String SQL_UPDATEPV = "UPDATE Vehiculos SET Estvhc=? WHERE pkidvehiculo=?";
     
 
     Connection conn = null;
@@ -183,4 +184,25 @@ public class VehiculosDAO {
         }
         return rows;
     }
+    
+    
+    //-------- UPDATE PARA ASIGNACION PILOTO A VEHICULO 
+    public int updatePV(Vehiculos vehiculos) {
+        int rows = 0;
+        try {
+            conn = Conexion.getConnection();
+            stmt = conn.prepareStatement(SQL_UPDATEPV);
+            stmt.setString(1, vehiculos.getEstado());
+            stmt.setString(2, vehiculos.getId());
+//          System.out.println(stmt);
+            rows = stmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(stmt);
+            Conexion.close(conn);
+        }
+        return rows;
+    }
+    
 }

@@ -645,7 +645,7 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_Btn_modificarMouseEntered
 
     private void Btn_modificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_modificarMouseClicked
-        if (procesosr.isEmptyTxf(Txt_id, Txt_nombre, Txt_apellido, Txt_user, Txt_password, Txt_email)) {
+        if (procesosr.isEmptyTxf(Txt_nombre, Txt_apellido, Txt_user, Txt_password, Txt_email)) {
             if (procesosr.isNumeric(Txt_id)) {
                 if (procesosr.isSelectedRbt(Rb_activo, Rb_inactivo)) {
                     if (procesosr.ValidarEmail(Txt_email.getText())) {
@@ -704,7 +704,7 @@ public class Mnt_Usuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_Btn_guardarMouseEntered
 
     private void Btn_guardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_guardarMouseClicked
-        if (procesosr.isEmptyTxf(Txt_id, Txt_nombre, Txt_apellido, Txt_user, Txt_password, Txt_email)) {
+        if (procesosr.isEmptyTxf(Txt_nombre, Txt_apellido, Txt_user, Txt_password, Txt_email)) {
             if (procesosr.isNumeric(Txt_id)) {
                 if (procesosr.isSelectedRbt(Rb_activo, Rb_inactivo)) {
                     if (procesosr.ValidarEmail(Txt_email.getText())) {

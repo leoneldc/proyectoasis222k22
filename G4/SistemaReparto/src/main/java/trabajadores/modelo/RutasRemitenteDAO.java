@@ -21,13 +21,13 @@ public class RutasRemitenteDAO {
     PreparedStatement stmt = null;
     ResultSet rs = null;
     
-    public static String idAsignacion, idVehiculo;
-    private static final String SQL_INSERT = "INSERT into Rutas_Remitente(fkvehiculo,Estrr) values(?,?)";
+    public static String idruta, idasignacion;
+    private static final String SQL_INSERT = "INSERT into Rutas_Remitente(fkpilveh,Estrr) values(?,?)";
     private static final String SQL_DELETE = "DELETE from Rutas_Remitente where pkidruta = ?";
-    private static final String SQL_UPDATE = "UPDATE Rutas_Remitente SET fkvehiculo=?, Estrr=? WHERE pkidruta=?";
+    private static final String SQL_UPDATE = "UPDATE Rutas_Remitente SET fkpilveh=?, Estrr=? WHERE pkidruta=?";
     
     public List<RutasRemitente> select() {
-        String SQL_SELECT = "SELECT * FROM Rutas_Remitente WHERE pkidruta LIKE '%" + idAsignacion + "%' OR fkvehiculo LIKE '%" + idVehiculo + "%'";
+        String SQL_SELECT = "SELECT * FROM Rutas_Remitente WHERE pkidruta LIKE '%" + idruta + "%' OR fkpilveh LIKE '%" + idasignacion + "%'";
         RutasRemitente rutas = null;
         List<RutasRemitente> listaRemitente = new ArrayList<RutasRemitente>();
         try {
@@ -36,11 +36,11 @@ public class RutasRemitenteDAO {
             rs = stmt.executeQuery();
             while (rs.next()) {
                 String idAsn = rs.getString("pkidruta");
-                String idVehiculo = rs.getString("fkvehiculo");
+                String idVehiculo = rs.getString("fkpilveh");
                 String estado = rs.getString("Estrr");
                 rutas = new RutasRemitente();
-                rutas.setIdAsignacion(idAsn);
-                rutas.setIdVehiculo(idVehiculo);
+                rutas.setIdRuta(idAsn);
+                rutas.setIdAsignacion(idVehiculo);
                 rutas.setEstado(estado);
                 listaRemitente.add(rutas);
             }
@@ -59,7 +59,7 @@ public class RutasRemitenteDAO {
         try {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_INSERT);
-            stmt.setString(1, asignacion.getIdVehiculo());
+            stmt.setString(1, asignacion.getIdAsignacion());
             stmt.setString(2, asignacion.getEstado());
             //System.out.println("ejecutando query:" + SQL_INSERT);
             rows = stmt.executeUpdate();
@@ -80,7 +80,7 @@ public class RutasRemitenteDAO {
         try {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_DELETE);
-            stmt.setString(1, asignacion.getIdAsignacion());
+            stmt.setString(1, asignacion.getIdRuta());
             //System.out.println(stmt);
             rows = stmt.executeUpdate();
         } catch (SQLException ex) {
@@ -97,9 +97,9 @@ public class RutasRemitenteDAO {
         try {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_UPDATE);
-            stmt.setString(1, asignacion.getIdVehiculo());
+            stmt.setString(1, asignacion.getIdAsignacion());
             stmt.setString(2, asignacion.getEstado());
-            stmt.setString(3, asignacion.getIdAsignacion());
+            stmt.setString(3, asignacion.getIdRuta());
 //          System.out.println(stmt);
             rows = stmt.executeUpdate();
         } catch (SQLException ex) {

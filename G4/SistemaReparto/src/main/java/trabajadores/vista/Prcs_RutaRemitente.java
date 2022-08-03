@@ -2,55 +2,53 @@ package trabajadores.vista;
 
 import administracion.vista.*;
 import administracion.controlador.ProcesosRepetidos;
-import administracion.controlador.TrabajadorAplicacion;
 import administracion.controlador.Vehiculos;
-import administracion.modelo.TrabajadorAplicacionDAO;
 import administracion.modelo.VehiculosDAO;
 import java.util.List;
+import trabajadores.controlador.PilotoVehiculo;
 import trabajadores.controlador.RutasRemitente;
+import trabajadores.modelo.PilotoVehiculoDAO;
 import trabajadores.modelo.RutasRemitenteDAO;
 
-public class Asgn_RutaRemitente extends javax.swing.JInternalFrame {
+public class Prcs_RutaRemitente extends javax.swing.JInternalFrame {
 
     ProcesosRepetidos procesosr = new ProcesosRepetidos();
     FuncionesBitacora funcBitacora = new FuncionesBitacora();
     RutasRemitente ruta = new RutasRemitente();
     RutasRemitenteDAO rutaDAO = new RutasRemitenteDAO();
-    String idApp = "1001";
+    PilotoVehiculo asignacion = new PilotoVehiculo();
+    PilotoVehiculoDAO pilotovdao = new PilotoVehiculoDAO();
 
-    public Asgn_RutaRemitente() {
+    public Prcs_RutaRemitente() {
         initComponents();
-        cargarAcciones();
         diseño();
         cargarDatos("");
     }
 
     public void diseño() {
         setTitle("Creación de Rutas Remitente");
-        Rb_limpieza.setVisible(false);
         procesosr.cursorMano(Tbl_Datos, Btn_ayuda, Btn_cancelar, Btn_eliminar, Btn_guardar, Btn_modificar, Btn_reporte);
     }
 
     private void limpiar() {
-        procesosr.limpiarTxf(Txt_idVehiculo, Txt_idAsn, Txt_datos1, Txt_datos2, Txt_busqueda);
-        Rb_limpieza.setSelected(true);
+        procesosr.limpiarTxf(Txt_idAsignacion, Txt_idAsn, Txt_datos1, Txt_datos2, Txt_busqueda, Txt_estado);
         Txt_idAsn.setText("0");
     }
 
     private void cargarDatos(String query) {
         ProcesosRepetidos procesosr = new ProcesosRepetidos();
-        RutasRemitenteDAO.idAsignacion = query;
-        RutasRemitenteDAO.idVehiculo = query;
-        String encabezado[] = {"ID ASIGNACIÓN", "ID VEHICULO", "ESTADO"};
+        RutasRemitenteDAO.idruta = query;
+        RutasRemitenteDAO.idasignacion = query;
+        String encabezado[] = {"ID RUTA", "ID ASIGNACION PILOTO-VEHICULO", "ESTADO"};
         int cantidadcolumnas = encabezado.length;
         procesosr.llenarColumnas(encabezado, cantidadcolumnas, Tbl_Datos);
         String datos[] = new String[cantidadcolumnas];
-        int tamaño[] = {150, 150, 150};
+        int tamaño[] = {100, 250, 125};
         RutasRemitenteDAO rutaDAO = new RutasRemitenteDAO();
         List<RutasRemitente> listadoRutas = rutaDAO.select();
         for (RutasRemitente ruta : listadoRutas) {
-            datos[0] = ruta.getIdAsignacion();
-            datos[1] = ruta.getIdVehiculo();
+            datos[0] = ruta.getIdRuta();
+            datos[1] = ruta.getIdAsignacion();
             if (ruta.getEstado().equals("1")) {
                 datos[2] = "EN USO";
             } else if (ruta.getEstado().equals("2")) {
@@ -59,35 +57,6 @@ public class Asgn_RutaRemitente extends javax.swing.JInternalFrame {
                 datos[2] = "ASIGNADA";
             }
             procesosr.llenarFilas(datos, tamaño, Tbl_Datos);
-        }
-    }
-
-    void cargarAcciones() {
-
-        Btn_guardar.setVisible(false);
-        Btn_modificar.setVisible(false);
-        Btn_eliminar.setVisible(false);
-        Txt_busqueda.setEditable(false);
-
-        TrabajadorAplicacion permisos = new TrabajadorAplicacion();
-        TrabajadorAplicacionDAO permisosDAO = new TrabajadorAplicacionDAO();
-
-        permisos.setIdTrabajador(LOGIN_Trabajadores.idUsuario);
-        permisos.setIdAplicacion(idApp);
-
-        permisos = permisosDAO.selectV(permisos);
-
-        if (permisos.getBuscar().equals("1")) {
-            Txt_busqueda.setEditable(true);
-        }
-        if (permisos.getGuardar().equals("1")) {
-            Btn_guardar.setVisible(true);
-        }
-        if (permisos.getModificar().equals("1")) {
-            Btn_modificar.setVisible(true);
-        }
-        if (permisos.getEliminar().equals("1")) {
-            Btn_eliminar.setVisible(true);
         }
     }
 
@@ -103,16 +72,12 @@ public class Asgn_RutaRemitente extends javax.swing.JInternalFrame {
         Lbl_idAsn = new javax.swing.JLabel();
         Txt_idAsn = new javax.swing.JTextField();
         Lbl_idVehiculo = new javax.swing.JLabel();
-        Txt_idVehiculo = new javax.swing.JTextField();
+        Txt_idAsignacion = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        Btn_buscarAsignacion = new javax.swing.JButton();
         Txt_datos1 = new javax.swing.JTextField();
         Txt_datos2 = new javax.swing.JTextField();
         Lbl_estado = new javax.swing.JLabel();
-        Rb_Pendiente = new javax.swing.JRadioButton();
-        Rb_Terminada = new javax.swing.JRadioButton();
-        Rb_EnUso = new javax.swing.JRadioButton();
-        Rb_limpieza = new javax.swing.JRadioButton();
         Btn_fondoGuardar = new javax.swing.JPanel();
         Btn_guardar = new javax.swing.JLabel();
         Btn_fondoEliminar = new javax.swing.JPanel();
@@ -125,6 +90,7 @@ public class Asgn_RutaRemitente extends javax.swing.JInternalFrame {
         Btn_ayuda = new javax.swing.JLabel();
         Btn_fondoCancelar = new javax.swing.JPanel();
         Btn_cancelar = new javax.swing.JLabel();
+        Txt_estado = new javax.swing.JTextField();
         Pnl_datos = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         Tbl_Datos = new javax.swing.JTable();
@@ -150,12 +116,12 @@ public class Asgn_RutaRemitente extends javax.swing.JInternalFrame {
         Txt_idAsn.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
 
         Lbl_idVehiculo.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        Lbl_idVehiculo.setText("ID VEHICULO:");
+        Lbl_idVehiculo.setText("ID ASIGNACIÓN:");
 
-        Txt_idVehiculo.setBackground(new java.awt.Color(172, 203, 225));
-        Txt_idVehiculo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Txt_idVehiculo.setText("0");
-        Txt_idVehiculo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
+        Txt_idAsignacion.setBackground(new java.awt.Color(172, 203, 225));
+        Txt_idAsignacion.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Txt_idAsignacion.setText("0");
+        Txt_idAsignacion.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
 
         jButton1.setText("?");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -164,10 +130,10 @@ public class Asgn_RutaRemitente extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton2.setText("CARGAR");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        Btn_buscarAsignacion.setText("CARGAR");
+        Btn_buscarAsignacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                Btn_buscarAsignacionActionPerformed(evt);
             }
         });
 
@@ -181,17 +147,6 @@ public class Asgn_RutaRemitente extends javax.swing.JInternalFrame {
 
         Lbl_estado.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         Lbl_estado.setText("ESTADO:");
-
-        Bg_estados.add(Rb_Pendiente);
-        Rb_Pendiente.setText("ASIGNADA");
-
-        Bg_estados.add(Rb_Terminada);
-        Rb_Terminada.setText("TERMINADA");
-
-        Bg_estados.add(Rb_EnUso);
-        Rb_EnUso.setText("EN USO");
-
-        Bg_estados.add(Rb_limpieza);
 
         Btn_fondoGuardar.setBackground(new java.awt.Color(97, 212, 195));
         Btn_fondoGuardar.setMaximumSize(new java.awt.Dimension(104, 40));
@@ -400,6 +355,11 @@ public class Asgn_RutaRemitente extends javax.swing.JInternalFrame {
             .addComponent(Btn_cancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        Txt_estado.setEditable(false);
+        Txt_estado.setBackground(new java.awt.Color(172, 203, 225));
+        Txt_estado.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        Txt_estado.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(88, 129, 87)));
+
         javax.swing.GroupLayout Pnl_ingresoDatosLayout = new javax.swing.GroupLayout(Pnl_ingresoDatos);
         Pnl_ingresoDatos.setLayout(Pnl_ingresoDatosLayout);
         Pnl_ingresoDatosLayout.setHorizontalGroup(
@@ -429,23 +389,17 @@ public class Asgn_RutaRemitente extends javax.swing.JInternalFrame {
                         .addComponent(Lbl_estado)
                         .addGap(79, 79, 79)
                         .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(Pnl_ingresoDatosLayout.createSequentialGroup()
-                                .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Rb_Pendiente)
-                                    .addComponent(Rb_EnUso)
-                                    .addComponent(Rb_Terminada)
-                                    .addComponent(Rb_limpieza))
-                                .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(Txt_datos1)
-                            .addComponent(Txt_datos2)))
+                            .addComponent(Txt_datos2)
+                            .addComponent(Txt_estado)))
                     .addGroup(Pnl_ingresoDatosLayout.createSequentialGroup()
                         .addComponent(Lbl_idVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Txt_idVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Txt_idAsignacion, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
+                        .addComponent(Btn_buscarAsignacion)))
                 .addContainerGap())
         );
         Pnl_ingresoDatosLayout.setVerticalGroup(
@@ -458,23 +412,17 @@ public class Asgn_RutaRemitente extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Lbl_idVehiculo)
-                    .addComponent(Txt_idVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Txt_idAsignacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(Btn_buscarAsignacion))
                 .addGap(18, 18, 18)
                 .addComponent(Txt_datos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(Txt_datos2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Rb_Pendiente)
-                    .addComponent(Lbl_estado))
-                .addGap(18, 18, 18)
-                .addComponent(Rb_EnUso)
-                .addGap(18, 18, 18)
-                .addComponent(Rb_Terminada)
-                .addGap(18, 18, 18)
-                .addComponent(Rb_limpieza)
+                    .addComponent(Lbl_estado)
+                    .addComponent(Txt_estado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(Btn_fondoReporte, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -571,14 +519,8 @@ public class Asgn_RutaRemitente extends javax.swing.JInternalFrame {
     private void Tbl_DatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Tbl_DatosMouseClicked
         if (evt.getClickCount() == 2) {
             Txt_idAsn.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 0).toString());
-            Txt_idVehiculo.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 1).toString());
-            if (Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 2).toString().equals("EN USO")) {
-                Rb_EnUso.setSelected(true);
-            } else if (Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 2).toString().equals("TERMINADA")) {
-                Rb_Terminada.setSelected(true);
-            } else {
-                Rb_Pendiente.setSelected(true);
-            }
+            Txt_idAsignacion.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 1).toString());
+            Txt_estado.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 2).toString());
         }
     }//GEN-LAST:event_Tbl_DatosMouseClicked
 
@@ -619,25 +561,14 @@ public class Asgn_RutaRemitente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_Btn_modificarMouseEntered
 
     private void Btn_modificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_modificarMouseClicked
-        if (procesosr.isEmptyTxf(Txt_idVehiculo, Txt_datos1, Txt_datos2)) {
-            if (procesosr.isNumeric(Txt_idVehiculo)) {
-                if (procesosr.isSelectedRbt(Rb_Pendiente, Rb_EnUso, Rb_Terminada)) {
-                    ruta.setIdAsignacion(Txt_idAsn.getText());
-                    ruta.setIdVehiculo(Txt_idVehiculo.getText());
-                    if (Rb_Pendiente.isSelected()) {
-                        ruta.setEstado("0");
-                    }
-                    if (Rb_EnUso.isSelected()) {
-                        ruta.setEstado("1");
-                    }
-                    if (Rb_Terminada.isSelected()) {
-                        ruta.setEstado("2");
-                    }
-                    rutaDAO.update(ruta);
-                    cargarDatos("");
-                    procesosr.accionExitosa("Registro Exitoso", "Se ha registrado la ruta para el vehiculo: \"" + Txt_datos1.getText() + "\" correctamente");
-                    limpiar();
-                }
+        if (procesosr.isEmptyTxf(Txt_idAsignacion, Txt_datos1, Txt_datos2)) {
+            if (procesosr.isNumeric(Txt_idAsignacion)) {
+                ruta.setIdRuta(Txt_idAsn.getText());
+                ruta.setIdAsignacion(Txt_idAsignacion.getText());
+                rutaDAO.update(ruta);
+                cargarDatos("");
+                procesosr.accionExitosa("Registro Exitoso", "Se ha registrado la ruta para el vehiculo: \"" + Txt_datos1.getText() + "\" correctamente");
+                limpiar();
             }
         }
     }//GEN-LAST:event_Btn_modificarMouseClicked
@@ -654,7 +585,7 @@ public class Asgn_RutaRemitente extends javax.swing.JInternalFrame {
         if (procesosr.isEmptyTxf(Txt_idAsn)) {
             if (procesosr.isNumeric(Txt_idAsn)) {
                 if (procesosr.confirmarEliminación("la ruta# " + Txt_idAsn.getText())) {
-                    ruta.setIdAsignacion(Txt_idAsn.getText());
+                    ruta.setIdRuta(Txt_idAsn.getText());
                     rutaDAO.delete(ruta);
                     cargarDatos("");
                     procesosr.accionExitosa("Eliminación Exitosa", "Se ha eliminado la ruta #" + Txt_idAsn.getText() + " correctamente");
@@ -673,24 +604,14 @@ public class Asgn_RutaRemitente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_Btn_guardarMouseEntered
 
     private void Btn_guardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_guardarMouseClicked
-        if (procesosr.isEmptyTxf(Txt_idVehiculo, Txt_datos1, Txt_datos2)) {
-            if (procesosr.isNumeric(Txt_idVehiculo)) {
-                if (procesosr.isSelectedRbt(Rb_Pendiente, Rb_EnUso, Rb_Terminada)) {
-                    ruta.setIdVehiculo(Txt_idVehiculo.getText());
-                    if (Rb_Pendiente.isSelected()) {
-                        ruta.setEstado("0");
-                    }
-                    if (Rb_EnUso.isSelected()) {
-                        ruta.setEstado("1");
-                    }
-                    if (Rb_Terminada.isSelected()) {
-                        ruta.setEstado("2");
-                    }
-                    rutaDAO.insert(ruta);
-                    cargarDatos("");
-                    procesosr.accionExitosa("Registro Exitoso", "Se ha registrado la ruta para el vehiculo: \"" + Txt_datos1.getText() + "\" correctamente");
-                    limpiar();
-                }
+        if (procesosr.isEmptyTxf(Txt_idAsignacion, Txt_datos1, Txt_datos2)) {
+            if (procesosr.isNumeric(Txt_idAsignacion)) {
+                ruta.setIdAsignacion(Txt_idAsignacion.getText());
+                ruta.setEstado("0");
+                rutaDAO.insert(ruta);
+                cargarDatos("");
+                procesosr.accionExitosa("Registro Exitoso", "Se ha registrado la ruta para el vehiculo: \"" + Txt_datos1.getText() + "\" correctamente");
+                limpiar();
             }
         }
     }//GEN-LAST:event_Btn_guardarMouseClicked
@@ -706,32 +627,30 @@ public class Asgn_RutaRemitente extends javax.swing.JInternalFrame {
     private void Txt_busquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Txt_busquedaKeyReleased
         String query = Txt_busqueda.getText();
         cargarDatos(query);
-        funcBitacora.GuardarBitacora("BUSQUEDA", idApp);
     }//GEN-LAST:event_Txt_busquedaKeyReleased
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (procesosr.isEmptyTxf(Txt_idVehiculo)) {
-            if (procesosr.isNumeric(Txt_idVehiculo)) {
-                Vehiculos vehiculos = new Vehiculos();
-                VehiculosDAO vehiculosDAO = new VehiculosDAO();
-                vehiculos.setId(Txt_idVehiculo.getText());
-                vehiculos = vehiculosDAO.selectUA(vehiculos);
-                if (vehiculos.getMarca() != null) {
-                    if (vehiculos.getEstado().equals("1")) {
-                        Txt_datos1.setText(vehiculos.getMarca() + " " + vehiculos.getPlaca());
-                        Txt_datos2.setText("Capacidad de " + vehiculos.getMax() + " pedidos");
-                    } else {
-                        procesosr.accionErronea("ERROR", "VEHICULO NO DISPONIBLE");
-                    }
+    private void Btn_buscarAsignacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_buscarAsignacionActionPerformed
+        if (procesosr.isEmptyTxf(Txt_idAsignacion)) {
+            if (procesosr.isNumeric(Txt_idAsignacion)) {
+                asignacion.setIdAsignacion(Txt_idAsignacion.getText());
+                asignacion = pilotovdao.selectRM(asignacion);
+                if (asignacion.getIdVehiculo() == null) {
+                    procesosr.accionErronea("¡ERROR!", "ASIGNACIÓN NO ENCONTRADA");
                 } else {
-                    procesosr.accionErronea("ERROR", "VEHICULO NO ENCONTRADO");
+                    Vehiculos vehiculos = new Vehiculos();
+                    VehiculosDAO vehiculosDAO = new VehiculosDAO();
+                    vehiculos.setId(asignacion.getIdVehiculo());
+                    vehiculos = vehiculosDAO.selectUA(vehiculos);
+                    Txt_datos1.setText(vehiculos.getMarca() + " " + vehiculos.getPlaca());
+                    Txt_datos2.setText("Capacidad de " + vehiculos.getMax() + " pedidos");
                 }
+
             }
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_Btn_buscarAsignacionActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Vst_Vehiculos vst_vehiculos = new Vst_Vehiculos();
+        Vst_TrabajadoresVehiculos vst_vehiculos = new Vst_TrabajadoresVehiculos();
         vst_vehiculos.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -739,6 +658,7 @@ public class Asgn_RutaRemitente extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup Bg_estados;
     private javax.swing.JLabel Btn_ayuda;
+    private javax.swing.JButton Btn_buscarAsignacion;
     private javax.swing.JLabel Btn_cancelar;
     private javax.swing.JLabel Btn_eliminar;
     private javax.swing.JPanel Btn_fondoAyuda;
@@ -756,18 +676,14 @@ public class Asgn_RutaRemitente extends javax.swing.JInternalFrame {
     private javax.swing.JLabel Lbl_idVehiculo;
     private javax.swing.JPanel Pnl_datos;
     private javax.swing.JPanel Pnl_ingresoDatos;
-    private javax.swing.JRadioButton Rb_EnUso;
-    private javax.swing.JRadioButton Rb_Pendiente;
-    private javax.swing.JRadioButton Rb_Terminada;
-    private javax.swing.JRadioButton Rb_limpieza;
     private javax.swing.JTable Tbl_Datos;
     private javax.swing.JTextField Txt_busqueda;
     private javax.swing.JTextField Txt_datos1;
     private javax.swing.JTextField Txt_datos2;
+    private javax.swing.JTextField Txt_estado;
+    private javax.swing.JTextField Txt_idAsignacion;
     private javax.swing.JTextField Txt_idAsn;
-    private javax.swing.JTextField Txt_idVehiculo;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }
