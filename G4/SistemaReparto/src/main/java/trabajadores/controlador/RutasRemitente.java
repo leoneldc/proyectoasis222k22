@@ -8,7 +8,15 @@ package trabajadores.controlador;
  */
 
 public class RutasRemitente {
-    private String idAsignacion, idVehiculo, estado;
+    private String idRuta, idAsignacion, estado;
+
+    public String getIdRuta() {
+        return idRuta;
+    }
+
+    public void setIdRuta(String idRuta) {
+        this.idRuta = idRuta;
+    }
 
     public String getIdAsignacion() {
         return idAsignacion;
@@ -16,14 +24,6 @@ public class RutasRemitente {
 
     public void setIdAsignacion(String idAsignacion) {
         this.idAsignacion = idAsignacion;
-    }
-
-    public String getIdVehiculo() {
-        return idVehiculo;
-    }
-
-    public void setIdVehiculo(String idVehiculo) {
-        this.idVehiculo = idVehiculo;
     }
 
     public String getEstado() {
