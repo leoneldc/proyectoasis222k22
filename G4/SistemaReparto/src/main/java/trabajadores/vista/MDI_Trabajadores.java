@@ -22,6 +22,7 @@ public class MDI_Trabajadores extends javax.swing.JFrame {
     
     private Vst_Bitacora vst_bitacora;
     private Prcs_RutaRemitente asgn_RutaRemitente;
+    private Prcs_RutaDestinatario asgn_RutaDestinatario;
     private Asgn_PilotoVehiculo asgn_pilotoVehiculo;
     private Asgn_RepartidorVehiculo asgn_repartidorVehiculo;
 
@@ -76,6 +77,7 @@ public class MDI_Trabajadores extends javax.swing.JFrame {
         Sbm_procesos = new javax.swing.JMenu();
         Mnu_procesos = new javax.swing.JMenu();
         MnI_RutasRemitente = new javax.swing.JMenuItem();
+        MnI_RutasRemitente1 = new javax.swing.JMenuItem();
         Sbm_herramientas = new javax.swing.JMenu();
         MnI_bitacora = new javax.swing.JMenuItem();
         Sbm_ayuda = new javax.swing.JMenu();
@@ -152,6 +154,14 @@ public class MDI_Trabajadores extends javax.swing.JFrame {
             }
         });
         Mnu_procesos.add(MnI_RutasRemitente);
+
+        MnI_RutasRemitente1.setText("Creación de Rutas de Destinatario");
+        MnI_RutasRemitente1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnI_RutasRemitente1ActionPerformed(evt);
+            }
+        });
+        Mnu_procesos.add(MnI_RutasRemitente1);
 
         Sbm_procesos.add(Mnu_procesos);
 
@@ -247,6 +257,18 @@ public class MDI_Trabajadores extends javax.swing.JFrame {
         asgn_repartidorVehiculo.toFront();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void MnI_RutasRemitente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnI_RutasRemitente1ActionPerformed
+        // TODO add your handling code here:
+        asgn_RutaDestinatario = new Prcs_RutaDestinatario();
+
+        Jdp_contenedor.add(asgn_RutaDestinatario);
+        Dimension desktopSize = Jdp_contenedor.getSize();
+        Dimension FrameSize = asgn_RutaDestinatario.getSize();
+        asgn_RutaDestinatario.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+        asgn_RutaDestinatario.setVisible(true);
+        asgn_RutaDestinatario.toFront();
+    }//GEN-LAST:event_MnI_RutasRemitente1ActionPerformed
+
     public static void main(String args[]) {
         //FLATLAF
         FlatLightLaf.setup();
@@ -264,6 +286,7 @@ public class MDI_Trabajadores extends javax.swing.JFrame {
     private javax.swing.JDesktopPane Jdp_contenedor;
     private javax.swing.JMenuItem MnI_PilotoVehiculo;
     public static javax.swing.JMenuItem MnI_RutasRemitente;
+    public static javax.swing.JMenuItem MnI_RutasRemitente1;
     private javax.swing.JMenuItem MnI_bitacora;
     public static javax.swing.JMenuBar Mnb_menu;
     public static javax.swing.JMenu Mnu_mantenimientos;
