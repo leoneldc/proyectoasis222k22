@@ -273,7 +273,6 @@ public class LOGIN_Clientes extends javax.swing.JFrame {
 
         login.setUsuario(usuario);
         login = ldao.selectL(login);
-        System.out.println(login.getUsuario()+" "+login.getPassword());
         if (newPassword.equals(login.getPassword())) {
             idCliente=login.getId();
             nombreCliente=login.getNombre();

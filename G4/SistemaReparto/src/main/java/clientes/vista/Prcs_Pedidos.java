@@ -2,13 +2,8 @@ package clientes.vista;
 
 import clientes.controlador.Pedidos;
 import administracion.controlador.ProcesosRepetidos;
-import administracion.controlador.UsuarioAplicacion;
 import clientes.modelo.PedidosDAO;
-import administracion.modelo.UsuarioAplicacionDAO;
 import administracion.vista.FuncionesBitacora;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class Prcs_Pedidos extends javax.swing.JInternalFrame {
 
@@ -390,7 +385,7 @@ public class Prcs_Pedidos extends javax.swing.JInternalFrame {
     private void Btn_guardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_guardarMouseClicked
         if (procesosr.isEmptyTxf(Txt_Id, Txt_DireR, Txt_DireD, Txt_ZonaD)) {
             if (procesosr.isNumeric(Txt_TelD,Txt_TamP)) {
-                        pedidos.setId(Txt_Id.getText());
+                        pedidos.setIdCliente(Txt_Id.getText());
                         pedidos.setFecha(procesosr.getFechaActual("us"));
                         pedidos.setDireR(Txt_DireR.getText());
                         pedidos.setDireD(Txt_DireD.getText());

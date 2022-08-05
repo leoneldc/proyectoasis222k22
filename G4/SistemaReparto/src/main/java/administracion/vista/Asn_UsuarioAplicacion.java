@@ -754,7 +754,7 @@ public class Asn_UsuarioAplicacion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_Btn_cargarUsuarioActionPerformed
 
     private void Btn_ReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_ReportesMouseClicked
-        // TODO add your handling code here:
+        procesosr.imprimirReporteA("Rpt_UsuarioAplicacion", "Reporte de Asignacion Usuario a Aplicacion");
     }//GEN-LAST:event_Btn_ReportesMouseClicked
 
     private void Btn_ReportesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_ReportesMouseEntered
