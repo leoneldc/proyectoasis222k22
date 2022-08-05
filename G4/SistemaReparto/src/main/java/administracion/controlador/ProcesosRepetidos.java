@@ -2,9 +2,15 @@
 
 package administracion.controlador;
 
+import administracion.modelo.Conexion;
+import administracion.vista.LOGIN_Administracion;
 import java.awt.Color;
 import java.awt.Component;
+import java.io.File;
+import java.sql.Connection;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
@@ -17,6 +23,11 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
  /**
  * @author H. Leonel Dominguez C.
@@ -203,6 +214,26 @@ public class ProcesosRepetidos {
             return true;
         }
         return false;
+    }
+    //reportes
+    private Connection connection = null;
+    public void imprimirReporteA(String nombreReporte, String titulo) {
+        Map p = new HashMap();
+        JasperReport report;
+        JasperPrint print;
+        try {
+            connection = Conexion.getConnection();
+            report = JasperCompileManager.compileReport(new File("").getAbsolutePath()
+                    + "/src/main/java/administracion/reportes/"+ nombreReporte+".jrxml");
+            p.put("usuario", LOGIN_Administracion.idUsuario);
+            p.put("logo", new File("").getAbsolutePath() + "/src/main/java/assets/logoA.png");
+            print = JasperFillManager.fillReport(report, p, connection);
+            JasperViewer view = new JasperViewer(print, false);
+            view.setTitle(titulo);
+            view.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     

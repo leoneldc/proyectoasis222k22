@@ -10,12 +10,12 @@ package clientes.controlador;
  */
 public class Pedidos {
 
-    public String getId() {
-        return id;
+    public String getIdCliente() {
+        return idCliente;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdCliente(String idCliente) {
+        this.idCliente = idCliente;
     }
 
     public String getFecha() {
@@ -73,5 +73,27 @@ public class Pedidos {
     public void setTamP(String tamP) {
         this.tamP = tamP;
     }
-    private String id, fecha, direR, direD, zonaD, nomD, telD, tamP;
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getIdPedido() {
+        return idPedido;
+    }
+
+    public void setIdPedido(String idPedido) {
+        this.idPedido = idPedido;
+    }
+
+    @Override
+    public String toString() {
+        return "Pedidos{" + "idCliente=" + idCliente + ", fecha=" + fecha + ", direR=" + direR + ", direD=" + direD + ", zonaD=" + zonaD + ", nomD=" + nomD + ", telD=" + telD + ", tamP=" + tamP + ", estado=" + estado + ", idPedido=" + idPedido + '}';
+    }
+    
+    private String idCliente, fecha, direR, direD, zonaD, nomD, telD, tamP, estado, idPedido;
+
 }

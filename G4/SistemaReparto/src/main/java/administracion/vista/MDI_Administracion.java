@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class MDI_Administracion extends javax.swing.JFrame {
 
@@ -18,7 +19,7 @@ public class MDI_Administracion extends javax.swing.JFrame {
     String idBusqueda = LOGIN_Administracion.idUsuario;
 
     public static JLabel Jl_logo = new JLabel();
-    
+
     private Mnt_Modulos mnt_modulos;
     private Mnt_Aplicaciones mnt_aplicaciones;
     private Mnt_Usuarios mnt_usuarios;
@@ -51,7 +52,7 @@ public class MDI_Administracion extends javax.swing.JFrame {
         gpermisos.cargarAplicaciones(idBusqueda);
         funcBitacora.GuardarBitacora("LOGIN", "0001");
         user.setId(idBusqueda);
-        user.setUltimaConexion(procesoRepetido.getFechaActual("us")+" "+procesoRepetido.getHoraActual());
+        user.setUltimaConexion(procesoRepetido.getFechaActual("us") + " " + procesoRepetido.getHoraActual());
         userDAO.updateL(user);
     }
 
@@ -67,7 +68,7 @@ public class MDI_Administracion extends javax.swing.JFrame {
         Dimension FrameSize = Jl_logo.getSize();
         Jl_logo.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -100,6 +101,11 @@ public class MDI_Administracion extends javax.swing.JFrame {
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 formComponentResized(evt);
+            }
+        });
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
 
@@ -246,6 +252,11 @@ public class MDI_Administracion extends javax.swing.JFrame {
 
         Btn_cerrarSesion.setText("Cerrar Sesión");
         Btn_cerrarSesion.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        Btn_cerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Btn_cerrarSesionMouseClicked(evt);
+            }
+        });
         Mnb_menu.add(Btn_cerrarSesion);
 
         setJMenuBar(Mnb_menu);
@@ -403,6 +414,18 @@ public class MDI_Administracion extends javax.swing.JFrame {
         mnt_clientes.toFront();
         funcBitacora.GuardarBitacora("ACCESO", "0011");
     }//GEN-LAST:event_MnI_clientesActionPerformed
+
+    private void Btn_cerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_cerrarSesionMouseClicked
+        int confirmar = JOptionPane.showConfirmDialog(null, "¿Desea cerrar sesión?", "Verifiación", JOptionPane.YES_NO_OPTION);
+        if (confirmar == 0) {
+            funcBitacora.GuardarBitacora("LOG OUT", "0001");
+            System.exit(0);
+        }
+    }//GEN-LAST:event_Btn_cerrarSesionMouseClicked
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        funcBitacora.GuardarBitacora("LOG OUT", "0001");
+    }//GEN-LAST:event_formWindowClosing
 
     public static void main(String args[]) {
         //FLATLAF

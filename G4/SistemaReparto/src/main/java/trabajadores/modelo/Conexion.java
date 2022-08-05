@@ -12,7 +12,7 @@ import java.sql.SQLException;
  * @author leone
  */
 public class Conexion {
-    private static final String JDBC_URL = "jdbc:mysql://sisreparto.mysql.database.azure.com:3306/RepartoBD?useSSL=true";
+    private static final String JDBC_URL = "jdbc:mysql://sisreparto.mysql.database.azure.com:3306/RepartoBD";
     private static final String JDBC_USER = "administrador";
     private static final String JDBC_PASS = "asis_G4_";
 

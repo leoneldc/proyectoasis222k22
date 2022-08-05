@@ -756,7 +756,7 @@ public class Asn_TrabajadorAplicacion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_Btn_cargarUsuarioActionPerformed
 
     private void Btn_ReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_ReportesMouseClicked
-        // TODO add your handling code here:
+        procesosr.imprimirReporteA("Rpt_TrabajadorAplicacion", "Reporte de Asignacion Trabajador a Aplicacion");
     }//GEN-LAST:event_Btn_ReportesMouseClicked
 
     private void Btn_ReportesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_ReportesMouseEntered

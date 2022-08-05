@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import trabajadores.controlador.GenerarPermisos;
 
 public class MDI_Trabajadores extends javax.swing.JFrame {
@@ -25,6 +26,7 @@ public class MDI_Trabajadores extends javax.swing.JFrame {
     private Prcs_RutaDestinatario asgn_RutaDestinatario;
     private Asgn_PilotoVehiculo asgn_pilotoVehiculo;
     private Asgn_RepartidorVehiculo asgn_repartidorVehiculo;
+    private Asgn_RutaPedido asgn_rutaPedido;
 
     public MDI_Trabajadores() {
         initComponents();
@@ -73,13 +75,13 @@ public class MDI_Trabajadores extends javax.swing.JFrame {
         Sbm_catalogo = new javax.swing.JMenu();
         Mnu_mantenimientos = new javax.swing.JMenu();
         MnI_PilotoVehiculo = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        MnI_RepartidorVehiculo = new javax.swing.JMenuItem();
         Sbm_procesos = new javax.swing.JMenu();
         Mnu_procesos = new javax.swing.JMenu();
         MnI_RutasRemitente = new javax.swing.JMenuItem();
         MnI_RutasRemitente1 = new javax.swing.JMenuItem();
+        MnI_RutaPedido = new javax.swing.JMenuItem();
         Sbm_herramientas = new javax.swing.JMenu();
-        MnI_bitacora = new javax.swing.JMenuItem();
         Sbm_ayuda = new javax.swing.JMenu();
         Btn_cerrarSesion = new javax.swing.JMenu();
 
@@ -88,6 +90,11 @@ public class MDI_Trabajadores extends javax.swing.JFrame {
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 formComponentResized(evt);
+            }
+        });
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
 
@@ -130,13 +137,13 @@ public class MDI_Trabajadores extends javax.swing.JFrame {
         });
         Mnu_mantenimientos.add(MnI_PilotoVehiculo);
 
-        jMenuItem1.setText("Asignacion Repartidor a Vehiculo");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        MnI_RepartidorVehiculo.setText("Asignacion Repartidor a Vehiculo");
+        MnI_RepartidorVehiculo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                MnI_RepartidorVehiculoActionPerformed(evt);
             }
         });
-        Mnu_mantenimientos.add(jMenuItem1);
+        Mnu_mantenimientos.add(MnI_RepartidorVehiculo);
 
         Sbm_catalogo.add(Mnu_mantenimientos);
 
@@ -163,21 +170,20 @@ public class MDI_Trabajadores extends javax.swing.JFrame {
         });
         Mnu_procesos.add(MnI_RutasRemitente1);
 
+        MnI_RutaPedido.setText("Asignación Ruta a Pedido");
+        MnI_RutaPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnI_RutaPedidoActionPerformed(evt);
+            }
+        });
+        Mnu_procesos.add(MnI_RutaPedido);
+
         Sbm_procesos.add(Mnu_procesos);
 
         Mnb_menu.add(Sbm_procesos);
 
         Sbm_herramientas.setText("Herramientas");
         Sbm_herramientas.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-
-        MnI_bitacora.setText("Bitacora");
-        MnI_bitacora.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MnI_bitacoraActionPerformed(evt);
-            }
-        });
-        Sbm_herramientas.add(MnI_bitacora);
-
         Mnb_menu.add(Sbm_herramientas);
 
         Sbm_ayuda.setText("Ayuda");
@@ -186,6 +192,11 @@ public class MDI_Trabajadores extends javax.swing.JFrame {
 
         Btn_cerrarSesion.setText("Cerrar Sesión");
         Btn_cerrarSesion.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        Btn_cerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Btn_cerrarSesionMouseClicked(evt);
+            }
+        });
         Mnb_menu.add(Btn_cerrarSesion);
 
         setJMenuBar(Mnb_menu);
@@ -213,17 +224,6 @@ public class MDI_Trabajadores extends javax.swing.JFrame {
 
     }//GEN-LAST:event_Sbm_actualizarPermisosMouseClicked
 
-    private void MnI_bitacoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnI_bitacoraActionPerformed
-        vst_bitacora = new Vst_Bitacora();
-
-        Jdp_contenedor.add(vst_bitacora);
-        Dimension desktopSize = Jdp_contenedor.getSize();
-        Dimension FrameSize = vst_bitacora.getSize();
-        vst_bitacora.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
-        vst_bitacora.setVisible(true);
-        vst_bitacora.toFront();
-    }//GEN-LAST:event_MnI_bitacoraActionPerformed
-
     private void MnI_RutasRemitenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnI_RutasRemitenteActionPerformed
         asgn_RutaRemitente = new Prcs_RutaRemitente();
 
@@ -246,7 +246,7 @@ public class MDI_Trabajadores extends javax.swing.JFrame {
         asgn_pilotoVehiculo.toFront();
     }//GEN-LAST:event_MnI_PilotoVehiculoActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void MnI_RepartidorVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnI_RepartidorVehiculoActionPerformed
         asgn_repartidorVehiculo = new Asgn_RepartidorVehiculo();
 
         Jdp_contenedor.add(asgn_repartidorVehiculo);
@@ -255,7 +255,7 @@ public class MDI_Trabajadores extends javax.swing.JFrame {
         asgn_repartidorVehiculo.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
         asgn_repartidorVehiculo.setVisible(true);
         asgn_repartidorVehiculo.toFront();
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_MnI_RepartidorVehiculoActionPerformed
 
     private void MnI_RutasRemitente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnI_RutasRemitente1ActionPerformed
         // TODO add your handling code here:
@@ -268,6 +268,31 @@ public class MDI_Trabajadores extends javax.swing.JFrame {
         asgn_RutaDestinatario.setVisible(true);
         asgn_RutaDestinatario.toFront();
     }//GEN-LAST:event_MnI_RutasRemitente1ActionPerformed
+
+    private void Btn_cerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_cerrarSesionMouseClicked
+        int confirmar = JOptionPane.showConfirmDialog(null, "¿Desea cerrar sesión?", "Verifiación", JOptionPane.YES_NO_OPTION);
+        if (confirmar == 0) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_Btn_cerrarSesionMouseClicked
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        int confirmar = JOptionPane.showConfirmDialog(null, "¿Desea cerrar sesión?", "Verifiación", JOptionPane.YES_NO_OPTION);
+        if (confirmar == 0) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_formWindowClosing
+
+    private void MnI_RutaPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnI_RutaPedidoActionPerformed
+        asgn_rutaPedido = new Asgn_RutaPedido();
+
+        Jdp_contenedor.add(asgn_rutaPedido);
+        Dimension desktopSize = Jdp_contenedor.getSize();
+        Dimension FrameSize = asgn_rutaPedido.getSize();
+        asgn_rutaPedido.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+        asgn_rutaPedido.setVisible(true);
+        asgn_rutaPedido.toFront();
+    }//GEN-LAST:event_MnI_RutaPedidoActionPerformed
 
     public static void main(String args[]) {
         //FLATLAF
@@ -284,10 +309,11 @@ public class MDI_Trabajadores extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JMenu Btn_cerrarSesion;
     private javax.swing.JDesktopPane Jdp_contenedor;
-    private javax.swing.JMenuItem MnI_PilotoVehiculo;
+    public static javax.swing.JMenuItem MnI_PilotoVehiculo;
+    public static javax.swing.JMenuItem MnI_RepartidorVehiculo;
+    public static javax.swing.JMenuItem MnI_RutaPedido;
     public static javax.swing.JMenuItem MnI_RutasRemitente;
     public static javax.swing.JMenuItem MnI_RutasRemitente1;
-    private javax.swing.JMenuItem MnI_bitacora;
     public static javax.swing.JMenuBar Mnb_menu;
     public static javax.swing.JMenu Mnu_mantenimientos;
     public static javax.swing.JMenu Mnu_procesos;
@@ -297,6 +323,5 @@ public class MDI_Trabajadores extends javax.swing.JFrame {
     public static javax.swing.JMenu Sbm_catalogo;
     public static javax.swing.JMenu Sbm_herramientas;
     public static javax.swing.JMenu Sbm_procesos;
-    private javax.swing.JMenuItem jMenuItem1;
     // End of variables declaration//GEN-END:variables
 }

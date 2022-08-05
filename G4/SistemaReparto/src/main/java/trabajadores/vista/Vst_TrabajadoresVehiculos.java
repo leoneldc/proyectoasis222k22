@@ -1,9 +1,11 @@
 package trabajadores.vista;
 
 import administracion.controlador.ProcesosRepetidos;
+import administracion.controlador.Trabajadores;
+import administracion.modelo.TrabajadoresDAO;
 import java.util.List;
-import trabajadores.controlador.PilotoVehiculo;
-import trabajadores.modelo.PilotoVehiculoDAO;
+import trabajadores.controlador.TrabajadorVehiculo;
+import trabajadores.modelo.TrabajadorVehiculoDAO;
 
 /**
  * @author H. Leonel Dominguez C.
@@ -16,27 +18,39 @@ public class Vst_TrabajadoresVehiculos extends javax.swing.JFrame {
      */
     public Vst_TrabajadoresVehiculos() {
         initComponents();
-        setTitle("CATALOGO DE TRABAJADORES A VEHICULOS");
+        setTitle("CATALOGO DE PILOTOS Y REPARTIDORES ACTIVOS");
         cargarDatos();
     }
 
     private void cargarDatos() {
         ProcesosRepetidos procesosr = new ProcesosRepetidos();
-        PilotoVehiculo asignacion = new PilotoVehiculo();
-        String encabezado[] = {"ID ASIGNACION", "ID TRABAJADOR", "ID REPARTIDOR", "ID VEHICULO"};
+        TrabajadoresDAO.codigoTrabajador = "";
+        TrabajadoresDAO.nombreTrabajador = "";
+        String encabezado[] = {"ID TRABAJADOR", "ID PUESTO T", "NOMBRE", "ULTIMA CONEX", "ESTADO"};
         int cantidadcolumnas = encabezado.length;
         procesosr.llenarColumnas(encabezado, cantidadcolumnas, Tbl_Datos);
         String datos[] = new String[cantidadcolumnas];
-        int tamaño[] = {250, 250, 250, 250};
-        PilotoVehiculoDAO pilotovdao = new PilotoVehiculoDAO();
-        List<PilotoVehiculo> listadoTrabajadores = pilotovdao.selectN(asignacion);
-        for (PilotoVehiculo pilotoAsgn : listadoTrabajadores) {
-            if (pilotoAsgn.getIdRepartidor() != null) {
-                datos[0] = pilotoAsgn.getIdAsignacion();
-                datos[1] = pilotoAsgn.getIdPiloto();
-                datos[2] = pilotoAsgn.getIdRepartidor();
-                datos[3] = pilotoAsgn.getIdVehiculo();
-                procesosr.llenarFilas(datos, tamaño, Tbl_Datos);
+        int tamaño[] = {100, 150, 250, 200, 100};
+        TrabajadoresDAO trabajadoresDAO = new TrabajadoresDAO();
+        List<Trabajadores> listadoTrabajadores = trabajadoresDAO.select();
+        for (Trabajadores trabajador : listadoTrabajadores) {
+            if (trabajador.getEstado().equals("1")) {
+                if (trabajador.getIdPuestoT().equals("1") || trabajador.getIdPuestoT().equals("2")) {
+                    datos[0] = trabajador.getIdTrabaajdor();
+                    if (trabajador.getIdPuestoT().equals("1")) {
+                        datos[1] = "piloto";
+                    }else{
+                        datos[1] = "repartidor";
+                    }
+                    datos[2] = trabajador.getNombre() + " " + trabajador.getApellido();
+                    if (trabajador.getUltimac() == null) {
+                        datos[3] = "N/C";
+                    } else {
+                        datos[3] = trabajador.getUltimac();
+                    }
+                    datos[4] = "activo";
+                    procesosr.llenarFilas(datos, tamaño, Tbl_Datos);
+                }
             }
         }
     }
@@ -123,6 +137,8 @@ public class Vst_TrabajadoresVehiculos extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Vst_TrabajadoresVehiculos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 

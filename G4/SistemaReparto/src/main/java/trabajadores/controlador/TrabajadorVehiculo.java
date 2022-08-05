@@ -7,8 +7,8 @@ package trabajadores.controlador;
  * @github https://github.com/leoneldc
  */
 
-public class PilotoVehiculo {
-    private String idPiloto, idRepartidor, idVehiculo, idAsignacion;
+public class TrabajadorVehiculo {
+    private String idPiloto, idRepartidor, idVehiculo, idAsignacion, estado;
 
     @Override
     public String toString() {
@@ -45,6 +45,14 @@ public class PilotoVehiculo {
 
     public void setIdRepartidor(String idRepartidor) {
         this.idRepartidor = idRepartidor;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
     
 

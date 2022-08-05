@@ -6,12 +6,10 @@ import java.util.List;
 import administracion.controlador.ProcesosRepetidos;
 import administracion.controlador.Vehiculos;
 import administracion.modelo.VehiculosDAO;
-
-import trabajadores.controlador.PilotoVehiculo;
-import trabajadores.modelo.PilotoVehiculoDAO;
-
 import trabajadores.controlador.RutasDestinatario;
+import trabajadores.controlador.TrabajadorVehiculo;
 import trabajadores.modelo.RutasDestinatariosDAO;
+import trabajadores.modelo.TrabajadorVehiculoDAO;
 
 public class Prcs_RutaDestinatario extends javax.swing.JInternalFrame {
 
@@ -19,8 +17,8 @@ public class Prcs_RutaDestinatario extends javax.swing.JInternalFrame {
     //FuncionesBitacora funcBitacora = new FuncionesBitacora();
     RutasDestinatario ruta = new RutasDestinatario();
     RutasDestinatariosDAO rutaDAO = new RutasDestinatariosDAO();
-    PilotoVehiculo asignacion = new PilotoVehiculo();
-    PilotoVehiculoDAO pilotovdao = new PilotoVehiculoDAO();
+    TrabajadorVehiculo asignacion = new TrabajadorVehiculo();
+    TrabajadorVehiculoDAO pilotovdao = new TrabajadorVehiculoDAO();
 
     public Prcs_RutaDestinatario() {
         initComponents();
