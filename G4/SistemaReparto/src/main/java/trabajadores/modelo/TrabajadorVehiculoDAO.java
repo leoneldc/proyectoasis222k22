@@ -1,6 +1,6 @@
 package trabajadores.modelo;
 
-import trabajadores.controlador.PilotoVehiculo;
+import trabajadores.controlador.TrabajadorVehiculo;
 import clientes.modelo.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +13,7 @@ import java.util.List;
  * @author H. Leonel Dominguez C.
  * @github https://github.com/leoneldc
  */
-public class PilotoVehiculoDAO {
+public class TrabajadorVehiculoDAO {
 
     Connection conn = null;
     PreparedStatement stmt = null;
@@ -25,10 +25,10 @@ public class PilotoVehiculoDAO {
     private static final String SQL_SELECTRP = "SELECT * FROM Asignacion_Trabajador_Vehiculo WHERE fkidpiloto = ?";
     private static final String SQL_SELECTRV = "SELECT * FROM Asignacion_Trabajador_Vehiculo WHERE fkidrepartidor = ?";
     private static final String SQL_SELECTN = "SELECT * FROM Asignacion_Trabajador_Vehiculo";
-    private static final String SQL_SELECTRM = "SELECT * FROM Asignacion_Trabajador_Vehiculo WHERE pkasignacion = ?";
+    private static final String SQL_SELECTA = "SELECT * FROM Asignacion_Trabajador_Vehiculo WHERE pkasignacion = ?";
     private static final String SQL_UPDATE = "UPDATE Asignacion_Trabajador_Vehiculo SET fkidrepartidor=? WHERE pkasignacion=?";
     
-    public PilotoVehiculo select(PilotoVehiculo asignacion) {
+    public TrabajadorVehiculo query(TrabajadorVehiculo asignacion) {
         int rows = 0;
         try {
             conn = Conexion.getConnection();
@@ -42,11 +42,13 @@ public class PilotoVehiculoDAO {
                 String idPiloto = rs.getString("fkidpiloto");
                 String idRepartidor = rs.getString("fkidrepartidor");
                 String idVehiculo = rs.getString("fkidvehiculo");
-                asignacion = new PilotoVehiculo();
+                String estado = rs.getString("Estasignacion");
+                asignacion = new TrabajadorVehiculo();
                 asignacion.setIdAsignacion(idAsignacion);
                 asignacion.setIdPiloto(idPiloto);
                 asignacion.setIdRepartidor(idRepartidor);
                 asignacion.setIdVehiculo(idVehiculo);
+                asignacion.setEstado(estado);
             }
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
@@ -57,9 +59,40 @@ public class PilotoVehiculoDAO {
         }
         return asignacion;
     }
-
-    public List<PilotoVehiculo> selectV(PilotoVehiculo asignacion) {
-        List<PilotoVehiculo> listadoClientes = new ArrayList<PilotoVehiculo>();
+    
+    public TrabajadorVehiculo queryA(TrabajadorVehiculo asignacion) {
+        int rows = 0;
+        try {
+            conn = Conexion.getConnection();
+            stmt = conn.prepareStatement(SQL_SELECTA);
+            stmt.setString(1, asignacion.getIdAsignacion());
+            //System.out.println(stmt);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                String idAsignacion = rs.getString("pkasignacion");
+                String idPiloto = rs.getString("fkidpiloto");
+                String idRepartidor = rs.getString("fkidrepartidor");
+                String idVehiculo = rs.getString("fkidvehiculo");
+                String estado = rs.getString("Estasignacion");
+                asignacion = new TrabajadorVehiculo();
+                asignacion.setIdAsignacion(idAsignacion);
+                asignacion.setIdPiloto(idPiloto);
+                asignacion.setIdRepartidor(idRepartidor);
+                asignacion.setIdVehiculo(idVehiculo);
+                asignacion.setEstado(estado);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(rs);
+            Conexion.close(stmt);
+            Conexion.close(conn);
+        }
+        return asignacion;
+    }
+    
+    public List<TrabajadorVehiculo> selectV(TrabajadorVehiculo asignacion) {
+        List<TrabajadorVehiculo> listadoClientes = new ArrayList<TrabajadorVehiculo>();
         try {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_SELECTRP);
@@ -71,11 +104,13 @@ public class PilotoVehiculoDAO {
                 String idPiloto = rs.getString("fkidpiloto");
                 String idRepartidor = rs.getString("fkidrepartidor");
                 String idVehiculo = rs.getString("fkidvehiculo");
-                asignacion = new PilotoVehiculo();
+                String estado = rs.getString("Estasignacion");
+                asignacion = new TrabajadorVehiculo();
                 asignacion.setIdAsignacion(idAsignacion);
                 asignacion.setIdPiloto(idPiloto);
                 asignacion.setIdRepartidor(idRepartidor);
                 asignacion.setIdVehiculo(idVehiculo);
+                asignacion.setEstado(estado);
                 listadoClientes.add(asignacion);
             }
         } catch (SQLException ex) {
@@ -88,8 +123,8 @@ public class PilotoVehiculoDAO {
         return listadoClientes;
     }
     
-    public List<PilotoVehiculo> selectVR(PilotoVehiculo asignacion) {
-        List<PilotoVehiculo> listadoClientes = new ArrayList<PilotoVehiculo>();
+    public List<TrabajadorVehiculo> selectVR(TrabajadorVehiculo asignacion) {
+        List<TrabajadorVehiculo> listadoClientes = new ArrayList<TrabajadorVehiculo>();
         try {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_SELECTRV);
@@ -101,11 +136,13 @@ public class PilotoVehiculoDAO {
                 String idPiloto = rs.getString("fkidpiloto");
                 String idRepartidor = rs.getString("fkidrepartidor");
                 String idVehiculo = rs.getString("fkidvehiculo");
-                asignacion = new PilotoVehiculo();
+                String estado = rs.getString("Estasignacion");
+                asignacion = new TrabajadorVehiculo();
                 asignacion.setIdAsignacion(idAsignacion);
                 asignacion.setIdPiloto(idPiloto);
                 asignacion.setIdRepartidor(idRepartidor);
                 asignacion.setIdVehiculo(idVehiculo);
+                asignacion.setEstado(estado);
                 listadoClientes.add(asignacion);
             }
         } catch (SQLException ex) {
@@ -118,8 +155,8 @@ public class PilotoVehiculoDAO {
         return listadoClientes;
     }
    
-    public List<PilotoVehiculo> selectN(PilotoVehiculo asignacion) {
-        List<PilotoVehiculo> listadoClientes = new ArrayList<PilotoVehiculo>();
+    public List<TrabajadorVehiculo> selectN(TrabajadorVehiculo asignacion) {
+        List<TrabajadorVehiculo> listadoClientes = new ArrayList<TrabajadorVehiculo>();
         try {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_SELECTN);
@@ -130,11 +167,13 @@ public class PilotoVehiculoDAO {
                 String idPiloto = rs.getString("fkidpiloto");
                 String idRepartidor = rs.getString("fkidrepartidor");
                 String idVehiculo = rs.getString("fkidvehiculo");
-                asignacion = new PilotoVehiculo();
+                String estado = rs.getString("Estasignacion");
+                asignacion = new TrabajadorVehiculo();
                 asignacion.setIdAsignacion(idAsignacion);
                 asignacion.setIdPiloto(idPiloto);
                 asignacion.setIdRepartidor(idRepartidor);
                 asignacion.setIdVehiculo(idVehiculo);
+                asignacion.setEstado(estado);
                 listadoClientes.add(asignacion);
             }
         } catch (SQLException ex) {
@@ -147,7 +186,7 @@ public class PilotoVehiculoDAO {
         return listadoClientes;
     }
    
-    public int update(PilotoVehiculo asignacion) {
+    public int update(TrabajadorVehiculo asignacion) {
         int rows = 0;
         try {
             conn = Conexion.getConnection();
@@ -165,7 +204,7 @@ public class PilotoVehiculoDAO {
         return rows;
     }
     
-    public int insert(PilotoVehiculo asignacion) {
+    public int insert(TrabajadorVehiculo asignacion) {
         int rows = 0;
         try {
             conn = Conexion.getConnection();
@@ -183,7 +222,7 @@ public class PilotoVehiculoDAO {
         return rows;
     }
 
-    public int delete(PilotoVehiculo asignacion) {
+    public int delete(TrabajadorVehiculo asignacion) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
@@ -203,11 +242,11 @@ public class PilotoVehiculoDAO {
     }
     
     //--SELECT RUTAS REMITENTE
-    public PilotoVehiculo selectRM(PilotoVehiculo asignacion) {
+    public TrabajadorVehiculo selectRM(TrabajadorVehiculo asignacion) {
         int rows = 0;
         try {
             conn = Conexion.getConnection();
-            stmt = conn.prepareStatement(SQL_SELECTRM);
+            stmt = conn.prepareStatement(SQL_SELECTA);
             stmt.setString(1, asignacion.getIdAsignacion());
             //System.out.println(stmt);
             rs = stmt.executeQuery();
@@ -215,7 +254,7 @@ public class PilotoVehiculoDAO {
                 String idAsignacion = rs.getString("pkasignacion");
                 String idPiloto = rs.getString("fkidpiloto");
                 String idVehiculo = rs.getString("fkidvehiculo");
-                asignacion = new PilotoVehiculo();
+                asignacion = new TrabajadorVehiculo();
                 asignacion.setIdAsignacion(idAsignacion);
                 asignacion.setIdPiloto(idPiloto);
                 asignacion.setIdVehiculo(idVehiculo);

@@ -24,7 +24,10 @@ public class RutasRemitenteDAO {
     public static String idruta, idasignacion;
     private static final String SQL_INSERT = "INSERT into Rutas_Remitente(fkpilveh,Estrr) values(?,?)";
     private static final String SQL_DELETE = "DELETE from Rutas_Remitente where pkidruta = ?";
-    private static final String SQL_UPDATE = "UPDATE Rutas_Remitente SET fkpilveh=?, Estrr=? WHERE pkidruta=?";
+    private static final String SQL_UPDATE = "UPDATE Rutas_Remitente SET fkpilveh=? WHERE pkidruta=?";
+    private static final String SQL_UPDATERP = "UPDATE Rutas_Remitente SET Estrr=? WHERE pkidruta=?";
+    private static final String SQL_SELECTRP = "SELECT * FROM Rutas_Remitente WHERE pkidruta = ?";
+        
     
     public List<RutasRemitente> select() {
         String SQL_SELECT = "SELECT * FROM Rutas_Remitente WHERE pkidruta LIKE '%" + idruta + "%' OR fkpilveh LIKE '%" + idasignacion + "%'";
@@ -52,6 +55,33 @@ public class RutasRemitenteDAO {
             Conexion.close(conn);
         }
         return listaRemitente;
+    }
+    
+    public RutasRemitente query(RutasRemitente ruta) {
+        int rows = 0;
+        try {
+            conn = Conexion.getConnection();
+            stmt = conn.prepareStatement(SQL_SELECTRP);
+            stmt.setString(1, ruta.getIdRuta());
+            //System.out.println(stmt);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                String idAsn = rs.getString("pkidruta");
+                String idVehiculo = rs.getString("fkpilveh");
+                String estado = rs.getString("Estrr");
+                ruta = new RutasRemitente();
+                ruta.setIdRuta(idAsn);
+                ruta.setIdAsignacion(idVehiculo);
+                ruta.setEstado(estado);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(rs);
+            Conexion.close(stmt);
+            Conexion.close(conn);
+        }
+        return ruta;
     }
     
     public int insert(RutasRemitente asignacion) {
@@ -98,8 +128,7 @@ public class RutasRemitenteDAO {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_UPDATE);
             stmt.setString(1, asignacion.getIdAsignacion());
-            stmt.setString(2, asignacion.getEstado());
-            stmt.setString(3, asignacion.getIdRuta());
+            stmt.setString(2, asignacion.getIdRuta());
 //          System.out.println(stmt);
             rows = stmt.executeUpdate();
         } catch (SQLException ex) {
@@ -111,4 +140,21 @@ public class RutasRemitenteDAO {
         return rows;
     }
 
+    public int updateRP(RutasRemitente asignacion) {
+        int rows = 0;
+        try {
+            conn = Conexion.getConnection();
+            stmt = conn.prepareStatement(SQL_UPDATERP);
+            stmt.setString(1, asignacion.getEstado());
+            stmt.setString(2, asignacion.getIdRuta());
+          System.out.println(stmt);
+            rows = stmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        } finally {
+            Conexion.close(stmt);
+            Conexion.close(conn);
+        }
+        return rows;
+    }
 }

@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class MDI_Clientes extends javax.swing.JFrame {
 
@@ -15,9 +16,9 @@ public class MDI_Clientes extends javax.swing.JFrame {
     String idBusqueda = LOGIN_Administracion.idUsuario;
 
     public static JLabel Jl_logo = new JLabel();
-    
+
     private Prcs_Pedidos prcs_pedidos;
-    
+
     public MDI_Clientes() {
         initComponents();
         Diseño();
@@ -30,7 +31,7 @@ public class MDI_Clientes extends javax.swing.JFrame {
         logo();
         Jdp_contenedor.add(Jl_logo);
     }
-    
+
     public void logo() {
         ImageIcon icon = new ImageIcon("src/main/java/assets/logoC.png");
         Jl_logo.setSize(512, 512);
@@ -130,6 +131,11 @@ public class MDI_Clientes extends javax.swing.JFrame {
 
         Btn_cerrarSesion.setText("Cerrar Sesión");
         Btn_cerrarSesion.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        Btn_cerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Btn_cerrarSesionMouseClicked(evt);
+            }
+        });
         Mnb_menu.add(Btn_cerrarSesion);
 
         setJMenuBar(Mnb_menu);
@@ -154,7 +160,7 @@ public class MDI_Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_formComponentResized
 
     private void Sbm_actualizarPermisosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Sbm_actualizarPermisosMouseClicked
-        
+
     }//GEN-LAST:event_Sbm_actualizarPermisosMouseClicked
 
     private void Prcs_PedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Prcs_PedidosActionPerformed
@@ -168,6 +174,13 @@ public class MDI_Clientes extends javax.swing.JFrame {
         prcs_pedidos.setVisible(true);
         prcs_pedidos.toFront();
     }//GEN-LAST:event_Prcs_PedidosActionPerformed
+
+    private void Btn_cerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_cerrarSesionMouseClicked
+        int confirmar = JOptionPane.showConfirmDialog(null, "¿Desea cerrar sesión?", "Verifiación", JOptionPane.YES_NO_OPTION);
+        if (confirmar == 0) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_Btn_cerrarSesionMouseClicked
 
     public static void main(String args[]) {
         //FLATLAF

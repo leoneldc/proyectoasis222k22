@@ -666,7 +666,7 @@ public class Mnt_Aplicaciones extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_Btn_ayudaMouseClicked
 
     private void Btn_reporteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_reporteMouseClicked
-        System.out.println("reportes");
+        procesosr.imprimirReporteA("Rpt_Aplicaciones", "Reporte de Aplicaciones");
     }//GEN-LAST:event_Btn_reporteMouseClicked
 
     private void Txt_busquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Txt_busquedaKeyReleased

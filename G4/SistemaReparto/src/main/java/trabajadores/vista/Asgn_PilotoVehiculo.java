@@ -1,13 +1,14 @@
 package trabajadores.vista;
 
 import administracion.controlador.ProcesosRepetidos;
+import administracion.controlador.TrabajadorAplicacion;
 import administracion.controlador.Trabajadores;
 import administracion.controlador.Vehiculos;
+import administracion.modelo.TrabajadorAplicacionDAO;
 import administracion.modelo.TrabajadoresDAO;
 import administracion.modelo.VehiculosDAO;
-import administracion.vista.Vst_Trabajadores;
-import trabajadores.controlador.PilotoVehiculo;
-import trabajadores.modelo.PilotoVehiculoDAO;
+import trabajadores.controlador.TrabajadorVehiculo;
+import trabajadores.modelo.TrabajadorVehiculoDAO;
 import java.util.List;
 
 /**
@@ -17,8 +18,9 @@ import java.util.List;
 public class Asgn_PilotoVehiculo extends javax.swing.JInternalFrame {
 
     ProcesosRepetidos procesosr = new ProcesosRepetidos();
-    PilotoVehiculo asignacion = new PilotoVehiculo();
-    PilotoVehiculoDAO pilotovdao = new PilotoVehiculoDAO();
+    TrabajadorVehiculo asignacion = new TrabajadorVehiculo();
+    TrabajadorVehiculoDAO pilotovdao = new TrabajadorVehiculoDAO();
+    String idApp = "1001";
 
     /**
      * Creates new form Asgn_PilotoVehiculo
@@ -26,6 +28,7 @@ public class Asgn_PilotoVehiculo extends javax.swing.JInternalFrame {
     public Asgn_PilotoVehiculo() {
         initComponents();
         cargarVehiculos();
+        cargarAcciones();
         diseño();
     }
 
@@ -40,21 +43,23 @@ public class Asgn_PilotoVehiculo extends javax.swing.JInternalFrame {
 
     private void cargarAsignaciones() {
         ProcesosRepetidos procesosr = new ProcesosRepetidos();
-        PilotoVehiculo asignacion = new PilotoVehiculo();
+        TrabajadorVehiculo asignacion = new TrabajadorVehiculo();
         asignacion.setIdPiloto(Txt_busqueda.getText());
         String encabezado[] = {"ID ASIGNACION", "ID TRABAJADOR", "ID REPARTIDOR", "ID VEHICULO"};
         int cantidadcolumnas = encabezado.length;
         procesosr.llenarColumnas(encabezado, cantidadcolumnas, Tbl_Asignaciones);
         String datos[] = new String[cantidadcolumnas];
         int tamaño[] = {250, 250, 250, 250};
-        PilotoVehiculoDAO pilotovdao = new PilotoVehiculoDAO();
-        List<PilotoVehiculo> listadoTrabajadores = pilotovdao.selectV(asignacion);
-        for (PilotoVehiculo pilotoAsgn : listadoTrabajadores) {
-            datos[0] = pilotoAsgn.getIdAsignacion();
-            datos[1] = pilotoAsgn.getIdPiloto();
-            datos[2] = pilotoAsgn.getIdRepartidor();
-            datos[3] = pilotoAsgn.getIdVehiculo();
-            procesosr.llenarFilas(datos, tamaño, Tbl_Asignaciones);
+        TrabajadorVehiculoDAO pilotovdao = new TrabajadorVehiculoDAO();
+        List<TrabajadorVehiculo> listadoTrabajadores = pilotovdao.selectV(asignacion);
+        for (TrabajadorVehiculo pilotoAsgn : listadoTrabajadores) {
+            if (pilotoAsgn.getEstado().equals("0")) {
+                datos[0] = pilotoAsgn.getIdAsignacion();
+                datos[1] = pilotoAsgn.getIdPiloto();
+                datos[2] = pilotoAsgn.getIdRepartidor();
+                datos[3] = pilotoAsgn.getIdVehiculo();
+                procesosr.llenarFilas(datos, tamaño, Tbl_Asignaciones);
+            }
         }
 
     }
@@ -82,6 +87,30 @@ public class Asgn_PilotoVehiculo extends javax.swing.JInternalFrame {
         }
     }
 
+    void cargarAcciones() {
+
+        Btn_guardarU.setVisible(false);
+        Btn_quitarU.setVisible(false);
+        Btn_cargarUsuario.setVisible(false);
+
+        TrabajadorAplicacion permisos = new TrabajadorAplicacion();
+        TrabajadorAplicacionDAO permisosDAO = new TrabajadorAplicacionDAO();
+
+        permisos.setIdTrabajador(LOGIN_Trabajadores.idUsuario);
+        permisos.setIdAplicacion(idApp);
+
+        permisos = permisosDAO.selectV(permisos);
+
+        if (permisos.getBuscar().equals("1")) {
+            Btn_cargarUsuario.setVisible(true);
+        }
+        if (permisos.getGuardar().equals("1")) {
+            Btn_guardarU.setVisible(true);
+        }
+        if (permisos.getEliminar().equals("1")) {
+            Btn_quitarU.setVisible(true);
+        }
+    }
     /**
      * Esto es codigo generado automaticamente por el IDE debido al Design *
      */
@@ -423,7 +452,7 @@ public class Asgn_PilotoVehiculo extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Btn_listaUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_listaUsuariosActionPerformed
-        Vst_Trabajadores vst_trabajadores = new Vst_Trabajadores();
+        Vst_TrabajadoresVehiculos vst_trabajadores = new Vst_TrabajadoresVehiculos();
         vst_trabajadores.setVisible(true);
     }//GEN-LAST:event_Btn_listaUsuariosActionPerformed
 
@@ -485,16 +514,18 @@ public class Asgn_PilotoVehiculo extends javax.swing.JInternalFrame {
                 int filaSeleccionada = Tbl_Datos.getSelectedRow();
                 if (filaSeleccionada >= 0) {
                     boolean asignado = false;
-                    PilotoVehiculo asignacion = new PilotoVehiculo();
+                    TrabajadorVehiculo asignacion = new TrabajadorVehiculo();
                     asignacion.setIdPiloto(Txt_busqueda.getText());
-                    List<PilotoVehiculo> listadoTrabajadores = pilotovdao.selectV(asignacion);
-                    for (PilotoVehiculo pilotoAsgn : listadoTrabajadores) {
+                    List<TrabajadorVehiculo> listadoTrabajadores = pilotovdao.selectV(asignacion);
+                    for (TrabajadorVehiculo pilotoAsgn : listadoTrabajadores) {
                         if (pilotoAsgn.getIdVehiculo() == null) {
                             asignado = false;
                         } else {
-                            limpiar();
-                            procesosr.accionErronea("¡ERROR!", "EL PILOTO NO PUEDE TENER MAS DE UN VEHICULO ASIGNADO");
-                            asignado = true;
+                            if (pilotoAsgn.getEstado().equals("0")) {
+                                limpiar();
+                                procesosr.accionErronea("¡ERROR!", "EL PILOTO NO PUEDE TENER MAS DE UN VEHICULO ASIGNADO");
+                                asignado = true;
+                            }
                         }
                     }
                     if (asignado == false) {

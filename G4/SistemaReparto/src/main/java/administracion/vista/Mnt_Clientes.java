@@ -754,7 +754,7 @@ public class Mnt_Clientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_Btn_ayudaMouseClicked
 
     private void Btn_reporteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_reporteMouseClicked
-        System.out.println("reporte");
+        procesosr.imprimirReporteA("Rpt_Clientes", "Reporte de Clientes");
     }//GEN-LAST:event_Btn_reporteMouseClicked
 
     private void Txt_busquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Txt_busquedaKeyReleased
